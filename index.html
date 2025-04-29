@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Components Sourcing Report</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chrono-node/1.3.11/chrono.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.15.0/Recharts.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div id="root" class="container mx-auto p-4"></div>
+
+  <script type="text/babel">
+    // Initializing React and Recharts dependencies
+    const { useState, useEffect } = React;
+    const { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, ReferenceArea, Label } = Recharts;
+
+    // ResponsiveWall component to show warning for small screens
+    const ResponsiveWall = ({ onAgree }) => {
+      return (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Optimal Viewing Experience
+            </h2>
+            <p className="text-gray-600 mb-6">
+              This website works best with a window width of 1024 pixels or more.
+              For the best experience, please rotate the screen or use a larger device.
+            </p>
+            <button
+              onClick={onAgree}
+              className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+              I Understand
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    // Defining the main Report component
+    const Report = () => {
+      const [data, setData] = useState([]);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState(null);
+      const [selectedVehicleType, setSelectedVehicleType] = useState(null);
+      const [selectedManufacturer, setSelectedManufacturer] = useState(null);
+      const [selectedRegion, setSelectedRegion] = useState(null);
+      const [showOnlyUSCanadian, setShowOnlyUSCanadian] = useState(false);
+      const [enableCrossFiltering, setEnableCrossFiltering] = useState(false);
+      const [showWall, setShowWall] = useState(window.innerWidth < 1024);
+
+      // Handle window resize to update wall visibility
+      useEffect(() => {
+        const handleResize = () => {
+          setShowWall(window.innerWidth < 1024);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+
+      // Function to handle agreement (dismiss wall)
+      const handleAgree = () => {
+        setShowWall(false);
+      };
+
+      // Function to extract Mexican and non-Mexican percentages from Foreign Parts (%) string
+      const extractForeignParts = (foreignPartsStr) => {
+        if (!foreignPartsStr || foreignPartsStr === "N/A" || foreignPartsStr.trim() === "" || foreignPartsStr === "0" || foreignPartsStr === "0%") {
+          return { mexican: 0, nonMexican: 0, breakdown: [] };
+        }
+        const parts = foreignPartsStr.split('+').map(part => part.trim());
+        let mexican = 0;
+        let nonMexican = 0;
+        const breakdown = [];
+        parts.forEach(part => {
+          const match = part.match(/^(\d+)%\s*([\w\s]+)/);
+          if (match) {
+            const value = parseFloat(match[1]);
+            const country = match[2].trim().toLowerCase();
+            if (country.includes('mexico')) {
+              mexican += value;
+            } else {
+              nonMexican += value;
+              breakdown.push(`${value}% ${country.charAt(0).toUpperCase() + country.slice(1)}`);
+            }
+          }
+        });
+        const singleMatch = foreignPartsStr.match(/^(\d+)%\s*([\w\s]+)/);
+        if (singleMatch && parts.length === 1) {
+          const value = parseFloat(singleMatch[1]);
+          const country = singleMatch[2].trim().toLowerCase();
+          if (country.includes('mexico')) {
+            return { mexican: value, nonMexican: 0, breakdown: [] };
+          } else {
+            return {
+              mexican: 0,
+              nonMexican: value,
+              breakdown: [`${value}% ${country.charAt(0).toUpperCase() + country.slice(1)}`]
+            };
+          }
+        }
+        return { mexican, nonMexican, breakdown };
+      };
+
+      // Function to calculate North American and Offshore Components
+      const calculateComponents = (usPartsStr, foreignPartsStr, foreignPartsOtherStr) => {
+        const usParts = parseFloat(usPartsStr) || 0;
+        const { mexican, nonMexican, breakdown } = extractForeignParts(foreignPartsStr);
+        const foreignPartsOther = parseFloat(foreignPartsOtherStr) || 0;
+        const northAmerican = usParts + mexican;
+        const offshore = nonMexican + foreignPartsOther;
+        const offshoreBreakdown = [
+          ...breakdown,
+          ...(foreignPartsOther > 0 ? [`${foreignPartsOther}% Other`] : [])
+        ].join(', ');
+
+        if (offshore === 0 && northAmerican < 95) {
+          console.warn(`Inferred Offshore Components for northAmerican=${northAmerican}: ${100 - northAmerican}%`);
+          return {
+            usCanadian: usParts,
+            northAmerican,
+            offshore: 100 - northAmerican,
+            mexican,
+            offshoreBreakdown: 'Inferred'
+          };
+        }
+
+        const sum = northAmerican + offshore;
+        if (sum < 95 || sum > 105) {
+          console.warn(`Unexpected sum for northAmerican=${northAmerican}, offshore=${offshore}: sum=${sum}`);
+        }
+
+        return { usCanadian: usParts, northAmerican, offshore, mexican, offshoreBreakdown };
+      };
+
+      // Function to assign region based on Manufacturer (mega)
+      const getRegion = (manufacturer) => {
+        const americanManufacturers = [
+          "General Motors",
+          "Ford Motor Company",
+          "Tesla, Inc.",
+          "Stellantis"
+        ];
+        const europeanManufacturers = [
+          "Volkswagen Group",
+          "BMW Group",
+          "Mercedes-Benz Group AG",
+          "Tata Motors",
+          "Geely",
+          "Rolls-Royce Motor"
+        ];
+        const asianManufacturers = [
+          "Toyota Motor Corporation",
+          "Honda Motor Company",
+          "Hyundai Motor Group",
+          "Nissan Motor Corporation",
+          "Subaru Corporation",
+          "Mazda Motor Corporation",
+          "Mitsubishi Motors Corporation"
+        ];
+
+        if (americanManufacturers.includes(manufacturer)) return "American";
+        if (europeanManufacturers.includes(manufacturer)) return "European";
+        if (asianManufacturers.includes(manufacturer)) return "Asian";
+        return "Unknown";
+      };
+
+      // Beeswarm positioning algorithm with guaranteed non-overlapping points
+      const beeswarmPosition = (points, xKey, pointRadius = 3, initialYRange = [-200, 200], xSpreadRange0 = [-19, -8], xSpreadRange1 = [-6, 0]) => {
+        // Adjust X-values for points with 0% and 1% Components
+        const adjustedPoints = points.map(point => {
+          if (point[xKey] === 0) {
+            const spreadX = xSpreadRange0[0] + Math.random() * (xSpreadRange0[1] - xSpreadRange0[0]);
+            return { ...point, adjustedX: spreadX };
+          } else if (point[xKey] === 1) {
+            const spreadX = xSpreadRange1[0] + Math.random() * (xSpreadRange1[1] - xSpreadRange1[0]);
+            return { ...point, adjustedX: spreadX };
+          }
+          return { ...point, adjustedX: point[xKey] };
+        });
+
+        // Group points by rounded adjusted X-value (binning)
+        const bins = {};
+        adjustedPoints.forEach(point => {
+          const x = Math.round(point.adjustedX * 2) / 2; // Bin to nearest 0.5
+          if (!bins[x]) bins[x] = [];
+          bins[x].push(point);
+        });
+
+        // Calculate max number of points in any bin to scale Y-range
+        const maxPointsInBin = Math.max(...Object.values(bins).map(bin => bin.length));
+
+        const positionedPoints = [];
+        Object.keys(bins).forEach(x => {
+          const binPoints = bins[x];
+          if (binPoints.length === 1) {
+            positionedPoints.push({ ...binPoints[0], y: 0 });
+            return;
+          }
+
+          // Dynamically scale Y-range based on number of points in this bin
+          const densityFactor = Math.min(binPoints.length / maxPointsInBin, 1);
+          const yRangeFactor = 0.5 + 0.5 * densityFactor; // Increased to spread points more
+
+          // Calculate required Y-range to fit all points without overlap
+          const pointDiameter = pointRadius * 3.0; // Increased spacing to reduce density
+          const minRequiredYRange = (binPoints.length - 1) * pointDiameter;
+          const isInSparseInterval = parseFloat(x) >= -20 && parseFloat(x) <= 1;
+          const baseYRange = isInSparseInterval ? 400 : 250; // Larger base range for sparse interval
+          const scaledYRange = Math.max(baseYRange * yRangeFactor, minRequiredYRange);
+          const yMin = -scaledYRange / 2;
+          const yMax = scaledYRange / 2;
+
+          // Ensure y-limits stay within [-200, 200] for consistency
+          const finalYMin = Math.max(yMin, initialYRange[0]);
+          const finalYMax = Math.min(yMax, initialYRange[1]);
+
+          // Sort points by some criteria (e.g., original Y or arbitrary) if needed
+          binPoints.sort((a, b) => a[xKey] - b[xKey]);
+
+          // Position points in a non-overlapping manner
+          const positions = [];
+          binPoints.forEach((point, idx) => {
+            let y = 0;
+            let attempt = 0;
+            const maxAttempts = 5000;
+            let placed = false;
+
+            // First attempt: Random placement within Y-range
+            while (!placed && attempt < maxAttempts) {
+              y = finalYMin + Math.random() * (finalYMax - finalYMin);
+              let overlap = false;
+              for (let pos of positions) {
+                const dy = Math.abs(y - pos);
+                if (dy < pointDiameter) {
+                  overlap = true;
+                  break;
+                }
+              }
+              if (!overlap) {
+                positions.push(y);
+                placed = true;
+              }
+              attempt++;
+            }
+
+            // If random placement fails, use a deterministic approach by expanding positions
+            if (!placed) {
+              positions.sort((a, b) => a - b);
+              let largestGap = 0;
+              let insertY = finalYMin;
+              if (positions.length === 0) {
+                y = (finalYMin + finalYMax) / 2; // Center single point
+              } else if (positions.length === 1) {
+                y = Math.abs(positions[0] - finalYMin) > Math.abs(positions[0] - finalYMax)
+                  ? finalYMin + pointDiameter
+                  : finalYMax - pointDiameter;
+              } else {
+                // Find largest gap for even spacing
+                for (let i = 0; i < positions.length - 1; i++) {
+                  const gap = positions[i + 1] - positions[i];
+                  if (gap > largestGap && gap >= pointDiameter) {
+                    largestGap = gap;
+                    insertY = positions[i] + pointDiameter;
+                  }
+                }
+                const gapToMin = positions[0] - finalYMin;
+                const gapToMax = finalYMax - positions[positions.length - 1];
+                if (gapToMin > largestGap && gapToMin >= pointDiameter) {
+                  largestGap = gapToMin;
+                  insertY = finalYMin + pointDiameter;
+                }
+                if (gapToMax > largestGap && gapToMax >= pointDiameter) {
+                  largestGap = gapToMax;
+                  insertY = finalYMax - pointDiameter;
+                }
+                y = insertY;
+                positions.push(y);
+              }
+            }
+
+            positionedPoints.push({ ...point, y });
+          });
+
+          // Validate no overlap in this bin
+          positions.sort((a, b) => a - b);
+          for (let i = 1; i < positions.length; i++) {
+            if (positions[i] - positions[i - 1] < pointDiameter) {
+              console.warn(`Overlap detected in bin ${x}: positions ${positions[i - 1]} and ${positions[i]} are too close (distance: ${positions[i] - positions[i - 1]}, required: ${pointDiameter})`);
+            }
+          }
+        });
+
+        return positionedPoints;
+      };
+
+      // Processing and cleaning CSV data, and precompute beeswarm positions
+      const processAndCleanData = (rawData) => {
+        let processedData = rawData
+          .filter(row => row["U.S./Canadian Parts (%)"] !== undefined && row["Foreign Parts (%)"] !== undefined && row["Foreign Parts, Other (%)"] !== undefined)
+          .map(row => {
+            const { usCanadian, northAmerican, offshore, mexican, offshoreBreakdown } = calculateComponents(
+              row["U.S./Canadian Parts (%)"],
+              row["Foreign Parts (%)"],
+              row["Foreign Parts, Other (%)"]
+            );
+            if (isNaN(northAmerican) || isNaN(offshore) || isNaN(mexican)) {
+              console.warn(`Invalid data for ${row["Make"]} ${row["Model (Carline)"]}: northAmerican=${northAmerican}, offshore=${offshore}, mexican=${mexican}`);
+              return null;
+            }
+            const vehicleType = row["Vehicle Type on Part 567 Certification Label"];
+            if (row["Make"] === "Toyota" && row["Model (Carline)"].includes("Rav4 Hybrid")) {
+              console.log(`Toyota RAV4 Hybrid vehicleType: "${vehicleType}"`);
+            }
+            return {
+              ...row,
+              usCanadianComponents: usCanadian,
+              northAmericanComponents: northAmerican,
+              offshoreComponents: offshore,
+              mexicanComponents: mexican,
+              offshoreBreakdown: offshoreBreakdown || 'None',
+              vehicleType: vehicleType,
+              manufacturer: row["Manufacturer (mega)"] || "Unknown",
+              make: row["Make"] || "Unknown",
+              model: row["Model (Carline)"] || "Unknown",
+              assemblyPlant: row["Final Assembly"] || "Unknown",
+              engineOrigin: row["Engine Origin"] || "Unknown",
+              engineAdditionalOrigin: row["Additional country of Origin for Engine/Motor"] || "None",
+              transmissionOrigin: row["Transmission Origin"] || "Unknown",
+              transmissionAdditionalOrigin: row["Additional Country of Origin for the Transmission(s)"] || "None",
+              region: getRegion(row["Manufacturer (mega)"])
+            };
+          })
+          .filter(row => row !== null);
+
+        const xKey = showOnlyUSCanadian ? "usCanadianComponents" : "northAmericanComponents";
+        const positionedData = beeswarmPosition(processedData, xKey);
+        return positionedData;
+      };
+
+      // Loading and parsing CSV file
+      useEffect(() => {
+        const loadData = async () => {
+          try {
+            console.log("Attempting to fetch frontend/public/data/MY2024 AALA Full Data.csv...");
+            const response = await fetch("frontend/public/data/MY2024 AALA Full Data.csv");
+            if (!response.ok) {
+              throw new Error(`Failed to fetch frontend/public/data/MY2024 AALA Full Data.csv: ${response.status} ${response.statusText}`);
+            }
+            const csvText = await response.text();
+            console.log("frontend/public/data/MY2024 AALA Full Data.csv fetched successfully, parsing...");
+
+            Papa.parse(csvText, {
+              header: true,
+              skipEmptyLines: true,
+              dynamicTyping: false,
+              transformHeader: (header) => header.trim().replace(/^"|"$/g, ''),
+              transform: (value, header) => {
+                let cleaned = value.trim().replace(/^"|"$/g, '');
+                return cleaned;
+              },
+              complete: (results) => {
+                console.log("Parsing complete, processing data...");
+                const cleanedData = processAndCleanData(results.data);
+                console.log(`Processed ${cleanedData.length} data points`);
+                setData(cleanedData);
+                setLoading(false);
+              },
+              error: (err) => {
+                console.error("Error parsing CSV:", err);
+                setError(`Error parsing CSV: ${err.message}`);
+                setLoading(false);
+              }
+            });
+          } catch (err) {
+            console.error("Error fetching CSV:", err);
+            setError(`Error fetching frontend/public/data/MY2024 AALA Full Data.csv: ${err.message}. Please ensure the file is available in the correct directory.`);
+            setLoading(false);
+          }
+        };
+
+        loadData();
+      }, []);
+
+      // Recompute beeswarm positions when showOnlyUSCanadian changes
+      useEffect(() => {
+        if (!loading && data.length > 0) {
+          console.log("Recomputing beeswarm positions due to showOnlyUSCanadian change...");
+          const xKey = showOnlyUSCanadian ? "usCanadianComponents" : "northAmericanComponents";
+          const repositionedData = beeswarmPosition(data, xKey);
+          setData(repositionedData);
+        }
+      }, [showOnlyUSCanadian]);
+
+      // Function to reset all filters
+      const resetFilters = () => {
+        console.log("Resetting all filters...");
+        setSelectedVehicleType(null);
+        setSelectedManufacturer(null);
+        setSelectedRegion(null);
+      };
+
+      // Function to determine if a point should be highlighted based on all selections and cross-filtering setting
+      const shouldHighlightPoint = (point, chartType) => {
+        let isHighlighted = true;
+
+        // Always apply the selection for the chart's own category
+        if (chartType === 'vehicleType' && selectedVehicleType && point.vehicleType !== selectedVehicleType) {
+          isHighlighted = false;
+        }
+        if (chartType === 'manufacturer' && selectedManufacturer && point.manufacturer !== selectedManufacturer) {
+          isHighlighted = false;
+        }
+        if (chartType === 'region' && selectedRegion && point.region !== selectedRegion) {
+          isHighlighted = false;
+        }
+
+        // Apply cross-filtering only if enabled
+        if (enableCrossFiltering) {
+          // Apply filters from other charts
+          if (chartType !== 'vehicleType' && selectedVehicleType && point.vehicleType !== selectedVehicleType) {
+            isHighlighted = false;
+          }
+          if (chartType !== 'manufacturer' && selectedManufacturer && point.manufacturer !== selectedManufacturer) {
+            isHighlighted = false;
+          }
+          if (chartType !== 'region' && selectedRegion && point.region !== selectedRegion) {
+            isHighlighted = false;
+          }
+        }
+
+        return isHighlighted;
+      };
+
+      // Rendering loading state
+      if (loading) {
+        return (
+          <div className="text-center text-2xl text-gray-600 mt-10">
+            Loading data...
+          </div>
+        );
+      }
+
+      // Render the ResponsiveWall if window width is less than 1024
+      if (showWall) {
+        return <ResponsiveWall onAgree={handleAgree} />;
+      }
+
+      // Rendering error state
+      if (error) {
+        return (
+          <div className="text-center text-2xl text-red-600 mt-10">
+            {error}
+          </div>
+        );
+      }
+
+      // Rendering if no data is available
+      if (data.length === 0) {
+        return (
+          <div className="text-center text-2xl text-gray-600 mt-10">
+            No data available to display. Please check the data source and try again.
+          </div>
+        );
+      }
+
+      // Defining vehicle types, manufacturers, and regions for grouping
+      const vehicleTypes = [...new Set(data.map(d => d.vehicleType))];
+      const manufacturers = [...new Set(data.map(d => d.manufacturer))];
+      const regions = [...new Set(data.map(d => d.region))];
+
+      // Sort categories for rendering to ensure selected one is last (z-order) without affecting legend order
+      const renderVehicleTypes = selectedVehicleType
+        ? [...vehicleTypes.filter(t => t !== selectedVehicleType), selectedVehicleType]
+        : vehicleTypes;
+      const renderManufacturers = selectedManufacturer
+        ? [...manufacturers.filter(m => m !== selectedManufacturer), selectedManufacturer]
+        : manufacturers;
+      const renderRegions = selectedRegion
+        ? [...regions.filter(r => r !== selectedRegion), selectedRegion]
+        : regions;
+
+      // Defining colors for vehicle types, manufacturers, and regions
+      const vehicleTypeColors = {
+        "Passenger Car": "#3B82F6",
+        "Multipurpose Passenger Vehicle": "#10B981",
+        "Truck": "#F59E0B",
+        "T/MPV": "#EF4444"
+      };
+      const manufacturerColors = manufacturers.reduce((acc, m, i) => {
+        const colors = [
+          "#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6", "#EC4899", "#6B7280",
+          "#14B8A6", "#F97316", "#A855F7", "#22C55E", "#D946EF", "#0EA5E9", "#F43F5E",
+          "#84CC16", "#FBBF24", "#2DD4BF", "#FB7185"
+        ];
+        acc[m] = colors[i % colors.length];
+        return acc;
+      }, {});
+      const regionColors = {
+        American: "#EF4444",
+        European: "#3B82F6",
+        Asian: "#10B981",
+        Unknown: "#6B7280"
+      };
+
+      // Custom render function for vehicle type legend
+      const renderVehicleTypeLegend = (props) => {
+        const { payload } = props;
+        return (
+          <ul className="flex flex-wrap gap-2 mb-4">
+            {payload.map((entry, index) => {
+              const isDimmed = selectedVehicleType && selectedVehicleType !== entry.value;
+              return (
+                <li
+                  key={`item-${index}`}
+                  className="flex items-center cursor-pointer"
+                  onClick={() => handleVehicleTypeLegendClick(entry)}
+                  style={{ marginRight: '10px' }}
+                >
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                      height: '10px',
+                      backgroundColor: isDimmed ? '#D1D5DB' : entry.color,
+                      marginRight: '5px'
+                    }}
+                  />
+                  <span style={{ color: isDimmed ? '#D1D5DB' : '#000' }}>
+                    {entry.value}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      };
+
+      // Custom render function for manufacturer legend, considering selectedRegion
+      const renderManufacturerLegend = (props) => {
+        const { payload } = props;
+        return (
+          <ul className="flex flex-wrap gap-2 mb-4">
+            {payload.map((entry, index) => {
+              const manufacturer = entry.value;
+              const manufacturerRegion = getRegion(manufacturer);
+              const isDimmed =
+                (selectedManufacturer && selectedManufacturer !== manufacturer) ||
+                (enableCrossFiltering && selectedRegion && selectedRegion !== manufacturerRegion);
+              return (
+                <li
+                  key={`item-${index}`}
+                  className="flex items-center cursor-pointer"
+                  onClick={() => handleManufacturerLegendClick(entry)}
+                  style={{ marginRight: '10px' }}
+                >
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                      height: '10px',
+                      backgroundColor: isDimmed ? '#D1D5DB' : entry.color,
+                      marginRight: '5px'
+                    }}
+                  />
+                  <span style={{ color: isDimmed ? '#D1D5DB' : '#000' }}>
+                    {entry.value}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      };
+
+      // Custom render function for region legend, considering selectedManufacturer
+      const renderRegionLegend = (props) => {
+        const { payload } = props;
+        const selectedManufacturerRegion = selectedManufacturer ? getRegion(selectedManufacturer) : null;
+        return (
+          <ul className="flex flex-wrap gap-2 mb-4">
+            {payload.map((entry, index) => {
+              const region = entry.value;
+              const isDimmed =
+                (selectedRegion && selectedRegion !== region) ||
+                (enableCrossFiltering && selectedManufacturer && selectedManufacturerRegion !== region);
+              return (
+                <li
+                  key={`item-${index}`}
+                  className="flex items-center cursor-pointer"
+                  onClick={() => handleRegionLegendClick(entry)}
+                  style={{ marginRight: '10px' }}
+                >
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                      height: '10px',
+                      backgroundColor: isDimmed ? '#D1D5DB' : entry.color,
+                      marginRight: '5px'
+                    }}
+                  />
+                  <span style={{ color: isDimmed ? '#D1D5DB' : '#000' }}>
+                    {entry.value}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        );
+      };
+
+      // Finding interesting fact: Vehicles with high components, sorted in descending order
+      const highComponentsVehicles = data
+        .filter(d => (showOnlyUSCanadian ? d.usCanadianComponents : d.northAmericanComponents) > 70)
+        .map(d => ({
+          name: `${d.make} ${d.model} (${(showOnlyUSCanadian ? d.usCanadianComponents : d.northAmericanComponents)}%)`,
+          percentage: showOnlyUSCanadian ? d.usCanadianComponents : d.northAmericanComponents
+        }))
+        .sort((a, b) => b.percentage - a.percentage)
+        .map(item => item.name);
+
+      // Custom tooltip component
+      const CustomTooltip = ({ active, payload }) => {
+        if (active && payload && payload.length) {
+          const data = payload[0].payload;
+          return (
+            <div className="bg-white border border-gray-300 p-3 rounded shadow-lg">
+              <p className="font-semibold">{`${data.make} ${data.model}`}</p>
+              <p>{`Parent Company: ${data.manufacturer}`}</p>
+              <p>{`Make: ${data.make}`}</p>
+              <p>{`${showOnlyUSCanadian ? "U.S./Canadian Components" : "North American Components"}: ${showOnlyUSCanadian ? data.usCanadianComponents : data.northAmericanComponents}%${!showOnlyUSCanadian ? ` [${data.mexicanComponents}% Mexican]` : ''}`}</p>
+              <p>{`${!showOnlyUSCanadian ? "" : `Mexican Components: ${data.mexicanComponents}%`}`}</p>
+              <p>{`Offshore Components: ${data.offshoreComponents}% [${data.offshoreBreakdown}]`}</p>
+              <p>{`Engine Origin: ${data.engineOrigin}, [Additional: ${data.engineAdditionalOrigin}]`}</p>
+              <p>{`Transmission Origin: ${data.transmissionOrigin}, [Additional: ${data.transmissionAdditionalOrigin}]`}</p>
+              <p>{`Assembly Plant: ${data.assemblyPlant}`}</p>
+            </div>
+          );
+        }
+        return null;
+      };
+
+      // Handle legend click for vehicle type
+      const handleVehicleTypeLegendClick = (entry) => {
+        const { value } = entry;
+        setSelectedVehicleType(prev => prev === value ? null : value);
+      };
+
+      // Handle legend click for manufacturer
+      const handleManufacturerLegendClick = (entry) => {
+        const { value } = entry;
+        setSelectedManufacturer(prev => prev === value ? null : value);
+      };
+
+      // Handle legend click for region
+      const handleRegionLegendClick = (entry) => {
+        const { value } = entry;
+        setSelectedRegion(prev => prev === value ? null : value);
+      };
+
+      // Handle checkbox change for U.S./Canadian toggle
+      const handleCheckboxChange = (e) => {
+        setShowOnlyUSCanadian(e.target.checked);
+      };
+
+      // Handle checkbox change for cross-filtering
+      const handleCrossFilteringChange = (e) => {
+        setEnableCrossFiltering(e.target.checked);
+      };
+
+      // Rendering the report
+      return (
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          {/* Summarizing the report */}
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">
+            Vehicle Components Sourcing Analysis
+          </h1>
+          <p className="text-gray-600 mb-6">
+            This report analyzes the sourcing of vehicle components for MY2024 vehicles,
+            focusing on the percentage of {showOnlyUSCanadian ? "U.S./Canadian components" : "North American (U.S./Canadian and Mexican) components"}.
+            The beeswarm plots below display the distribution of {showOnlyUSCanadian ? "U.S./Canadian components" : "North American components"} across
+            different categories, with points spread vertically to avoid overlap, utilizing the
+            full canvas height. Click a legend item to highlight a category (bringing its points to the front); click again
+            to reset, or use the "Reset Filters" button to clear all selections. Use the "Enable Cross-Filtering" checkbox to control whether selections affect all charts or only the chart where the selection is made.
+            Unselected legend items are dimmed to indicate the active selection.
+            Hover over points to see detailed component breakdowns, including the
+            vehicle&apos;s make, engine origin (with additional origins), and transmission origin (with additional origins).
+          </p>
+
+          {/* Checkbox to toggle between North American and U.S./Canadian Components */}
+          <div className="mb-2">
+            <label className="flex items-center text-gray-700">
+              <input
+                type="checkbox"
+                checked={showOnlyUSCanadian}
+                onChange={handleCheckboxChange}
+                className="mr-2 h-5 w-5 text-blue-600"
+              />
+              Show only U.S./Canadian Components (exclude Mexican %)
+            </label>
+          </div>
+
+          {/* Checkbox to toggle cross-filtering */}
+          <div className="mb-6">
+            <label className="flex items-center text-gray-700">
+              <input
+                type="checkbox"
+                checked={enableCrossFiltering}
+                onChange={handleCrossFilteringChange}
+                className="mr-2 h-5 w-5 text-blue-600"
+              />
+              Enable Cross-Filtering
+            </label>
+          </div>
+
+          {/* Highlighting an interesting fact */}
+          <div className="bg-blue-100 p-4 rounded-lg mb-6">
+            <h2 className="text-xl font-semibold text-blue-800">
+              Interesting Fact
+            </h2>
+            <p className="text-blue-600">
+              {highComponentsVehicles.length > 0
+                ? `Vehicles with over 70% ${showOnlyUSCanadian ? "U.S./Canadian" : "North American"} components include: ${highComponentsVehicles.join(", ")}.`
+                : `No vehicles have over 70% ${showOnlyUSCanadian ? "U.S./Canadian" : "North American"} components.`}
+            </p>
+          </div>
+
+          {/* Plotting beeswarm plot by vehicle type */}
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Components Sourcing by Vehicle Type
+          </h2>
+          <div className="mb-2">
+            <button
+              onClick={resetFilters}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+            >
+              Reset Filters
+            </button>
+          </div>
+          <div className="mb-8" style={{ height: "500px" }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart
+                margin={{ top: 40, right: 20, bottom: 20, left: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                <XAxis
+                  type="number"
+                  dataKey="adjustedX"
+                  name={showOnlyUSCanadian ? "U.S./Canadian Components (%)" : "North American Components (%)"}
+                  unit="%"
+                  domain={[-20, 100]}
+                  label={{
+                    value: showOnlyUSCanadian ? "U.S./Canadian Components (%)" : "North American Components (%)",
+                    position: "bottom",
+                    offset: 0,
+                    fill: "#666",
+                    fontSize: 14
+                  }}
+                  ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+                  tick={{ fill: "#666", fontSize: 14 }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  type="number"
+                  dataKey="y"
+                  name="Jitter"
+                  domain={[-200, 200]}
+                  hide={true}
+                />
+                <ReferenceArea x1={-20} x2={-7} fill="#E8ECEF" fillOpacity={0.3} />
+                <ReferenceArea x1={-7} x2={1} fill="#E8ECEF" fillOpacity={0.3} />
+                <ReferenceLine x={-20} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={-7} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={1} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={-13.5}>
+                  <Label value="0%" position="bottom" offset={10} fill="#666" fontSize={14} />
+                </ReferenceLine>
+                <ReferenceLine x={-3}>
+                  <Label value="1%" position="bottom" offset={10} fill="#666" fontSize={14} />
+                </ReferenceLine>
+                <Tooltip content={<CustomTooltip />} />
+                <Legend
+                  verticalAlign="top"
+                  align="left"
+                  height={36}
+                  content={renderVehicleTypeLegend}
+                />
+                {renderVehicleTypes.map(type => {
+                  const filteredData = data.filter(d => d.vehicleType === type);
+                  const color = vehicleTypeColors[type];
+                  if (!color) {
+                    console.error(`No color defined for vehicle type: ${type}`);
+                    return null;
+                  }
+                  return (
+                    <Scatter
+                      key={type}
+                      name={type}
+                      data={filteredData.map(point => ({
+                        ...point,
+                        fill: shouldHighlightPoint(point, 'vehicleType') ? color : "#D1D5DB"
+                      }))}
+                      fill={color}
+                      shape="circle"
+                      opacity={0.7}
+                    />
+                  );
+                })}
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Plotting beeswarm plot by manufacturer */}
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Components Sourcing by Manufacturer
+          </h2>
+          <div className="mb-2">
+            <button
+              onClick={resetFilters}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+            >
+              Reset Filters
+            </button>
+          </div>
+          <div className="mb-8" style={{ height: "564px" }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart
+                margin={{ top: 80, right: 20, bottom: 20, left: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                <XAxis
+                  type="number"
+                  dataKey="adjustedX"
+                  name={showOnlyUSCanadian ? "U.S./Canadian Components (%)" : "North American Components (%)"}
+                  unit="%"
+                  domain={[-20, 100]}
+                  label={{
+                    value: showOnlyUSCanadian ? "U.S./Canadian Components (%)" : "North American Components (%)",
+                    position: "bottom",
+                    offset: 0,
+                    fill: "#666",
+                    fontSize: 14
+                  }}
+                  ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+                  tick={{ fill: "#666", fontSize: 14 }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  type="number"
+                  dataKey="y"
+                  name="Jitter"
+                  domain={[-200, 200]}
+                  hide={true}
+                />
+                <ReferenceArea x1={-20} x2={-7} fill="#E8ECEF" fillOpacity={0.3} />
+                <ReferenceArea x1={-7} x2={1} fill="#E8ECEF" fillOpacity={0.3} />
+                <ReferenceLine x={-20} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={-7} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={1} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={-13.5}>
+                  <Label value="0%" position="bottom" offset={10} fill="#666" fontSize={14} />
+                </ReferenceLine>
+                <ReferenceLine x={-3}>
+                  <Label value="1%" position="bottom" offset={10} fill="#666" fontSize={14} />
+                </ReferenceLine>
+                <Tooltip content={<CustomTooltip />} />
+                <Legend
+                  verticalAlign="top"
+                  align="left"
+                  height={60}
+                  wrapperStyle={{ top: 10 }}
+                  content={renderManufacturerLegend}
+                />
+                {renderManufacturers.map(man => {
+                  const filteredData = data.filter(d => d.manufacturer === man);
+                  const color = manufacturerColors[man];
+                  return (
+                    <Scatter
+                      key={man}
+                      name={man}
+                      data={filteredData.map(point => ({
+                        ...point,
+                        fill: shouldHighlightPoint(point, 'manufacturer') ? color : "#D1D5DB"
+                      }))}
+                      fill={color}
+                      shape="circle"
+                      opacity={0.7}
+                    />
+                  );
+                })}
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Plotting beeswarm plot by region of manufacturer */}
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Components Sourcing by Region of Manufacturer
+          </h2>
+          <div className="mb-2">
+            <button
+              onClick={resetFilters}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+            >
+              Reset Filters
+            </button>
+          </div>
+          <div className="mb-8" style={{ height: "500px" }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart
+                margin={{ top: 40, right: 20, bottom: 20, left: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                <XAxis
+                  type="number"
+                  dataKey="adjustedX"
+                  name={showOnlyUSCanadian ? "U.S./Canadian Components (%)" : "North American Components (%)"}
+                  unit="%"
+                  domain={[-20, 100]}
+                  label={{
+                    value: showOnlyUSCanadian ? "U.S./Canadian Components (%)" : "North American Components (%)",
+                    position: "bottom",
+                    offset: 0,
+                    fill: "#666",
+                    fontSize: 14
+                  }}
+                  ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+                  tick={{ fill: "#666", fontSize: 14 }}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  type="number"
+                  dataKey="y"
+                  name="Jitter"
+                  domain={[-200, 200]}
+                  hide={true}
+                />
+                <ReferenceArea x1={-20} x2={-7} fill="#E8ECEF" fillOpacity={0.3} />
+                <ReferenceArea x1={-7} x2={1} fill="#E8ECEF" fillOpacity={0.3} />
+                <ReferenceLine x={-20} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={-7} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={1} stroke="silver" strokeWidth="2" />
+                <ReferenceLine x={-13.5}>
+                  <Label value="0%" position="bottom" offset={10} fill="#666" fontSize={14} />
+                </ReferenceLine>
+                <ReferenceLine x={-3}>
+                  <Label value="1%" position="bottom" offset={10} fill="#666" fontSize={14} />
+                </ReferenceLine>
+                <Tooltip content={<CustomTooltip />} />
+                <Legend
+                  verticalAlign="top"
+                  align="left"
+                  height={36}
+                  content={renderRegionLegend}
+                />
+                {renderRegions.map(region => {
+                  const filteredData = data.filter(d => d.region === region);
+                  const color = regionColors[region] || "#6B7280";
+                  return (
+                    <Scatter
+                      key={region}
+                      name={region}
+                      data={filteredData.map(point => ({
+                        ...point,
+                        fill: shouldHighlightPoint(point, 'region') ? color : "#D1D5DB"
+                      }))}
+                      fill={color}
+                      shape="circle"
+                      opacity={0.7}
+                    />
+                  );
+                })}
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Concluding the report */}
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Conclusion
+          </h2>
+          <p className="text-gray-600">
+            The beeswarm plots illustrate the distribution of {showOnlyUSCanadian ? "U.S./Canadian component content" : "North American component content"}
+            across vehicle types, manufacturers, and regions, with points spread vertically to
+            avoid overlap, utilizing the full canvas height. Trucks and American manufacturers, such as Tesla and General Motors, tend to
+            have higher {showOnlyUSCanadian ? "U.S./Canadian" : "North American"} component percentages,
+            reflecting stronger regional sourcing. Passenger cars and European or Asian
+            manufacturers, like Mercedes-Benz and Toyota, often show lower {showOnlyUSCanadian ? "U.S./Canadian" : "North American"} content,
+            relying more on offshore components. The regional analysis confirms that
+            American manufacturers lead in {showOnlyUSCanadian ? "U.S./Canadian" : "North American"} sourcing, highlighting
+            the diversity in global supply chains for vehicle manufacturing.
+          </p>
+        </div>
+      );
+    };
+
+    // Rendering the report to the DOM
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<Report />);
+  </script>
+</body>
+</html>
