@@ -54,21 +54,24 @@
       const [selectedRegion, setSelectedRegion] = useState(null);
       const [showOnlyUSCanadian, setShowOnlyUSCanadian] = useState(false);
       const [enableCrossFiltering, setEnableCrossFiltering] = useState(false);
-      const [showWall, setShowWall] = useState(window.innerWidth < 1024);
+      const [showWall, setShowWall] = useState(
+          window.innerWidth < 1024 && !sessionStorage.getItem('wallDismissed')
+        );
 
-      // Handle window resize to update wall visibility
-      useEffect(() => {
-        const handleResize = () => {
-          setShowWall(window.innerWidth < 1024);
+        const handleAgree = () => {
+          sessionStorage.setItem('wallDismissed', 'true');
+          setShowWall(false);
         };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
 
-      // Function to handle agreement (dismiss wall)
-      const handleAgree = () => {
-        setShowWall(false);
-      };
+        useEffect(() => {
+          const handleResize = () => {
+            if (!sessionStorage.getItem('wallDismissed')) {
+              setShowWall(window.innerWidth < 1024);
+            }
+          };
+          window.addEventListener('resize', handleResize);
+          return () => window.removeEventListener('resize', handleResize);
+        }, []);
 
       // Function to extract Mexican and non-Mexican percentages from Foreign Parts (%) string
       const extractForeignParts = (foreignPartsStr) => {
@@ -697,7 +700,7 @@
 
           {/* Checkbox to toggle between North American and U.S./Canadian Components */}
           <div className="mb-2">
-            <label className="flex items-center text-gray-700">
+            <label className="items-center text-gray-700">
               <input
                 type="checkbox"
                 checked={showOnlyUSCanadian}
@@ -709,8 +712,8 @@
           </div>
 
           {/* Checkbox to toggle cross-filtering */}
-          <div className="mb-6">
-            <label className="flex items-center text-gray-700">
+          <div className="mb-2">
+            <label className="items-center text-gray-700">
               <input
                 type="checkbox"
                 checked={enableCrossFiltering}
