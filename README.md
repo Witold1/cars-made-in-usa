@@ -13,26 +13,29 @@
 <h2> 📜 Some Implemented Features 🚙</h2>
 
   * **Interactive Charts with Extended Tooltips**
-  > Hover over a point to see details, such as which Audi model(s) source their transmissions from Japan but engines from Hungary, or which Dodge models partially source their engines from Poland.
+    > Hover over a point to see details, such as which Audi model(s) source their transmissions from Japan but engines from Hungary, or which Dodge models partially source their engines from Poland.
 
   * **Visualizations from Different Perspectives**
-  > View cars split by vehicle type<sup>t1</sup>, automotive parent corporation<sup>t2</sup>, or region of the automotive parent corporation<sup>t2</sup>.
+    > View cars split by vehicle type<sup>t1</sup>, automotive parent corporation<sup>t2</sup>, or region of the automotive parent corporation<sup>t2</sup>.
 
   * **Selectable Dynamic Views for Component Sourcing**
-  > Toggle between viewing cars by the share of components from North America (including Mexico, per NAFTA) versus "offshore," or by the share of components from the U.S./Canada versus the rest of the world.
+    > Toggle between viewing cars by the share of components from North America (including Mexico, per NAFTA) versus "offshore," or by the share of components from the U.S./Canada versus the rest of the world.
 
   * **Selectable Dynamic Cross-Filtering with Easy Reset**
-  > Filter to see where General Motors Company (or Toyota Motor Corporation, Tata Motors, or Geely) sources components for their passenger cars, or where Asian automotive corporations source components for their trucks. Reset all filters easily with a single button.
+    > Filter to see where General Motors Company (or Toyota Motor Corporation, Tata Motors, or Geely) sources components for their passenger cars, or where Asian automotive corporations source components for their trucks. Reset all filters easily with a single button.
 
   * **Window-Size-Based Conditional Notification**  
-  > A notification appears if the window width is less than 1024 pixels, recommending a wider screen for the best experience. Rotate your device horizontally or use a modern tablet, laptop, or computer for optimal viewing.
+    > A notification appears if the window width is less than 1024 pixels, recommending a wider screen for the best experience. Rotate your device horizontally or use a modern tablet, laptop, or computer for optimal viewing.
 
 <h2> 💡 Possible Next Steps 🚗</h2>
 
   * **Refine Data Points for Better Feature Generation**  
     > What region should be assigned to Tata Motors and Geely portfolios after their respective acquisitions (e.g., Jaguar Land Rover or Volvo-Polestar Cars) or to Stellantis after its trans-national merger (e.g., RAM, Dodge, and Alfa Romeo)?  
+
     > How should re-badged and joint venture cars be classified (e.g., Subaru-Toyota Subaru BRZ-Toyota 86 or GM-Honda Ultium-Prologue-ZDX)?  
+
     > Should we focus on "platforms" instead of individual cars (e.g., GM VSS-F Trax-Envista-TrailBlazer-EncoreGX or Toyota E210 Corolla-CorollaCross-CorollaGR-CHR)? If so, how?  
+
     > Why do some manufacturers provide more detailed data (e.g., extra detailed trims for Volkswagen Group or engine info for Ford Motor Company) while others lack it (e.g., the Canadian assembly plant for Chevrolet Equinox from 2018 to 2022)? Why are some sub-corporate cars listed differently (e.g., Buick Trax instead of Chevrolet Trax in 2024)? What did the raw and non-public data submitted to regulators look like?
 
   * **Add More Filters and Views**  
