@@ -67,22 +67,24 @@
       const [enableCrossFiltering, setEnableCrossFiltering] = useState(false);
       const [showWall, setShowWall] = useState(
           window.innerWidth < 1024 && !sessionStorage.getItem('wallDismissed')
-        );
+      );
+      const [searchQuery, setSearchQuery] = useState('');
 
-        const handleAgree = () => {
-          sessionStorage.setItem('wallDismissed', 'true');
-          setShowWall(false);
+      const handleAgree = () => {
+        sessionStorage.setItem('wallDismissed', 'true');
+        setShowWall(false);
+      };
+
+      // Function to show notification when screen width is low
+      useEffect(() => {
+        const handleResize = () => {
+          if (!sessionStorage.getItem('wallDismissed')) {
+            setShowWall(window.innerWidth < 1024);
+          }
         };
-
-        useEffect(() => {
-          const handleResize = () => {
-            if (!sessionStorage.getItem('wallDismissed')) {
-              setShowWall(window.innerWidth < 1024);
-            }
-          };
-          window.addEventListener('resize', handleResize);
-          return () => window.removeEventListener('resize', handleResize);
-        }, []);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
 
       // Function to extract Mexican and non-Mexican percentages from Foreign Parts (%) string
       const extractForeignParts = (foreignPartsStr) => {
@@ -345,6 +347,7 @@
               make: row["Make"] || "Unknown",
               model: row["Model (Carline)"] || "Unknown",
               assemblyPlant: row["Final Assembly"] || "Unknown",
+              assemblyAdditionalPlant: row["Additional Final Assembly Countries"] || "None",
               engineOrigin: row["Engine Origin"] || "Unknown",
               engineAdditionalOrigin: row["Additional country of Origin for Engine/Motor"] || "None",
               transmissionOrigin: row["Transmission Origin"] || "Unknown",
@@ -452,6 +455,18 @@
 
         return isHighlighted;
       };
+
+      // Search handler for table filtering
+      const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+      };
+
+      // Filter data based on search query
+      const filteredData = data.filter(row =>
+        Object.values(row).some(value =>
+          value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
 
       // Rendering loading state
       if (loading) {
@@ -653,9 +668,9 @@
               <p>{`${showOnlyUSCanadian ? "U.S./Canadian Components" : "North American Components"}: ${showOnlyUSCanadian ? data.usCanadianComponents : data.northAmericanComponents}%${!showOnlyUSCanadian ? ` [${data.mexicanComponents}% Mexican]` : ''}`}</p>
               <p>{`${!showOnlyUSCanadian ? "" : `Mexican Components: ${data.mexicanComponents}%`}`}</p>
               <p>{`Offshore Components: ${data.offshoreComponents}% [${data.offshoreBreakdown}]`}</p>
-              <p>{`Engine Origin: ${data.engineOrigin}, [Additional: ${data.engineAdditionalOrigin}]`}</p>
-              <p>{`Transmission Origin: ${data.transmissionOrigin}, [Additional: ${data.transmissionAdditionalOrigin}]`}</p>
-              <p>{`Assembly Plant: ${data.assemblyPlant}`}</p>
+              <p>{`Engine Origin: ${data.engineAdditionalOrigin !== "None" ? `${data.engineOrigin} [${data.engineAdditionalOrigin}]` : data.engineOrigin}`}</p>
+              <p>{`Transmission Origin: ${data.transmissionAdditionalOrigin !== "None" ? `${data.transmissionOrigin} [${data.transmissionAdditionalOrigin}]` : data.transmissionOrigin}`}</p>
+              <p>{`Assembly Plant: ${data.assemblyAdditionalPlant !== "None" ? `${data.assemblyPlant} [${data.assemblyAdditionalPlant}]` : data.assemblyPlant}`}</p>
             </div>
           );
         }
@@ -711,7 +726,7 @@
 
           {/* Checkbox to toggle between North American and U.S./Canadian Components */}
           <div className="mb-2">
-            <label className="items-center text-gray-700">
+            <label className="flex items-center text-gray-700">
               <input
                 type="checkbox"
                 checked={showOnlyUSCanadian}
@@ -724,7 +739,7 @@
 
           {/* Checkbox to toggle cross-filtering */}
           <div className="mb-2">
-            <label className="items-center text-gray-700">
+            <label className="flex items-center text-gray-700">
               <input
                 type="checkbox"
                 checked={enableCrossFiltering}
@@ -833,9 +848,9 @@
             </ResponsiveContainer>
           </div>
 
-          {/* Plotting beeswarm plot by manufacturer */}
+          {/* Plotting beeswarm plot by manufacturer parent company */}
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Components Sourcing by Manufacturer
+            Components Sourcing by Manufacturer Parent Company
           </h2>
           <div className="mb-2">
             <button
@@ -916,9 +931,9 @@
             </ResponsiveContainer>
           </div>
 
-          {/* Plotting beeswarm plot by region of manufacturer */}
+          {/* Plotting beeswarm plot by region of manufacturer parent company */}
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Components Sourcing by Region of Manufacturer
+            Components Sourcing by Region of Manufacturer Parent Company
           </h2>
           <div className="mb-2">
             <button
@@ -1002,7 +1017,7 @@
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Conclusion
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-6">
             The beeswarm plots illustrate the distribution of {showOnlyUSCanadian ? "U.S./Canadian component content" : "North American component content"}
             across vehicle types, manufacturers, and regions, with points spread vertically to
             avoid overlap, utilizing the full canvas height. Trucks and American manufacturers, such as Tesla and General Motors, tend to
@@ -1013,6 +1028,61 @@
             American manufacturers lead in {showOnlyUSCanadian ? "U.S./Canadian" : "North American"} sourcing, highlighting
             the diversity in global supply chains for vehicle manufacturing.
           </p>
+
+          {/* Dataset Table */}
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Dataset Table
+          </h2>
+          <p className="text-gray-600 mb-4">
+            Explore the raw MY2024 AALA dataset below. Use the search bar to find specific vehicles, manufacturers, or other details.
+          </p>
+          <div className="mb-4">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Search dataset (e.g., Toyota, Truck, Mexico)..."
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            />
+          </div>
+          <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
+            <table className="min-w-full bg-white border border-gray-300">
+              <thead className="bg-gray-100 sticky top-0">
+                <tr>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Make</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Model</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Vehicle Type</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Manufacturer Parent Company</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Region of Parent Company</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">U.S./Canadian (%)</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Mexican (%)</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Offshore (%)</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Offshore Breakdown</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Assembly Plant</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Engine Origin</th>
+                  <th className="py-2 px-4 border-b text-left text-gray-600">Transmission Origin</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.map((row, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="py-2 px-4 border-b text-gray-800">{row.make}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.model}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.vehicleType}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.manufacturer}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.region}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.usCanadianComponents}%</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.mexicanComponents}%</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.offshoreComponents}%</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.offshoreBreakdown}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.assemblyAdditionalPlant !== "None" ? `${row.assemblyPlant} [${row.assemblyAdditionalPlant}]` : row.assemblyPlant}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.engineAdditionalOrigin !== "None" ? `${row.engineOrigin} [${row.engineAdditionalOrigin}]` : row.engineOrigin}</td>
+                    <td className="py-2 px-4 border-b text-gray-800">{row.transmissionAdditionalOrigin !== "None" ? `${row.transmissionOrigin} [${row.transmissionAdditionalOrigin}]` : row.transmissionOrigin}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       );
     };

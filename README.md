@@ -7,8 +7,8 @@
 <h2> 📖 ️Description 🏎 </h2>
 
   * This is an experimental one-page, dynamic, minimal working product featuring interactive and filterable charts. I extensively used <tt>#AI</tt> (<tt>#LLMs</tt>) to build both the frontend (including page layout, data visualizations, and some data processing) and the backend (including feature generation and the general data flow from <tt>"raw"</tt> to <tt>"final"</tt>).
-  * The chart type used is <tt>beeswarm jitter</tt>. This approach allows the display of horizontal ratios for the target variable, ranging from 0% to 100%, while vertically <tt>jittering</tt> points to reduce overplotting and enhance readability.
-  * Data comes from **[Part 583 American Automobile Labeling Act Reports](https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports)** shared to public by National Highway Traffic Safety Administration. For more details and context of this regulation, see _[PART 583—AUTOMOBILE PARTS CONTENT at LABELING](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-583) provided by Electronic Code of Federal Regulations (eCFR)_ or _[49 CFR Part 583 - PART 583—AUTOMOBILE PARTS CONTENT LABELING](https://www.law.cornell.edu/cfr/text/49/part-583) provided by Legal Information Institute of Cornell University_. In addition, you can read the ["Evaluation of the American Automobile Labeling Act (NHTSA Publication DOT HS 809 208)"](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/809208), the report from January 2001 that stated "most consumers were unaware of the existence of the AALA labels".
+  * The chart type used is <tt>beeswarm</tt> or <tt>jitter</tt> chart. This approach allows the display of horizontal ratios for the target variable, ranging from 0% to 100%, while vertically <tt>jittering</tt> points to reduce overplotting and improve readability.
+  * Data comes from **[Part 583 American Automobile Labeling Act Reports](https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports)** shared to public by National Highway Traffic Safety Administration. For more details and context of this regulation, see _Title 49 CFR Part 583 - Automobile Parts Content Labeling_ on _[Electronic Code of Federal Regulations (eCFR)](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-583)_ or _[Legal Information Institute, Cornell University](https://www.law.cornell.edu/cfr/text/49/part-583)_. In addition, you can check the ["Evaluation of the American Automobile Labeling Act (NHTSA Publication DOT HS 809 208)"](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/809208), a report from January 2001 that stated "most consumers were unaware of the existence of the AALA labels".
 
 <h2> 📜 Some Implemented Features 🚙</h2>
 
@@ -44,6 +44,8 @@
   * **Incorporate Additional Data**  
     > Car-wise sales numbers could be used to determine the size of dots in the beeswarm chart, adding another layer of insight.
 
+    > Market segments and car sizes could replace generic "vehicle types" classification from raw data, for example "compact - small - medium (two rows) - medium (three rows) - full size - executive" and "sedan (car) - suv (wagon) - truck (unibody) - truck (body-on-frame) - minivan"
+
 <h2> 📁 Structure of repository </h2>
 
   ```
@@ -62,6 +64,12 @@
   For more on React file structures, see [React File Structure](https://react-file-structure.surge.sh/) and [Legacy React Docs](https://legacy.reactjs.org/docs/faq-structure.html). For more on hosting, see [GitHub Pages > Project site](https://pages.github.com/#project-site)
 
 <h2> 📌 Links </h2>
+
+  * ["Auto Index" by Kogod School of Business, American University](https://kogod.american.edu/autoindex) (academic research)
+  * ["Looking for an American-made vehicle? How the automakers stack up" by USA TODAY](https://www.usatoday.com/story/graphics/2025/04/05/which-cars-vehicles-made-in-america/82758650007/) (very nice cards and interactive table)
+  * ["How 25% Tariffs on All Imported Cars Will Affect Every Model" by CarAndDriver](https://www.caranddriver.com/news/a64308066/list-of-how-tariffs-will-affect-every-car/)
+  * ["Visualized: Where Automakers Build Cars Sold in America" by Visual Capitalist](https://www.visualcapitalist.com/visualized-where-automakers-build-cars-sold-in-america)
+  * ["What Cars Are Made In America? \[Infographic\]" by CarCityWholesale](https://www.carcitywholesale.com/what-cars-are-made-in-america.htm)
 
   > Placeholder
 
