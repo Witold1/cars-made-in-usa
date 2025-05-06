@@ -58,6 +58,7 @@
     // Defining the main Report component
     const Report = () => {
       const [data, setData] = useState([]);
+      const [year, setYear] = useState('MY2024');
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
       const [selectedVehicleType, setSelectedVehicleType] = useState(null);
@@ -363,48 +364,50 @@
       };
 
       // Loading and parsing CSV file
-      useEffect(() => {
-        const loadData = async () => {
-          try {
-            console.log("Attempting to fetch frontend/public/data/MY2024 AALA Full Data.csv...");
-            const response = await fetch("frontend/public/data/MY2024 AALA Full Data.csv");
-            if (!response.ok) {
-              throw new Error(`Failed to fetch frontend/public/data/MY2024 AALA Full Data.csv: ${response.status} ${response.statusText}`);
-            }
-            const csvText = await response.text();
-            console.log("frontend/public/data/MY2024 AALA Full Data.csv fetched successfully, parsing...");
-
-            Papa.parse(csvText, {
-              header: true,
-              skipEmptyLines: true,
-              dynamicTyping: false,
-              transformHeader: (header) => header.trim().replace(/^"|"$/g, ''),
-              transform: (value, header) => {
-                let cleaned = value.trim().replace(/^"|"$/g, '');
-                return cleaned;
-              },
-              complete: (results) => {
-                console.log("Parsing complete, processing data...");
-                const cleanedData = processAndCleanData(results.data);
-                console.log(`Processed ${cleanedData.length} data points`);
-                setData(cleanedData);
-                setLoading(false);
-              },
-              error: (err) => {
-                console.error("Error parsing CSV:", err);
-                setError(`Error parsing CSV: ${err.message}`);
-                setLoading(false);
+        useEffect(() => {
+          const loadData = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+              console.log(`Attempting to fetch frontend/public/data/${year} AALA Full Data.csv...`);
+              const response = await fetch(`frontend/public/data/${year} AALA Full Data.csv`);
+              if (!response.ok) {
+                throw new Error(`Failed to fetch frontend/public/data/${year} AALA Full Data.csv: ${response.status} ${response.statusText}`);
               }
-            });
-          } catch (err) {
-            console.error("Error fetching CSV:", err);
-            setError(`Error fetching frontend/public/data/MY2024 AALA Full Data.csv: ${err.message}. Please ensure the file is available in the correct directory.`);
-            setLoading(false);
-          }
-        };
+              const csvText = await response.text();
+              console.log(`frontend/public/data/${year} AALA Full Data.csv fetched successfully, parsing...`);
 
-        loadData();
-      }, []);
+              Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+                dynamicTyping: false,
+                transformHeader: (header) => header.trim().replace(/^"|"$/g, ''),
+                transform: (value, header) => {
+                  let cleaned = value.trim().replace(/^"|"$/g, '');
+                  return cleaned;
+                },
+                complete: (results) => {
+                  console.log("Parsing complete, processing data...");
+                  const cleanedData = processAndCleanData(results.data, showOnlyUSCanadian);
+                  console.log(`Processed ${cleanedData.length} data points`);
+                  setData(cleanedData);
+                  setLoading(false);
+                },
+                error: (err) => {
+                  console.error("Error parsing CSV:", err);
+                  setError(`Error parsing CSV: ${err.message}`);
+                  setLoading(false);
+                }
+              });
+            } catch (err) {
+              console.error("Error fetching CSV:", err);
+              setError(`Error fetching frontend/public/data/${year} AALA Full Data.csv: ${err.message}. Please ensure the file is available in the correct directory.`);
+              setLoading(false);
+            }
+          };
+
+          loadData();
+        }, [year]);
 
       // Recompute beeswarm positions when showOnlyUSCanadian changes
       useEffect(() => {
@@ -713,7 +716,7 @@
             Vehicle Components Sourcing Analysis
           </h1>
           <p className="text-gray-600 mb-6">
-            This report analyzes the sourcing of vehicle components for MY2024 vehicles,
+            This report analyzes the sourcing of vehicle components for {year} vehicles,
             focusing on the percentage of {showOnlyUSCanadian ? "U.S./Canadian components" : "North American (U.S./Canadian and Mexican) components"}.
             The beeswarm plots below display the distribution of {showOnlyUSCanadian ? "U.S./Canadian components" : "North American components"} across
             different categories, with points spread vertically to avoid overlap, utilizing the
@@ -723,6 +726,12 @@
             Hover over points to see detailed component breakdowns, including the
             vehicle&apos;s make, engine origin (with additional origins), and transmission origin (with additional origins).
           </p>
+
+          {/* Dropdown to select year of dataset */}
+          <select value={year} onChange={(e) => setYear(e.target.value)} className="mb-4 p-2 border rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600">
+            <option value="MY2024">MY2024</option>
+            <option value="MY2007">MY2007 <sup>(inferred)</sup></option>
+          </select>
 
           {/* Checkbox to toggle between North American and U.S./Canadian Components */}
           <div className="mb-2">
@@ -1034,7 +1043,7 @@
             Dataset Table
           </h2>
           <p className="text-gray-600 mb-4">
-            Explore the raw MY2024 AALA dataset below. Use the search bar to find specific vehicles, manufacturers, or other details.
+            Explore the {year} AALA dataset below. Use the search bar to find specific vehicles, manufacturers, or other details.
           </p>
           <div className="mb-4">
             <input
