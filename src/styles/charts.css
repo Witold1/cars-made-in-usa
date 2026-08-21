@@ -1,0 +1,125 @@
+@layer components {
+  .legend-item {
+    @apply flex items-center gap-2 py-1 pr-2 text-xs font-normal text-ink-secondary hover:text-ink cursor-pointer transition-colors;
+  }
+  .legend-item.selected {
+    @apply text-ink font-medium;
+  }
+
+  .chart-guide-block {
+    margin-top: 0.75rem;
+  }
+  .chart-guide {
+    @apply border-t border-border pt-3 mt-3;
+  }
+  .chart-guide-draft {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0 0 0.7rem;
+    padding-left: 0.7rem;
+    border-left: 3px solid var(--independence);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--text-secondary);
+  }
+  .chart-guide-draft::before {
+    content: "✎";
+    font-style: normal;
+    font-size: 0.85rem;
+    color: var(--independence);
+  }
+  .chart-guide-title {
+    margin: 0 0 0.375rem;
+    font-family: var(--font);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--type-label-tracking);
+    color: var(--text-muted);
+  }
+  .chart-guide-body {
+    @apply text-xs text-ink-secondary leading-relaxed;
+  }
+  .chart-guide-body p {
+    @apply mt-2 first:mt-0;
+  }
+  .chart-guide-body strong {
+    @apply font-medium text-ink;
+  }
+  .chart-guide-body .chart-guide-link {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-color: var(--border-light);
+  }
+  .chart-guide-body .chart-guide-link:hover {
+    color: var(--text);
+    text-decoration-color: var(--text-muted);
+  }
+
+  .chart-frame {
+    background: var(--chart-bg);
+  }
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 100;
+  max-width: min(280px, calc(100vw - 16px));
+  padding: 0.4rem 0.55rem 0.45rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  pointer-events: none;
+  box-shadow: var(--tooltip-shadow);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.tooltip strong {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text);
+  white-space: normal;
+}
+
+.tooltip .role {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.tooltip p.role {
+  margin: 0.2rem 0 0;
+}
+
+.tooltip .dates {
+  font-family: var(--font-chart);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-feature-settings: "tnum" 1;
+  color: var(--text);
+  margin-top: 0.2rem;
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--border);
+}
+
+.tooltip .tooltip-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.625rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}

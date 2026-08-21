@@ -1,0 +1,67 @@
+@layer components {
+  .plot-control-panel {
+    @apply w-full mb-4;
+  }
+  .plot-control-toggle {
+    @apply w-full text-left py-1.5 flex items-center gap-2 text-sm font-medium text-ink-secondary hover:text-ink transition-colors border-0 bg-transparent cursor-pointer;
+  }
+  .plot-control-toggle-label {
+    @apply min-w-0 flex items-center gap-1.5;
+  }
+  .plot-control-toggle-icon {
+    @apply w-3.5 h-3.5 flex-shrink-0 transition-transform;
+    color: var(--text-muted);
+  }
+  .plot-control-toggle.is-open .plot-control-toggle-icon {
+    transform: rotate(90deg);
+  }
+  .plot-control-toggle:hover .plot-control-toggle-icon {
+    color: var(--text);
+  }
+  .panel-section-title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .plot-control-inner {
+    @apply pt-3 pb-1 border-t border-border mt-1;
+  }
+  .plot-controls {
+    @apply max-w-2xl;
+  }
+  .plot-control-list {
+    @apply grid gap-x-6 gap-y-2.5;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+  @media (max-width: 480px) {
+    .plot-control-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  .plot-control-item {
+    @apply contents;
+  }
+  .plot-control-item .plot-control-label {
+    @apply text-xs font-normal text-ink-muted tracking-tight self-center;
+  }
+  .plot-control-item .plot-control-inputs {
+    @apply flex items-center gap-2 min-w-0;
+  }
+  .plot-control-item .plot-control-inputs input[type="range"] {
+    @apply flex-1 min-w-0;
+    accent-color: var(--accent);
+  }
+  .plot-control-item .plot-control-inputs input[type="number"] {
+    @apply flex-shrink-0 text-right text-xs font-mono text-ink-secondary bg-transparent border-b border-border rounded-none py-0.5 px-1 w-14 focus:ring-0;
+  }
+  .plot-control-item .plot-control-inputs input[type="number"]:focus {
+    border-color: var(--border-light);
+    outline: none;
+  }
+  .plot-control-reset {
+    margin-top: 0.75rem;
+  }
+}

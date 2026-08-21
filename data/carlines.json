@@ -1,0 +1,2620 @@
+[
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Cadillac",
+    "value": 0.0,
+    "id": "UB2E8"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 0.0,
+    "id": "ECD5F"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 0.0,
+    "id": "A1E51"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 1.0,
+    "id": "UB3DB"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 0.0,
+    "id": "U7195"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 1.0,
+    "id": "AA338"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "value": 0.0,
+    "id": "UB051"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "E51EC"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "E73AB"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 0.0,
+    "id": "A27CE"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 0.0,
+    "id": "E62DD"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "UA465"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "E8F96"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 0.0,
+    "id": "E97C6"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 1.0,
+    "id": "AFF8E"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "E0604"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "U3270"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 0.0,
+    "id": "UF302"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 0.0,
+    "id": "A8C70"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 1.0,
+    "id": "E9453"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "U7F2F"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "U8139"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 0.0,
+    "id": "A1881"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 0.0,
+    "id": "UB952"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 0.0,
+    "id": "A9666"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 0.0,
+    "id": "A6B09"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 0.0,
+    "id": "E00D4"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 0.0,
+    "id": "EE075"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 1.0,
+    "id": "E2E68"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 0.0,
+    "id": "AD27C"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 0.0,
+    "id": "EEF88"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "E9007"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "U70EC"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "value": 0.0,
+    "id": "U94C3"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "U8F43"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 0.0,
+    "id": "AA2F2"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 0.0,
+    "id": "U71EA"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 0.0,
+    "id": "E5634"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 0.0,
+    "id": "U8D32"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 0.0,
+    "id": "A45B4"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 0.0,
+    "id": "A5597"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 1.0,
+    "id": "EBA6E"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 1.0,
+    "id": "E8EE0"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 0.0,
+    "id": "U9AD2"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 0.0,
+    "id": "EAA78"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 0.0,
+    "id": "A5503"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 0.0,
+    "id": "U0150"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 0.0,
+    "id": "E949F"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "E746B"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 0.0,
+    "id": "ACB45"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 0.0,
+    "id": "A2336"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 1.0,
+    "id": "EBB59"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 0.0,
+    "id": "ED6C5"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 1.0,
+    "id": "E3CDA"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 0.0,
+    "id": "U2B79"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 0.0,
+    "id": "U9DF0"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 0.0,
+    "id": "A3630"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 0.0,
+    "id": "UBCBC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 0.0,
+    "id": "ACB8E"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "E9987"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 0.0,
+    "id": "U855C"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 0.0,
+    "id": "EC039"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 0.0,
+    "id": "UD720"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "EB9FB"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 0.0,
+    "id": "UCF93"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "ED2C0"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "EE381"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 0.0,
+    "id": "ACCE7"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 1.0,
+    "id": "EC48E"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 0.0,
+    "id": "E8FDA"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 0.0,
+    "id": "A8BFD"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 0.0,
+    "id": "UE843"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "E3986"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 0.0,
+    "id": "A8BA8"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 0.0,
+    "id": "U422F"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 0.0,
+    "id": "EB30E"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 0.0,
+    "id": "EE47A"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 1.0,
+    "id": "E7A38"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 0.0,
+    "id": "UEF83"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 0.0,
+    "id": "A5726"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 0.0,
+    "id": "U1DF6"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 0.0,
+    "id": "UC2A8"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "ECC15"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 0.0,
+    "id": "U0690"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 0.0,
+    "id": "A4149"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 0.0,
+    "id": "U9C0E"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "EAC53"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 0.0,
+    "id": "U3AB7"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 0.0,
+    "id": "U72EF"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 1.0,
+    "id": "A40C4"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 0.0,
+    "id": "A03F1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 1.0,
+    "id": "A08D3"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "E5A6D"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "EF319"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 0.0,
+    "id": "ECB5E"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "ED9B6"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 0.0,
+    "id": "A7F0A"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 0.0,
+    "id": "U5601"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 1.0,
+    "id": "E4039"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 1.0,
+    "id": "E560A"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 0.0,
+    "id": "AADFD"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 0.0,
+    "id": "AA3D1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 1.0,
+    "id": "AF326"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 0.0,
+    "id": "E0CE1"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "E691A"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 0.0,
+    "id": "U1AE6"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 0.0,
+    "id": "U8433"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 0.0,
+    "id": "A1BC6"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 0.0,
+    "id": "E9521"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 0.0,
+    "id": "UC211"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 0.0,
+    "id": "UF9C5"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 0.0,
+    "id": "A3926"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 0.0,
+    "id": "E987F"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 0.0,
+    "id": "A687B"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 0.0,
+    "id": "U7D74"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 0.0,
+    "id": "E6642"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 0.0,
+    "id": "E7E64"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 1.0,
+    "id": "A4650"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "EE0BD"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 0.0,
+    "id": "U229C"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 1.0,
+    "id": "U7E7C"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 0.0,
+    "id": "A0F26"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "E8481"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 0.0,
+    "id": "ED546"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 0.0,
+    "id": "E2FE8"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 1.0,
+    "id": "EA0C5"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Cadillac",
+    "value": 1.0,
+    "id": "UFDFC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 1.0,
+    "id": "A657D"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 0.0,
+    "id": "A799A"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 0.0,
+    "id": "E8E99"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 0.0,
+    "id": "A7E84"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 1.0,
+    "id": "ECF06"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 0.0,
+    "id": "E8725"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Cadillac",
+    "value": 0.0,
+    "id": "U53D3"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 0.0,
+    "id": "ABACC"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 0.0,
+    "id": "U1A49"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 0.0,
+    "id": "AAEF0"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 0.0,
+    "id": "E22B9"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 0.0,
+    "id": "E5E45"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 0.0,
+    "id": "A0F17"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 0.0,
+    "id": "A006F"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 0.0,
+    "id": "AB817"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 1.0,
+    "id": "U09D7"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 0.0,
+    "id": "AC8CC"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 1.0,
+    "id": "U39D3"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 0.0,
+    "id": "UACEE"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 0.0,
+    "id": "A8C72"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 0.0,
+    "id": "U6989"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 0.0,
+    "id": "A88FC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 0.0,
+    "id": "A542A"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 0.0,
+    "id": "A18D6"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 1.0,
+    "id": "A5520"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 3.76,
+    "id": "AFF68"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 8.54,
+    "id": "AD6CF"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 3.08,
+    "id": "E7F69"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 5.08,
+    "id": "E6CF3"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 3.96,
+    "id": "A2C13"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 3.62,
+    "id": "UFCA3"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 7.17,
+    "id": "E5563"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 5.11,
+    "id": "E77DF"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 9.37,
+    "id": "A6C55"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 8.18,
+    "id": "U4C7F"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 1.51,
+    "id": "E3034"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 6.66,
+    "id": "U6053"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 3.03,
+    "id": "E100F"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 4.15,
+    "id": "EC746"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 3.97,
+    "id": "A2EE6"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 2.04,
+    "id": "UC41A"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 2.84,
+    "id": "EC29C"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 6.69,
+    "id": "E50EB"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 7.78,
+    "id": "A942C"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 7.33,
+    "id": "A7C24"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 9.81,
+    "id": "E8CF1"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Cadillac",
+    "value": 1.14,
+    "id": "UED74"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 9.67,
+    "id": "E3AE3"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 4.68,
+    "id": "E6136"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 1.31,
+    "id": "E51AC"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 6.37,
+    "id": "UC1A6"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 2.48,
+    "id": "UFAF6"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 3.49,
+    "id": "U8552"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 2.76,
+    "id": "E7E5B"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Cadillac",
+    "value": 4.58,
+    "id": "U3CCB"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 10.37,
+    "id": "E988B"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 16.35,
+    "id": "A8323"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 12.91,
+    "id": "E6158"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 13.76,
+    "id": "A0B5E"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 12.95,
+    "id": "A79B5"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 13.86,
+    "id": "U5425"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 18.63,
+    "id": "EE0D4"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 12.56,
+    "id": "AB1B4"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 14.21,
+    "id": "U8F8C"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 19.55,
+    "id": "E52AE"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 16.09,
+    "id": "A4105"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 17.98,
+    "id": "E4D32"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 10.27,
+    "id": "E7C72"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 15.08,
+    "id": "AB8AA"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 11.26,
+    "id": "ED3CC"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 17.02,
+    "id": "U24F8"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 16.79,
+    "id": "U641A"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 17.05,
+    "id": "U0AFE"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 17.69,
+    "id": "AB605"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 12.09,
+    "id": "E41CB"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 10.52,
+    "id": "A81B0"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 13.6,
+    "id": "E8215"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 12.1,
+    "id": "ACCC1"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "value": 10.2,
+    "id": "U950A"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 10.56,
+    "id": "A850B"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 10.66,
+    "id": "A68DA"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 21.35,
+    "id": "E807F"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 27.62,
+    "id": "AC380"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 25.14,
+    "id": "A8BF1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 25.03,
+    "id": "ABFE7"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 21.02,
+    "id": "E8914"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 24.43,
+    "id": "ECBC5"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 28.59,
+    "id": "A8AB3"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 28.82,
+    "id": "U486A"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 20.77,
+    "id": "E8A0E"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 20.2,
+    "id": "U3AF2"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 28.14,
+    "id": "E3BDD"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 27.29,
+    "id": "E4664"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 29.96,
+    "id": "A567E"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 20.35,
+    "id": "U9929"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 21.47,
+    "id": "EE4D3"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 29.97,
+    "id": "A1673"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 29.68,
+    "id": "AF4A6"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "value": 24.62,
+    "id": "U39B4"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 29.75,
+    "id": "EB71C"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 28.78,
+    "id": "E81C3"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 20.46,
+    "id": "EC1EC"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 25.83,
+    "id": "E7966"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 21.04,
+    "id": "U91DA"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 28.8,
+    "id": "E7B67"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 28.44,
+    "id": "A1FEB"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 24.28,
+    "id": "AAABB"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 27.98,
+    "id": "E859E"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 32.05,
+    "id": "E87FB"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 37.13,
+    "id": "U762D"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 37.07,
+    "id": "A6258"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 36.31,
+    "id": "A1E82"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 33.66,
+    "id": "A8E86"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 36.8,
+    "id": "A273E"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 37.03,
+    "id": "EE6DC"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 37.27,
+    "id": "U6842"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 35.21,
+    "id": "A6D1F"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 39.07,
+    "id": "EA3A1"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 36.46,
+    "id": "E17DC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 36.77,
+    "id": "AC782"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 31.36,
+    "id": "E528F"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 30.91,
+    "id": "E5232"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 38.41,
+    "id": "A74D9"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 38.9,
+    "id": "UBB24"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 33.09,
+    "id": "E6CFC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 39.31,
+    "id": "A6128"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 31.33,
+    "id": "ACE19"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 37.4,
+    "id": "UAE0C"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 31.05,
+    "id": "U92FA"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 30.15,
+    "id": "U7747"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Mustang Mach-E",
+    "value": 37.96,
+    "id": "U9EDC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 31.73,
+    "id": "A10DC"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 32.96,
+    "id": "E7F2B"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 41.53,
+    "id": "EF7C4"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 45.44,
+    "id": "U23D1"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 43.03,
+    "id": "U5266"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 40.76,
+    "id": "UCA5E"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 48.63,
+    "id": "EEB74"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 46.61,
+    "id": "A8B96"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 41.45,
+    "id": "A4FB4"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 40.28,
+    "id": "E2FC1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 45.72,
+    "id": "A9146"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 48.37,
+    "id": "U9BBF"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 43.47,
+    "id": "A6105"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 42.61,
+    "id": "E1327"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 48.45,
+    "id": "EC487"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 41.16,
+    "id": "UE6B1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 40.86,
+    "id": "AD983"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 46.45,
+    "id": "A9CE7"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 48.55,
+    "id": "ECF49"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 45.83,
+    "id": "EA563"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 49.43,
+    "id": "E498F"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 48.26,
+    "id": "A5F7D"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 42.35,
+    "id": "U4A9E"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 42.62,
+    "id": "EF732"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "value": 53.48,
+    "id": "U7C8A"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 51.97,
+    "id": "EB5E2"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 53.68,
+    "id": "AA8BF"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Cadillac",
+    "value": 54.72,
+    "id": "U7DFC"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 50.21,
+    "id": "ACB93"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 56.12,
+    "id": "A6757"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Hino",
+    "value": 50.44,
+    "id": "A10BB"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 51.31,
+    "id": "EA5CA"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 51.59,
+    "id": "E4EB2"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 53.83,
+    "id": "AA7CF"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 51.53,
+    "id": "U6506"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Porsche",
+    "value": 56.86,
+    "id": "EAAC1"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Mini",
+    "value": 57.37,
+    "id": "E53C7"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 51.38,
+    "id": "U22AA"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Ram",
+    "value": 54.7,
+    "id": "U9421"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 50.76,
+    "id": "A1E45"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 59.78,
+    "id": "U52A1"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 55.64,
+    "id": "E9698"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 58.22,
+    "id": "U3132"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 55.79,
+    "id": "EB45A"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 59.32,
+    "id": "E1B69"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 57.96,
+    "id": "U2DC2"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 50.96,
+    "id": "A589B"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 52.64,
+    "id": "E1BEA"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 54.83,
+    "id": "UE97C"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 54.27,
+    "id": "E4920"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 58.35,
+    "id": "UFB3C"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 52.26,
+    "id": "A48C7"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 56.18,
+    "id": "U7FC1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 57.19,
+    "id": "A9189"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 54.51,
+    "id": "E3212"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 60.22,
+    "id": "A7DD4"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 65.56,
+    "id": "AE081"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 65.68,
+    "id": "UDDBE"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 65.79,
+    "id": "A03BD"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 66.52,
+    "id": "ECB5F"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 61.15,
+    "id": "E3A91"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 67.16,
+    "id": "AEE7C"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 61.75,
+    "id": "U847D"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 68.31,
+    "id": "UA464"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 66.81,
+    "id": "E5CF0"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 60.47,
+    "id": "E25FE"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "value": 65.89,
+    "id": "U6FF8"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 69.15,
+    "id": "A2959"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 67.27,
+    "id": "EFBD1"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 68.97,
+    "id": "A9727"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Honda",
+    "value": 65.01,
+    "id": "A06F6"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 67.07,
+    "id": "EF429"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 69.71,
+    "id": "E6D8C"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 60.16,
+    "id": "E5FF6"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 60.13,
+    "id": "EF3A9"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 61.79,
+    "id": "U50A8"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Volkswagen",
+    "value": 63.82,
+    "id": "E6679"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 65.18,
+    "id": "U10C4"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "value": 68.49,
+    "id": "A80C6"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 64.57,
+    "id": "EAEA7"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 62.7,
+    "id": "EE374"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "Rolls-Royce",
+    "value": 64.69,
+    "id": "E273E"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Citroën",
+    "value": 68.24,
+    "id": "E7B93"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 67.79,
+    "id": "A24F7"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Buick",
+    "value": 65.16,
+    "id": "U2A64"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 61.13,
+    "id": "A121C"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Chrysler",
+    "value": 65.92,
+    "id": "U8451"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 65.79,
+    "id": "U7B4A"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Jeep",
+    "value": 66.72,
+    "id": "U10CB"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "value": 60.42,
+    "id": "E7A36"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 68.37,
+    "id": "A1CB9"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Lexus",
+    "value": 60.99,
+    "id": "A43DC"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "value": 68.12,
+    "id": "UC0B0"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "GMC",
+    "value": 61.61,
+    "id": "U1838"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 63.98,
+    "id": "E2A5F"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 63.13,
+    "id": "E3301"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 63.41,
+    "id": "E05AF"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 69.69,
+    "id": "EAE15"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Bentley",
+    "value": 65.25,
+    "id": "E1424"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 71.57,
+    "id": "E9DB7"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Peugeot",
+    "value": 78.71,
+    "id": "EDFC1"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Alfa Romeo",
+    "value": 72.82,
+    "id": "E509B"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 77.6,
+    "id": "AE6F2"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Kia",
+    "value": 74.31,
+    "id": "AC8B6"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Acura",
+    "value": 77.34,
+    "id": "A40B3"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 75.47,
+    "id": "AA833"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "value": 72.87,
+    "id": "UDAD4"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "value": 72.42,
+    "id": "E61F6"
+  },
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Skoda",
+    "value": 73.62,
+    "id": "E7BC8"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Daihatsu",
+    "value": 70.24,
+    "id": "A8B72"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Hyundai",
+    "value": 73.69,
+    "id": "AF19F"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Honda Motor Co.",
+    "brand": "Asimo",
+    "value": 77.05,
+    "id": "A5810"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 70.61,
+    "id": "A0A4E"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 74.63,
+    "id": "AAA98"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Hyundai Motor Group",
+    "brand": "Genesis",
+    "value": 72.9,
+    "id": "AF31C"
+  },
+  {
+    "region": "American",
+    "corporation": "Stellantis North America",
+    "brand": "Dodge",
+    "value": 99.79,
+    "id": "UE888"
+  }
+]

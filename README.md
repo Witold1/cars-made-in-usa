@@ -1,77 +1,133 @@
-<h1 style="margin:0 auto; "> Project "Cars Made in USA" </h1>
-<span style="padding-left:15%; ">or Vehicle Components Sourcing Analysis</span>
+# How American Is Your Car?
 
-<h2> 📊 GIF or Video Preview </h2>
-  * Placeholder
+[![Website](https://img.shields.io/badge/Website-live-22863a?style=flat-square)](https://witold1.github.io/cars-made-in-usa/)
+![Vue](https://img.shields.io/badge/Vue-3-42b883?style=flat-square&logo=vuedotjs&logoColor=white)
+![D3](https://img.shields.io/badge/D3-7-f9a03c?style=flat-square&logo=d3dotjs&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646cff?style=flat-square&logo=vite&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)
+![JSON](https://img.shields.io/badge/Data-JSON-000000?style=flat-square&logo=json&logoColor=white)
+![Status](https://img.shields.io/badge/Status-private--alpha-orange?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT%20%2B%20CC%20BY--SA%204.0-lightgrey?style=flat-square)
+![AI Assistance](https://img.shields.io/badge/AI--Assistance-high-informational?style=flat-square)
 
-<h2> 📖 ️Description 🏎 </h2>
+Interactive dashboard of U.S./Canadian parts content for passenger vehicle carlines, based on public NHTSA American Automobile Labeling Act (Part 583) releases.
 
-  * This is an experimental one-page, dynamic, minimal working product featuring interactive and filterable charts. I extensively used <tt>#AI</tt> (<tt>#LLMs</tt>) to build both the frontend (including page layout, data visualizations, and some data processing) and the backend (including feature generation and the general data flow from <tt>"raw"</tt> to <tt>"final"</tt>).
-  * The chart type used is <tt>beeswarm</tt> or <tt>jitter</tt> chart. This approach allows the display of horizontal ratios for the target variable, ranging from 0% to 100%, while vertically <tt>jittering</tt> points to reduce overplotting and improve readability.
-  * Data comes from **[Part 583 American Automobile Labeling Act Reports](https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports)** shared to public by National Highway Traffic Safety Administration. For more details and context of this regulation, see _Title 49 CFR Part 583 - Automobile Parts Content Labeling_ on _[Electronic Code of Federal Regulations (eCFR)](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-583)_ or _[Legal Information Institute, Cornell University](https://www.law.cornell.edu/cfr/text/49/part-583)_. In addition, you can check the ["Evaluation of the American Automobile Labeling Act (NHTSA Publication DOT HS 809 208)"](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/809208), a report from January 2001 that stated "most consumers were unaware of the existence of the AALA labels".
+Vue 3 + Vite + D3. Dataset is plain JSON under `data/` - edit files, refresh the app.
 
-<h2> 📜 Some Implemented Features 🚙</h2>
+## Description
 
-  * **Interactive Charts with Extended Tooltips**
-    > Hover over a point to see details, such as which Audi model(s) source their transmissions from Japan but engines from Hungary, or which Dodge models partially source their engines from Poland.
 
-  * **Visualizations from Different Perspectives**
-    > View cars split by vehicle type<sup>t1</sup>, manufacturer parent corporation<sup>t2</sup>, or region of the manufacturer parent corporation<sup>t2</sup>.
 
-  * **Selectable Dynamic Views for Component Sourcing**
-    > Toggle between viewing cars by the share of components from North America (including Mexico, per NAFTA) versus "offshore," or by the share of components from the U.S./Canada versus the rest of the world.
+### 1. Views
 
-  * **Selectable Dynamic Cross-Filtering with Easy Reset**
-    > Filter to see where General Motors Company (or Toyota Motor Corporation, Tata Motors, or Geely) sources components for their passenger cars, or where Asian automotive corporations source components for their trucks. Reset all filters easily with a single button.
 
-  * **Window-Size-Based Conditional Notification**  
-    > A notification appears if the window width is less than 1024 pixels, recommending a wider screen for the best experience. Rotate your device horizontally or use a modern tablet, laptop, or computer for optimal viewing.
+| View          | Meaning                                                              |
+| ------------- | -------------------------------------------------------------------- |
+| Beeswarm      | One point per carline; U.S./Canadian parts content on the value axis |
+| Jitter        | Same data, one small chart per region under a reference strip        |
+| Table         | Searchable / sortable carline rows                                   |
+| Origins table | Extended release rows (foreign parts, origins, assembly)             |
+| Bar / Line    | Placeholders - coming soon                                           |
 
-    <sup>t1</sup> vehicle types are defined as in datasource
-    <sup>t2</sup> manufacturer parent corporation as defined as feature generated by AI
 
-<h2> 💡 Possible Next Steps 🚗</h2>
+Hover points for model, corporation, brand, and content %.
 
-  * **Refine Data Points for Better Feature Generation**  
-    > What region should be assigned to Tata Motors and Geely portfolios after their respective acquisitions (e.g., Jaguar Land Rover or Volvo-Polestar Cars) or to Stellantis after its trans-national mergers (e.g., RAM, Dodge, and Alfa Romeo)? how to handle brands belonged to "lean" mergers (e.g., Mitsubishi Motors Corporation or Nissan North America, Inc and Renault–Nissan–Mitsubishi Alliance)?
+### 2. Controls
 
-    > How should re-badged and joint venture cars be classified (e.g., Subaru-Toyota Subaru BRZ-Toyota 86 or GM-Honda Ultium-Prologue-ZDX)?  
+Top bar:
 
-    > Should we focus on "platforms" instead of individual cars (e.g., GM VSS-F Trax-Envista-TrailBlazer-EncoreGX or Toyota E210 Corolla-CorollaCross-CorollaGR-CHR)? If so, how?  
+- **View** - switch chart / table type
+- **Theme** - light or dark
+- **Save PNG** - export the chart (WYS = as on screen; FW = full-width reflow)
+- **Settings (gear)** - dataset filters position, chart orientation (beeswarm), PNG mode, experimental emoji markers
 
-    > Why do some manufacturers provide more detailed data (e.g., extra detailed trims for Volkswagen Group or engine info for Ford Motor Company, extra-detailed rows for Honda CR-V) while others lack it (e.g., the Canadian assembly plant for Chevrolet Equinox from 2018 to 2022)? Why are some sub-corporate cars listed differently (e.g., Buick Trax instead of Chevrolet Trax in 2024)? What did the raw and non-public data submitted to regulator look like?
+Dataset filters:
 
-  * **Add More Filters and Views**  
-    > Additional filters can be implemented based on available data, such as brand names (e.g., Lexus and Toyota for Toyota Motor Corporation, or Chevrolet, Buick, Cadillac, GMC for General Motors Company), countries of final assembly plants, or origins of engines and transmissions.
+- Region / corporation / brand hierarchy
+- Optional marker style customization
+- Legend toggles mirror the same selections
 
-  * **Incorporate Additional Data**  
-    > Car-wise sales numbers could be used to determine the size of dots in the beeswarm chart, adding another layer of insight.
+URL query params keep chart type and filters shareable (`?chart=beeswarm&regions=…`).
 
-    > Market segments and car sizes could replace generic "vehicle types" classification from raw data, for example "compact - small - medium (two rows) - medium (three rows) - full size - executive" and "sedan (car) - suv (wagon) - truck (unibody) - truck (body-on-frame) - minivan"
+## Data
 
-<h2> 📁 Structure of repository </h2>
+Source of truth is JSON under `data/`:
 
-  ```
-  +--frontend                  <- Folder for frontend components
-  ¦  L--public                 <- ... Static assets and data files
-  ¦  L--placeholder            <- ... Placeholder folder
-  ¦  
-  +--backend                   <- Folder for backend components
-  ¦  L--data                   <- ... Data processing datasets
-  ¦  L--placeholder            <- ... Placeholder folder
-  ¦
-  +--index.html                <- Web page to serve online
-  +--README.md                 <- Top-level README describing this project
-  ```
+- `meta.json` - dataset title, schema version, default release
+- `sources.json` - bibliography keyed by id (NHTSA, CFR, …)
+- `carlines.json` - beeswarm / jitter / simple table points
+- `releases/index.json` - Origins-table dropdown order and labels
+- `releases/{id}.json` - one Origins release each (published mocks + draft pipeline parses)
 
-<h2> 📌 Links </h2>
+Field notes and editing rules live in `[data/README.md](data/README.md)`. Origins row schema: `[docs/extended-data-plan.md](docs/extended-data-plan.md)`. Material changes should be logged in `[data/CHANGELOG.md](data/CHANGELOG.md)`.
 
-  * ["Auto Index" by Kogod School of Business, American University](https://kogod.american.edu/autoindex) (academic research)
-  * ["Looking for an American-made vehicle? How the automakers stack up" by USA TODAY](https://www.usatoday.com/story/graphics/2025/04/05/which-cars-vehicles-made-in-america/82758650007/) (very nice brand cards, interactive table)
-  * ["How 25% Tariffs on All Imported Cars Will Affect Every Model" by CarAndDriver](https://www.caranddriver.com/news/a64308066/list-of-how-tariffs-will-affect-every-car/)
-  * ["Visualized: Where Automakers Build Cars Sold in America" by Visual Capitalist](https://www.visualcapitalist.com/visualized-where-automakers-build-cars-sold-in-america)
-  * ["What Cars Are Made In America? \[Infographic\]" by CarCityWholesale](https://www.carcitywholesale.com/what-cars-are-made-in-america.htm)
+U.S./Canadian `%` is as reported in public AALA listings. Foreign totals may be reported or derived (`100 − U.S./Canadian`). Major foreign sources follow **49 CFR §583.7(e)**. Corrections welcome: see `[CONTRIBUTING.md](CONTRIBUTING.md)`.
 
-<h2> 🐉 License and Legals </h2>
+App loaders under `src/data/` import this folder. Draft releases are lazy-loaded so large pipeline files stay out of the initial bundle.
 
-  Ask before use.
+## Run locally
+
+```powershell
+npm install
+npm run dev
+```
+
+Open the printed localhost URL (Vite default: `http://localhost:5173`).
+
+Optional Docker:
+
+```powershell
+docker compose up
+```
+
+
+
+## Repository layout
+
+```text
+index.html              Page shell
+vite.config.js          Vite + Vue
+.github/workflows/      GitHub Pages deploy
+
+src/
+  main.js               Boot + CSS entry
+  App.vue
+  index.css             Style barrel (@imports → Tailwind)
+  components/
+    Dashboard.vue       Shell (wires composables)
+    charts/             Beeswarm, jitter, legend, placeholders
+    filters/            Filter panel, markers
+    tables/             Data + Origins tables
+    layout/             Theme toggle
+    debug/              Environment / debug panel
+  composables/          Filters, chart view, layout, URL state
+  config/               Version, footer, chart guides
+  data/                 Thin loaders over /data JSON
+  styles/               Theme tokens + feature CSS modules
+  utils/                D3 helpers, PNG export, filters
+data/
+  meta.json
+  sources.json          Citeable source ids
+  SOURCES.md            Human-readable source notes
+  carlines.json         Plot points
+  releases/             Per-release JSON + index.json
+  README.md             Dataset schema & methodology
+  CHANGELOG.md
+docs/
+  extended-data-plan.md Origins parse / schema spec
+CONTRIBUTING.md
+LICENSE-DATA
+```
+
+
+
+## License & credit
+
+
+| Part                                   | License                                                                    |
+| -------------------------------------- | -------------------------------------------------------------------------- |
+| Website code (`src/`, config, scripts) | [MIT](LICENSE)              |
+| Dataset under `data/`                  | [CC BY-SA 4.0](LICENSE-DATA) |
+
+
+*Made with AI. Curated by Human.*

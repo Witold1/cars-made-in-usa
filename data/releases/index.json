@@ -1,0 +1,37 @@
+[
+  {
+    "id": "2026",
+    "label": "2026",
+    "file": "2026.json",
+    "status": "published",
+    "kind": "mock"
+  },
+  {
+    "id": "2026-draft",
+    "label": "2026 (draft real data)",
+    "file": "2026-draft.json",
+    "status": "draft",
+    "kind": "pipeline"
+  },
+  {
+    "id": "2025",
+    "label": "2025",
+    "file": "2025.json",
+    "status": "published",
+    "kind": "mock"
+  },
+  {
+    "id": "2025-draft",
+    "label": "2025 (draft real data)",
+    "file": "2025-draft.json",
+    "status": "draft",
+    "kind": "pipeline"
+  },
+  {
+    "id": "2024",
+    "label": "2024",
+    "file": "2024.json",
+    "status": "published",
+    "kind": "mock"
+  }
+]

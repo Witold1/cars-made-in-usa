@@ -1,0 +1,205 @@
+[
+  {
+    "region": "European",
+    "corporation": "Volkswagen Group",
+    "brand": "Audi",
+    "model": "e-tron GT",
+    "id": "AUDI-E-TRON-GT",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Germany", "percent": 45 },
+      { "country": "Poland", "percent": 29 },
+      { "country": "Other", "percent": 25 }
+    ],
+    "engineOrigins": [
+      { "country": "Germany", "role": "primary" },
+      { "country": "Poland", "role": "secondary" }
+    ],
+    "transmissionOrigins": [{ "country": "Germany", "role": "primary" }],
+    "finalAssemblyCountries": [{ "country": "Germany", "role": "primary" }],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "F-150",
+    "id": "FORD-F150-2024",
+    "value": 55,
+    "foreignPartsTotalPercent": 40,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Mexico", "percent": 25 },
+      { "country": "Canada", "percent": 15 }
+    ],
+    "engineOrigins": [{ "country": "USA", "role": "primary" }],
+    "transmissionOrigins": [{ "country": "Mexico", "role": "primary" }],
+    "finalAssemblyCountries": [{ "country": "USA", "role": "primary" }],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motors",
+    "brand": "Toyota",
+    "model": "RAV4 Hybrid",
+    "id": "TOYOTA-RAV4-HYB",
+    "value": 45,
+    "foreignPartsTotalPercent": 50,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Japan", "percent": 35 },
+      { "country": "Canada", "percent": 15 }
+    ],
+    "engineOrigins": [{ "country": "Japan", "role": "primary" }],
+    "transmissionOrigins": [{ "country": "Japan", "role": "primary" }],
+    "finalAssemblyCountries": [{ "country": "Canada", "role": "primary" }],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "region": "European",
+    "corporation": "BMW Group",
+    "brand": "BMW",
+    "model": "X5",
+    "id": "BMW-X5",
+    "value": 28,
+    "foreignPartsTotalPercent": 72,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Germany", "percent": 19 },
+      { "country": "Other", "percent": 53 }
+    ],
+    "engineOrigins": [
+      { "country": "Germany", "role": "primary" },
+      { "country": "Austria", "role": "secondary" }
+    ],
+    "transmissionOrigins": [{ "country": "Germany", "role": "primary" }],
+    "finalAssemblyCountries": [{ "country": "United States", "role": "primary" }],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "region": "European",
+    "corporation": "Stellantis",
+    "brand": "Jeep",
+    "model": "Grand Cherokee",
+    "id": "JEEP-GRAND-CHEROKEE",
+    "value": 59,
+    "foreignPartsTotalPercent": 41,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Mexico", "percent": 23 },
+      { "country": "Other", "percent": 18 }
+    ],
+    "engineOrigins": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Italy", "role": "secondary" },
+      { "country": "Mexico", "role": "secondary" }
+    ],
+    "transmissionOrigins": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Germany", "role": "secondary" }
+    ],
+    "finalAssemblyCountries": [{ "country": "United States", "role": "primary" }],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Mustang",
+    "id": "FORD-MUSTANG",
+    "value": 60,
+    "foreignPartsTotalPercent": 40,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Mexico", "percent": 17 },
+      { "country": "Other", "percent": 23 }
+    ],
+    "engineOrigins": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Mexico", "role": "secondary" }
+    ],
+    "transmissionOrigins": [
+      { "country": "United States", "role": "primary" },
+      { "country": "China", "role": "secondary" },
+      { "country": "Mexico", "role": "secondary" }
+    ],
+    "finalAssemblyCountries": [{ "country": "United States", "role": "primary" }],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "model": "Equinox",
+    "id": "CHEVY-EQUINOX",
+    "value": 20,
+    "foreignPartsTotalPercent": 80,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Mexico", "percent": 42 },
+      { "country": "Other", "percent": 38 }
+    ],
+    "engineOrigins": [
+      { "country": "China", "role": "primary" },
+      { "country": "Mexico", "role": "secondary" }
+    ],
+    "transmissionOrigins": [
+      { "country": "Mexico", "role": "primary" },
+      { "country": "Argentina", "role": "secondary" },
+      { "country": "Canada", "role": "secondary" }
+    ],
+    "finalAssemblyCountries": [{ "country": "Mexico", "role": "primary" }],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motor Corporation",
+    "brand": "Toyota",
+    "model": "Corolla",
+    "id": "TOYOTA-COROLLA",
+    "value": 55,
+    "foreignPartsTotalPercent": 45,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      { "country": "Japan", "percent": 30 },
+      { "country": "Other", "percent": 15 }
+    ],
+    "engineOrigins": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Japan", "role": "secondary" }
+    ],
+    "transmissionOrigins": [{ "country": "Japan", "role": "primary" }],
+    "finalAssemblyCountries": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Japan", "role": "secondary" }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "model": "Silverado (legacy example)",
+    "id": "CHEVY-SILVERADO-LEGACY",
+    "value": 62,
+    "foreignPartsTotalPercent": 38,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "engineOrigins": [{ "country": "United States", "role": "primary" }],
+    "transmissionOrigins": [{ "country": "United States", "role": "primary" }],
+    "finalAssemblyCountries": [{ "country": "United States", "role": "primary" }],
+    "vehicleTypePart567": "Truck"
+  }
+]

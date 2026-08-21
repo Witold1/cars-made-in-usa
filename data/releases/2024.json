@@ -1,0 +1,25 @@
+[
+  {
+    "region": "American",
+    "corporation": "General Motors",
+    "brand": "Chevy",
+    "model": "Equinox",
+    "id": "CHEVY-EQUINOX-2024",
+    "value": 18,
+    "foreignPartsTotalPercent": 82,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "engineOrigins": [
+      { "country": "China", "role": "primary" },
+      { "country": "Mexico", "role": "secondary" }
+    ],
+    "transmissionOrigins": [
+      { "country": "Mexico", "role": "primary" },
+      { "country": "Canada", "role": "secondary" }
+    ],
+    "finalAssemblyCountries": [{ "country": "Mexico", "role": "primary" }],
+    "vehicleTypePart567": "MPV"
+  }
+]

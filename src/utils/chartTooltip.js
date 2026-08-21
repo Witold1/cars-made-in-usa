@@ -1,0 +1,70 @@
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatPartsPercent(datum) {
+  const raw = datum?.originalValue ?? datum?.value;
+  const num = Number(raw);
+  if (!Number.isFinite(num)) return '-';
+  // Beeswarm often stores 0–100; some paths use 0–1
+  const pct = num <= 1 && num >= 0 && !Number.isInteger(num) ? num * 100 : num;
+  return `${Math.round(pct)}%`;
+}
+
+/**
+ * Minimal floating readout - same facts as the old info strip,
+ * with the model as the only emphasized line.
+ */
+export function buildPointTooltipHtml(datum) {
+  if (!datum) return '';
+  const id = escapeHtml(datum.id || 'Unknown');
+  const trail = [datum.region, datum.corporation, datum.brand]
+    .filter(Boolean)
+    .map(escapeHtml)
+    .join(' / ');
+  const pct = escapeHtml(formatPartsPercent(datum));
+
+  return [
+    `<strong>${id}</strong>`,
+    trail ? `<span class="role">${trail}</span>` : '',
+    `<div class="dates">${pct}</div>`,
+  ].join('');
+}
+
+export function getChartTooltipEl() {
+  return typeof document !== 'undefined'
+    ? document.getElementById('chart-tooltip')
+    : null;
+}
+
+export function showChartTooltip(html, clientX, clientY, accentColor, el = getChartTooltipEl()) {
+  if (!el || !html) return;
+  el.innerHTML = html;
+  el.hidden = false;
+  el.style.borderTopColor = accentColor || '';
+  const rect = el.getBoundingClientRect();
+  let left = clientX + 12;
+  let top = clientY + 12;
+  if (left + rect.width > window.innerWidth - 8) left = clientX - rect.width - 12;
+  if (top + rect.height > window.innerHeight - 8) top = clientY - rect.height - 12;
+  if (left < 8) left = 8;
+  if (top < 8) top = 8;
+  el.style.left = `${left}px`;
+  el.style.top = `${top}px`;
+}
+
+export function hideChartTooltip(el = getChartTooltipEl()) {
+  if (!el) return;
+  el.hidden = true;
+  el.innerHTML = '';
+  el.style.borderTopColor = '';
+}
+
+export function showPointTooltip(datum, clientX, clientY, accentColor) {
+  showChartTooltip(buildPointTooltipHtml(datum), clientX, clientY, accentColor);
+}

@@ -1,0 +1,18 @@
+{
+  "nhtsa-aala-reports": {
+    "id": "nhtsa-aala-reports",
+    "title": "NHTSA Part 583 American Automobile Labeling Act (AALA) reports",
+    "publisher": "National Highway Traffic Safety Administration",
+    "url": "https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports",
+    "accessed": "2026-07-01",
+    "notes": "Listings of passenger motor vehicles labeled with U.S./Canadian parts content. Public releases only; not original manufacturer submissions."
+  },
+  "cfr-583-7-e": {
+    "id": "cfr-583-7-e",
+    "title": "49 CFR §583.7(e) - major sources of foreign parts content",
+    "publisher": "U.S. Government Publishing Office / eCFR",
+    "url": "https://www.ecfr.gov/current/title-49/part-583/section-583.7#p-583.7(e)",
+    "accessed": "2026-07-01",
+    "notes": "Defines major foreign sources (≥15% of equipment value; at most two countries with the highest percentages)."
+  }
+}

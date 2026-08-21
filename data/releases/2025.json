@@ -1,0 +1,46 @@
+[
+  {
+    "region": "American",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "F-150",
+    "id": "FORD-F150-2025",
+    "value": 54,
+    "foreignPartsTotalPercent": 46,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "percent_other_countries",
+    "foreignPartsBreakdown": [
+      { "country": "Mexico", "percent": 28 },
+      { "country": "Other", "percent": 18 }
+    ],
+    "engineOrigins": [{ "country": "USA", "role": "primary" }],
+    "transmissionOrigins": [{ "country": "Mexico", "role": "primary" }],
+    "finalAssemblyCountries": [{ "country": "USA", "role": "primary" }],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "region": "Asian",
+    "corporation": "Toyota Motor Corporation",
+    "brand": "Toyota",
+    "model": "Corolla",
+    "id": "TOYOTA-COROLLA-2025",
+    "value": 52,
+    "foreignPartsTotalPercent": 48,
+    "foreignPartsTotalSource": "reported",
+    "foreignPartsSource": "percent_other_countries",
+    "foreignPartsBreakdown": [
+      { "country": "Japan", "percent": 33 },
+      { "country": "Other", "percent": 15 }
+    ],
+    "engineOrigins": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Japan", "role": "secondary" }
+    ],
+    "transmissionOrigins": [{ "country": "Japan", "role": "primary" }],
+    "finalAssemblyCountries": [
+      { "country": "United States", "role": "primary" },
+      { "country": "Japan", "role": "secondary" }
+    ],
+    "vehicleTypePart567": "PC"
+  }
+]

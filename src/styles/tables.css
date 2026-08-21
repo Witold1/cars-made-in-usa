@@ -1,0 +1,55 @@
+@layer components {
+  .data-table-thead .data-table-th {
+    @apply sticky top-0 z-10;
+  }
+  .data-table-search {
+    @apply text-sm py-1.5 px-2 rounded border border-border bg-input-bg text-ink;
+  }
+  .data-table-search:focus {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  .data-table-th {
+    @apply text-xs font-medium text-ink-secondary tracking-tight text-left py-2 px-3 border-b border-border bg-surface-2;
+  }
+  .data-table-td {
+    @apply text-xs font-normal text-ink-secondary tracking-tight py-2 px-3 border-b border-border;
+  }
+  .data-table-tbody .data-table-tr:nth-child(odd) .data-table-td {
+    background: var(--chart-bg-alt);
+  }
+  .data-table-tbody .data-table-tr:nth-child(even) .data-table-td {
+    background: var(--chart-bg);
+  }
+  .data-table-tr:hover .data-table-td {
+    background: var(--surface-2);
+  }
+  .data-table-sort-icon {
+    @apply text-ink-muted text-xs;
+  }
+
+  .data-table-detail-row .data-table-detail-cell {
+    @apply text-xs text-ink-secondary border-t border-border px-4 py-3;
+    background: var(--chart-bg);
+  }
+  .data-table-detail-grid {
+    @apply grid gap-3 md:grid-cols-2;
+  }
+  .data-table-detail-section {
+    @apply space-y-1;
+  }
+  .data-table-detail-section--full {
+    grid-column: 1 / -1;
+  }
+  .data-table-detail-label {
+    font-family: var(--font);
+    font-size: var(--type-label-size);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--type-label-tracking);
+    color: var(--text-muted);
+  }
+  .data-table-detail-text {
+    @apply leading-snug;
+  }
+}

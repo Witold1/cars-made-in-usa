@@ -1,0 +1,90 @@
+/**
+ * Editorial design language for this app (copied from the shared product look:
+ * Source Sans / Newsreader / IBM Plex Mono, paper-and-ink light, charcoal dark).
+ * Light is the default; dark via html.dark (and optional data-theme).
+ */
+
+:root {
+  --accent: #3d6f8a;
+
+  --font: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-chart: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius: 2px;
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+
+  --type-title-size: 2.375rem;
+  --type-lead-size: 0.8125rem;
+  --type-label-size: 0.625rem;
+  --type-title-tracking: -0.015em;
+  --type-body-tracking: 0.01em;
+  --type-label-tracking: 0.08em;
+
+  /* Light - paper & ink */
+  color-scheme: light;
+  --bg: #f4f1ea;
+  --chart-bg: #fffcf7;
+  --chart-bg-alt: #f7f4ed;
+  --surface: #fffcf7;
+  --surface-2: #ebe6dc;
+  --border: #d4cfc4;
+  --border-light: #c4bfb4;
+  --text: #1c1c1a;
+  --text-secondary: #3d3a36;
+  --text-muted: #5c5852;
+
+  --independence: #8f6f1a;
+  --independence-halo: rgba(143, 111, 26, 0.28);
+
+  --year-line: rgba(28, 28, 26, 0.06);
+  --year-line-major: rgba(28, 28, 26, 0.2);
+
+  --row-alt: rgba(28, 28, 26, 0.028);
+  --tooltip-shadow: 0 6px 24px rgba(28, 28, 26, 0.12);
+  --input-bg: #ffffff;
+
+  --palette-1: #9e5849;
+  --palette-2: #9a7428;
+  --palette-3: #8a7d62;
+  --palette-4: #3d7a52;
+  --palette-5: #3d6f8a;
+  --palette-6: #6f6f6a;
+}
+
+/* Dark - editorial charcoal */
+html.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --accent: #4f7f9c;
+
+  --bg: #121316;
+  --chart-bg: #181a1f;
+  --chart-bg-alt: #1e2128;
+  --surface: #1c1f24;
+  --surface-2: #252930;
+  --border: #353a44;
+  --border-light: #434956;
+  --text: #f4f2ec;
+  --text-secondary: #c8c4bb;
+  --text-muted: #9a9690;
+
+  --independence: #d4af37;
+  --independence-halo: rgba(212, 175, 55, 0.35);
+
+  --year-line: rgba(244, 242, 236, 0.055);
+  --year-line-major: rgba(244, 242, 236, 0.2);
+
+  --row-alt: rgba(255, 255, 255, 0.022);
+  --tooltip-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  --input-bg: #14161a;
+
+  --palette-1: #b86b5c;
+  --palette-2: #b8923a;
+  --palette-3: #c8baa0;
+  --palette-4: #4d8f62;
+  --palette-5: #4f7f9c;
+  --palette-6: #8f8f8a;
+}

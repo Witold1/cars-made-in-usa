@@ -1,0 +1,26 @@
+# Dependencies & local tooling
+node_modules/
+
+# Build / cache
+dist/
+.vite/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+.idea/
+*.swp
+*.swo
+*~
