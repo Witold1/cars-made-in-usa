@@ -7,6 +7,14 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+/** Human-facing carline / model label (never the internal row id). */
+export function displayCarlineName(datum) {
+  if (!datum) return 'Unknown';
+  const model = String(datum.model ?? datum.carline ?? '').trim();
+  if (model) return model;
+  return 'Unknown carline';
+}
+
 function formatPartsPercent(datum) {
   const raw = datum?.originalValue ?? datum?.value;
   const num = Number(raw);
@@ -22,7 +30,7 @@ function formatPartsPercent(datum) {
  */
 export function buildPointTooltipHtml(datum) {
   if (!datum) return '';
-  const id = escapeHtml(datum.id || 'Unknown');
+  const title = escapeHtml(displayCarlineName(datum));
   const trail = [datum.region, datum.corporation, datum.brand]
     .filter(Boolean)
     .map(escapeHtml)
@@ -30,7 +38,7 @@ export function buildPointTooltipHtml(datum) {
   const pct = escapeHtml(formatPartsPercent(datum));
 
   return [
-    `<strong>${id}</strong>`,
+    `<strong>${title}</strong>`,
     trail ? `<span class="role">${trail}</span>` : '',
     `<div class="dates">${pct}</div>`,
   ].join('');

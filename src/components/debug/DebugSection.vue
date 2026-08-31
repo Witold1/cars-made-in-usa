@@ -3,7 +3,7 @@
     <div class="debug-section-inner">
       <button
         type="button"
-        class="debug-toggle"
+        class="text-link"
         :aria-expanded="open"
         @click="open = !open"
       >
@@ -11,7 +11,7 @@
       </button>
       <div v-if="open" class="debug-panel">
         <div class="debug-block">
-          <span class="debug-block-heading">Environment</span>
+          <span class="editorial-heading">Environment</span>
           <div class="debug-lines">
             <div v-for="line in technicalLines" :key="'tech-' + line.key" class="debug-line">
               <span class="debug-key">{{ line.key }}:</span>
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="debug-block">
-          <span class="debug-block-heading">Chart</span>
+          <span class="editorial-heading">Chart</span>
           <div class="debug-lines">
             <div v-for="line in chartLines" :key="'chart-' + line.key" class="debug-line">
               <span class="debug-key">{{ line.key }}:</span>
@@ -29,11 +29,11 @@
           </div>
         </div>
         <div v-if="lastError" class="debug-error-actions">
-          <button type="button" class="debug-link" @click="clearError">
+          <button type="button" class="text-link text-link--mono" @click="clearError">
             Clear last error
           </button>
         </div>
-        <button type="button" class="debug-link" @click="copyToClipboard">
+        <button type="button" class="text-link text-link--mono" @click="copyToClipboard">
           {{ copyDone ? 'Copied!' : 'Copy to clipboard' }}
         </button>
       </div>
@@ -44,7 +44,6 @@
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { appVersion, buildMode } from '../../config/appVersion';
-import '../../styles/debug-section.css';
 
 function resolveAppRelativePath() {
   if (typeof window === 'undefined') return '-';

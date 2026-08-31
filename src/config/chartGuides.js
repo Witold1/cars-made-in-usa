@@ -7,9 +7,8 @@ const METHODOLOGY =
 export const CHART_TYPE_OPTIONS = [
   { value: 'beeswarm', label: 'Beeswarm' },
   { value: 'jitter', label: 'Jitter' },
-  { value: 'bar', label: 'Bar' },
-  { value: 'line', label: 'Line' },
-  { value: 'table', label: 'Table' },
+  { value: 'placeholder', label: 'Placeholder' },
+  { value: 'table', label: 'Artificially generated table' },
   { value: 'table-extended', label: 'Origins table' },
 ];
 
@@ -18,26 +17,23 @@ export const VALID_CHART_TYPES = CHART_TYPE_OPTIONS.map((o) => o.value);
 const GUIDE_TITLES = {
   beeswarm: 'Beeswarm',
   jitter: 'Jitter by region',
-  bar: 'Bar chart',
-  line: 'Line chart',
-  table: 'Data table',
+  placeholder: 'Placeholder chart',
+  table: 'Artificially generated table',
   'table-extended': 'Origins & content table',
 };
 
 const CHART_TITLES = {
   beeswarm: 'Beeswarm Plot',
   jitter: 'Jitter Plot',
-  bar: 'Bar Chart',
-  line: 'Line Chart',
-  table: 'Data table',
+  placeholder: 'Placeholder',
+  table: 'Artificially generated table',
   'table-extended': 'Origins & content table',
 };
 
 const CHART_COMPONENTS = {
   beeswarm: 'BeeswarmPlot',
   jitter: 'JitterPlot',
-  bar: 'BarChart',
-  line: 'LineChart',
+  placeholder: 'PlaceholderChart',
   table: 'DataTable',
   'table-extended': 'ExtendedDataTable',
 };
@@ -53,12 +49,7 @@ ${METHODOLOGY}
 ${METHODOLOGY}
 <p>Learn more: <a href="https://datavizcatalogue.com/blog/chart-snapshot-jitter-plot/" target="_blank" rel="noopener noreferrer" class="chart-guide-link">Jitter plot</a> (DataViz Catalogue).</p>`,
 
-  bar: `${VALUE_AXIS}
-<p>Aggregated view. Use filters to compare regions, corporations, or brands.</p>
-${METHODOLOGY}`,
-
-  line: `${VALUE_AXIS}
-<p>Trend view over the dataset. Use filters to compare series.</p>
+  placeholder: `<p>Reserved slot for a future chart type. Filters still apply to the row count shown here.</p>
 ${METHODOLOGY}`,
 
   table: `<p>One row per vehicle model. Use <strong>Search</strong> to filter by region, corporation, brand, or model; click column headers to sort.</p>

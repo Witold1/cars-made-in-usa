@@ -12,6 +12,9 @@
       @update:strokeOpacity="updateStrokeOpacity($event)"
       @update:strokeWidth="updateStrokeWidth($event)"
     />
+    <div v-if="$slots['release-stepper']" class="release-stepper-block">
+      <slot name="release-stepper" />
+    </div>
     <div id="error" class="error-message" aria-live="polite"></div>    <!-- Aggregated Chart -->
     <div v-for="chart in aggregatedContainer" :key="chart.id" :id="chart.id" class="svg-container chart-frame w-full mb-6">
       <div class="chart-header flex flex-row items-center justify-between gap-2 flex-wrap mb-2 px-1 py-1 xl:px-4 xl:py-3">
@@ -21,11 +24,17 @@
         </div>
         <button
           type="button"
-          class="action-link text-xs"
+          class="text-link export-link"
           :disabled="exportingPngId === chart.id"
           :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
           @click="exportChartPng(chart)"
         >
+          <span class="export-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 2v8.2M5.2 7.5 8 10.3l2.8-2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 12.5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </span>
           {{ exportingPngId === chart.id ? 'Exporting…' : 'Save PNG' }}
         </button>
       </div>
@@ -58,11 +67,17 @@
         </div>
         <button
           type="button"
-          class="action-link text-xs"
+          class="text-link export-link"
           :disabled="exportingPngId === chart.id"
           :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
           @click="exportChartPng(chart)"
         >
+          <span class="export-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 2v8.2M5.2 7.5 8 10.3l2.8-2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 12.5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </span>
           {{ exportingPngId === chart.id ? 'Exporting…' : 'Save PNG' }}
         </button>
       </div>
@@ -91,7 +106,6 @@
 import { ref, computed, watch, inject } from 'vue';
 import JitterPlotSubCharts from './JitterPlotSubCharts.vue';
 import JitterPlotControlPanel from './JitterPlotControlPanel.vue';
-import { initialData } from '../../data/initialData';
 import { log } from '../../utils/logger';
 import { hideChartTooltip } from '../../utils/chartTooltip';
 import { exportSvgAsPng, exportFilename } from '../../utils/exportChartPng';
@@ -103,6 +117,11 @@ export default {
     data: {
       type: Array,
       required: true
+    },
+    /** Full active-release rows (unfiltered) for reference strip + region totals. */
+    sourceData: {
+      type: Array,
+      default: null
     },
     markerStyles: {
       type: Object,
@@ -125,6 +144,10 @@ export default {
     const strokeOpacity = ref(15);
     const strokeWidth = ref(1.3);
     const selectedPointId = ref(null);
+
+    const allRows = computed(() =>
+      Array.isArray(props.sourceData) ? props.sourceData : props.data
+    );
 
     const updateChartHeight = (value) => {
       const numValue = +value;
@@ -174,16 +197,17 @@ export default {
     };
 
     const aggregatedContainer = computed(() => {
+      const rows = allRows.value;
       return [
         {
           id: "jitter-aggregated-container",
           svgId: "jitter-aggregated-svg",
           counterId: "jitter-aggregated-counter",
           region: "All data (reference)",
-          data: initialData,
-          total: initialData.length,
+          data: rows,
+          total: rows.length,
           isMain: true,
-          margin: { top: 20, right: 20, bottom: 40, left: 40 }
+          margin: { top: 20, right: 20, bottom: 32, left: 40 }
         }
       ];
     });
@@ -193,7 +217,7 @@ export default {
       const charts = [];
       allRegions.forEach(region => {
         const filteredData = props.data.filter(d => d.region === region);
-        const totalInRegion = initialData.filter(d => d.region === region).length;
+        const totalInRegion = allRows.value.filter(d => d.region === region).length;
         if (filteredData.length > 0) {
           charts.push({
             id: `jitter-${region.toLowerCase()}-container`,
@@ -203,7 +227,7 @@ export default {
             data: filteredData,
             total: totalInRegion,
             isMain: false,
-            margin: { top: 20, right: 20, bottom: 40, left: 40 }
+            margin: { top: 20, right: 20, bottom: 32, left: 40 }
           });
         }
       });
@@ -291,7 +315,7 @@ export default {
   color: var(--accent);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  font-size: 0.8125rem;
+  font-size: var(--type-sm-size);
 }
 .error-message:empty {
   display: none;

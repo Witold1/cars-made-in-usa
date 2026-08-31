@@ -185,6 +185,17 @@ export function updatePointAttributes(g, d, state, radius, hoverRadius, height, 
   }
 }
 
+/** Shared value-axis tick chrome (beeswarm grid labels + jitter axis). */
+export const CHART_TICK = {
+  fontMajor: '13px',
+  fontMinor: '13px',
+  fontAvg: '14px',
+  /** Distance from plot edge to label (bottom axis). */
+  gapBottom: 8,
+  /** Distance from plot edge to label (left / vertical axis). */
+  gapSide: 3,
+};
+
 export function renderAxis(svg, xScale, height, margin) {
   const t = readThemeTokens();
   svg.append("g")
@@ -192,6 +203,7 @@ export function renderAxis(svg, xScale, height, margin) {
     .call(d3.axisBottom(xScale))
     .selectAll("text")
     .attr("fill", t.text)
+    .attr("font-size", CHART_TICK.fontMajor)
     .attr("font-family", t.fontChart);
 }
 
@@ -203,6 +215,7 @@ export function renderAxisLeft(svg, yScale, width, margin) {
     .call(d3.axisLeft(yScale))
     .selectAll("text")
     .attr("fill", t.text)
+    .attr("font-size", CHART_TICK.fontMajor)
     .attr("font-family", t.fontChart);
 }
 
@@ -230,7 +243,6 @@ function getMinorGridTicks(minValue, maxValue) {
 export function renderGridlinesHorizontal(svg, xScale, height, margin, minValue, maxValue) {
   const t = readThemeTokens();
   const stroke = t.yearLineMajor;
-  const strokeMinor = t.yearLine;
   const fill = t.textMuted;
   const fillMinor = t.textMuted;
   const y1 = margin.top;
@@ -242,15 +254,15 @@ export function renderGridlinesHorizontal(svg, xScale, height, margin, minValue,
       .attr('x2', x)
       .attr('y1', y1)
       .attr('y2', y2)
-      .attr('stroke', strokeMinor)
-      .attr('stroke-width', 0.35)
-      .attr('stroke-opacity', 0.6)
-      .attr('stroke-dasharray', '2,5');
+      .attr('stroke', stroke)
+      .attr('stroke-width', 0.45)
+      .attr('stroke-dasharray', '3,4');
     svg.append('text')
       .attr('x', x)
-      .attr('y', height - margin.bottom + 14)
+      .attr('y', height - margin.bottom + CHART_TICK.gapBottom)
       .attr('text-anchor', 'middle')
-      .attr('font-size', '10px')
+      .attr('dominant-baseline', 'hanging')
+      .attr('font-size', CHART_TICK.fontMinor)
       .attr('font-family', t.fontChart)
       .attr('fill', fillMinor)
       .text(v);
@@ -267,9 +279,10 @@ export function renderGridlinesHorizontal(svg, xScale, height, margin, minValue,
       .attr('stroke-width', 0.5);
     svg.append('text')
       .attr('x', x)
-      .attr('y', height - margin.bottom + 14)
+      .attr('y', height - margin.bottom + CHART_TICK.gapBottom)
       .attr('text-anchor', 'middle')
-      .attr('font-size', '11px')
+      .attr('dominant-baseline', 'hanging')
+      .attr('font-size', CHART_TICK.fontMajor)
       .attr('font-family', t.fontChart)
       .attr('fill', fill)
       .text(v);
@@ -280,11 +293,11 @@ export function renderGridlinesHorizontal(svg, xScale, height, margin, minValue,
 export function renderGridlinesVertical(svg, yScale, width, height, margin, minValue, maxValue) {
   const t = readThemeTokens();
   const stroke = t.yearLineMajor;
-  const strokeMinor = t.yearLine;
   const fill = t.textMuted;
   const fillMinor = t.textMuted;
   const x1 = margin.left;
   const x2 = width - margin.right;
+  const tickX = margin.left / 2;
   getMinorGridTicks(minValue, maxValue).forEach((v) => {
     const y = yScale(v);
     svg.append('line')
@@ -292,16 +305,15 @@ export function renderGridlinesVertical(svg, yScale, width, height, margin, minV
       .attr('x2', x2)
       .attr('y1', y)
       .attr('y2', y)
-      .attr('stroke', strokeMinor)
-      .attr('stroke-width', 0.35)
-      .attr('stroke-opacity', 0.6)
-      .attr('stroke-dasharray', '2,5');
+      .attr('stroke', stroke)
+      .attr('stroke-width', 0.45)
+      .attr('stroke-dasharray', '3,4');
     svg.append('text')
-      .attr('x', margin.left - 8)
+      .attr('x', tickX)
       .attr('y', y)
-      .attr('text-anchor', 'end')
+      .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
-      .attr('font-size', '10px')
+      .attr('font-size', CHART_TICK.fontMinor)
       .attr('font-family', t.fontChart)
       .attr('fill', fillMinor)
       .text(v);
@@ -317,11 +329,11 @@ export function renderGridlinesVertical(svg, yScale, width, height, margin, minV
       .attr('stroke', stroke)
       .attr('stroke-width', 0.5);
     svg.append('text')
-      .attr('x', margin.left - 8)
+      .attr('x', tickX)
       .attr('y', y)
-      .attr('text-anchor', 'end')
+      .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
-      .attr('font-size', '11px')
+      .attr('font-size', CHART_TICK.fontMajor)
       .attr('font-family', t.fontChart)
       .attr('fill', fill)
       .text(v);
@@ -346,7 +358,7 @@ export function renderAverageLine(svg, xScale, data, height, margin) {
       .attr("x", xScale(averageValue))
       .attr("y", margin.top - 5)
       .attr("text-anchor", "middle")
-      .attr("font-size", "11px")
+      .attr("font-size", CHART_TICK.fontAvg)
       .attr("font-weight", "600")
       .attr("font-family", t.fontChart)
       .attr("fill", strokeColor)
@@ -378,7 +390,7 @@ export function renderAverageLineVertical(svg, yScale, data, width, height, marg
       .attr("y", y - 10)
       .attr("text-anchor", "end")
       .attr("dominant-baseline", "middle")
-      .attr("font-size", "11px")
+      .attr("font-size", CHART_TICK.fontAvg)
       .attr("font-weight", "600")
       .attr("font-family", t.fontChart)
       .attr("fill", strokeColor)

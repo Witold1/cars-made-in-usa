@@ -1,5 +1,5 @@
 import { readThemeTokens } from './themeTokens.js';
-import { getSiteFooterLines } from '../config/siteFooter.js';
+import { getSiteFooterLines, siteSubtitlePlain } from '../config/siteFooter.js';
 
 const EXPORT_WIDTH = 1200;
 const SCALE = 2;
@@ -9,8 +9,7 @@ const HEADER_GAP = 14;
 const FOOTER_GAP = 12;
 
 const DEFAULT_TITLE = 'How American Is Your Car?';
-const DEFAULT_SUBTITLE =
-  "U.S. and Canadian parts content reported under NHTSA's American Automobile Labeling Act (Part 583).";
+const DEFAULT_SUBTITLE = siteSubtitlePlain;
 
 /**
  * Export chart SVG(s) as PNG with title/footer chrome.

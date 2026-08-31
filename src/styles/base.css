@@ -5,6 +5,7 @@
     color: var(--text);
     /* Rem root stays browser default (16px); title 2.375rem ≈ 38px */
     font-family: var(--font);
+    font-size: var(--type-ui-size);
     line-height: 1.5;
     letter-spacing: var(--type-body-tracking);
     -webkit-font-smoothing: antialiased;
@@ -18,13 +19,9 @@
   body {
     margin: 0;
     min-height: 100vh;
-    font-family: var(--font);
-    font-size: 15px;
     background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color: inherit;
+    font: inherit;
   }
 
   #app {
@@ -34,5 +31,10 @@
 
   .container {
     background-color: transparent;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--accent);
   }
 }

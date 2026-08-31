@@ -393,7 +393,7 @@ export default {
 .x-axis text {
   fill: var(--text);
   font-family: var(--font-chart);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
 }
 .x-axis path.domain {
@@ -403,7 +403,7 @@ export default {
   color: var(--accent);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  font-size: 0.8125rem;
+  font-size: var(--type-sm-size);
 }
 .error-message:empty {
   display: none;

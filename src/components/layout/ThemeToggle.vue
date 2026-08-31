@@ -1,59 +1,99 @@
 <template>
-  <div class="theme-switch" role="group" aria-label="Color theme">
-    <span class="theme-switch-label">Theme</span>
-    <div class="theme-switch-group">
-      <button
-        type="button"
-        class="theme-btn"
-        :class="{ 'is-active': theme === 'light' }"
-        :aria-pressed="theme === 'light'"
-        @click="setTheme('light')"
-      >
-        Light
-      </button>
-      <button
-        type="button"
-        class="theme-btn"
-        :class="{ 'is-active': theme === 'dark' }"
-        :aria-pressed="theme === 'dark'"
-        @click="setTheme('dark')"
-      >
-        Dark
-      </button>
-    </div>
+  <div class="theme-switcher" role="group" aria-label="Color theme">
+    <button
+      v-for="opt in options"
+      :key="opt"
+      type="button"
+      class="theme-btn"
+      :class="{ 'is-active': preference === opt }"
+      :aria-pressed="preference === opt"
+      @click="setPreference(opt)"
+    >
+      {{ labels[opt] }}
+    </button>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { log } from '../../utils/logger';
 
-function applyTheme(next) {
-  const isDark = next === 'dark';
+const STORAGE_KEY = 'theme';
+const PREFS = new Set(['system', 'dark', 'light']);
+
+function systemTheme() {
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function readStoredPreference() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (PREFS.has(stored)) return stored;
+  } catch {
+    /* private mode / blocked storage */
+  }
+  return 'system';
+}
+
+function resolveTheme(preference) {
+  return preference === 'system' ? systemTheme() : preference;
+}
+
+function applyResolved(preference) {
+  const pref = PREFS.has(preference) ? preference : 'system';
+  const resolved = resolveTheme(pref);
+  const isDark = resolved === 'dark';
   document.documentElement.classList.toggle('dark', isDark);
-  document.documentElement.dataset.theme = next;
-  localStorage.setItem('theme', next);
+  document.documentElement.dataset.theme = resolved;
+  document.documentElement.dataset.themePref = pref;
 }
 
 export default {
   name: 'ThemeToggle',
   setup() {
-    const theme = ref('light');
+    const preference = ref('system');
+    const options = ['system', 'dark', 'light'];
+    const labels = { system: 'System', dark: 'Dark', light: 'Light' };
+    let media;
 
-    const setTheme = (next) => {
-      theme.value = next;
-      applyTheme(next);
-      log('Theme Toggled:', next);
+    const setPreference = (next) => {
+      const pref = PREFS.has(next) ? next : 'system';
+      preference.value = pref;
+      applyResolved(pref);
+      try {
+        localStorage.setItem(STORAGE_KEY, pref);
+      } catch {
+        /* ignore */
+      }
+      log('Theme preference:', pref);
+    };
+
+    const onSystemChange = () => {
+      if (readStoredPreference() === 'system') applyResolved('system');
     };
 
     onMounted(() => {
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      theme.value = savedTheme;
-      applyTheme(savedTheme);
-      log('Theme Loaded:', savedTheme);
+      preference.value = readStoredPreference();
+      applyResolved(preference.value);
+      media = window.matchMedia('(prefers-color-scheme: light)');
+      if (typeof media.addEventListener === 'function') {
+        media.addEventListener('change', onSystemChange);
+      } else if (typeof media.addListener === 'function') {
+        media.addListener(onSystemChange);
+      }
+      log('Theme loaded:', preference.value);
     });
 
-    return { theme, setTheme };
-  }
+    onBeforeUnmount(() => {
+      if (!media) return;
+      if (typeof media.removeEventListener === 'function') {
+        media.removeEventListener('change', onSystemChange);
+      } else if (typeof media.removeListener === 'function') {
+        media.removeListener(onSystemChange);
+      }
+    });
+
+    return { preference, options, labels, setPreference };
+  },
 };
 </script>

@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import { log, warn, error as logError } from './logger.js';
 import { readThemeTokens } from './themeTokens.js';
+import { CHART_TICK } from './chartUtils.js';
 
 const createSeededRandom = (seed) => {
   let state = seed ? seed.split('').reduce((sum, char, i) => sum + char.charCodeAt(0) * (i + 1), 0) : Math.random();
@@ -139,8 +140,8 @@ export const xAxisMain = (g, x, height, width) => {
         .ticks(Math.max(5, Math.floor(width / 80)))
         .tickFormat(d => Math.round(d)))
       .selectAll("text")
-      .attr("dy", "1em")
-      .attr("font-size", "11px")
+      .attr("dy", "0.55em")
+      .attr("font-size", CHART_TICK.fontMajor)
       .attr("font-family", t.fontChart)
       .attr("fill", t.textMuted);
     g.select(".domain")
@@ -200,7 +201,7 @@ export const addMeanLines = (svg, regionData, region, x, height) => {
       .attr("x", x(mean))
       .attr("y", 15) // Slightly above line (margin.top - 5)
       .attr("text-anchor", "middle")
-      .attr("font-size", "11px")
+      .attr("font-size", CHART_TICK.fontAvg)
       .attr("font-weight", "600")
       .attr("font-family", t.fontChart)
       .attr("fill", strokeColor)

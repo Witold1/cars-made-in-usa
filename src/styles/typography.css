@@ -1,42 +1,14 @@
 @layer components {
-  .heading-1 {
-    @apply font-display text-xl xl:text-2xl font-semibold text-ink tracking-tight;
-  }
-  .heading-2 {
-    @apply font-sans text-base xl:text-lg font-semibold text-ink tracking-tight;
-  }
   .heading-3 {
     @apply font-sans text-sm xl:text-base font-semibold text-ink tracking-tight;
   }
-  .label {
-    @apply text-sm font-medium text-ink-secondary;
-  }
   .label-muted {
     @apply text-sm font-medium text-ink-muted;
-  }
-  .body {
-    @apply text-sm text-ink-secondary;
   }
   .body-muted {
     @apply text-sm text-ink-muted;
   }
 
-  .editorial-page-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
-    font-weight: 600;
-    letter-spacing: var(--type-title-tracking);
-    line-height: 1.2;
-    color: var(--text);
-  }
-  .editorial-heading {
-    font-family: var(--font);
-    font-size: var(--type-label-size);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: var(--type-label-tracking);
-    color: var(--text-muted);
-  }
   .editorial-label {
     @apply text-xs font-normal text-ink-muted tracking-tight;
   }
@@ -54,33 +26,32 @@
 }
 
 .subtitle {
-  margin: 0.35rem 0 0;
+  margin: var(--space-sm) 0 0;
   font-family: var(--font);
-  font-size: var(--type-lead-size);
+  font-size: var(--type-ui-size);
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: var(--type-body-tracking);
   color: var(--text-secondary);
-  max-width: 36em;
-  overflow: hidden;
-  max-height: 6rem;
-  opacity: 1;
-  transition: opacity 0.2s ease, max-height 0.25s ease, margin 0.25s ease;
+  max-width: 48em;
 }
 
+.subtitle-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--text-secondary) 45%, transparent);
+  text-underline-offset: 0.15em;
+}
+
+.subtitle-link:hover {
+  color: var(--text);
+  text-decoration-color: currentColor;
+}
+
+/* bp-xl — sync src/config/breakpoints.js */
 @media (max-width: 960px) {
-  .header.is-compact .subtitle {
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    pointer-events: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .title-block h1 {
-    font-size: 1.15rem;
+  .header.is-actions-open .subtitle {
+    margin-top: var(--space-sm);
   }
 }
 

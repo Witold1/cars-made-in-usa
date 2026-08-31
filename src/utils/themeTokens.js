@@ -1,16 +1,16 @@
-/** Read design tokens from themes.css for D3 / canvas chrome. */
+/** Read design tokens from theme.css for D3 / canvas chrome. */
 export function readThemeTokens(el = document.documentElement) {
   const styles = getComputedStyle(el);
   const get = (name, fallback = '') => styles.getPropertyValue(name).trim() || fallback;
   return {
-    bg: get('--bg', '#f4f1ea'),
-    chartBg: get('--chart-bg', '#fffcf7'),
-    surface: get('--surface', '#fffcf7'),
-    surface2: get('--surface-2', '#ebe6dc'),
+    bg: get('--bg', '#f4f5f7'),
+    chartBg: get('--chart-bg', '#ffffff'),
+    surface: get('--surface', '#ffffff'),
+    surface2: get('--surface-2', '#e4e7eb'),
     border: get('--border', '#d4cfc4'),
-    text: get('--text', '#1c1c1a'),
-    textSecondary: get('--text-secondary', '#3d3a36'),
-    textMuted: get('--text-muted', '#5c5852'),
+    text: get('--text', '#000000'),
+    textSecondary: get('--text-secondary', '#000000'),
+    textMuted: get('--text-muted', '#000000'),
     accent: get('--accent', '#e3120b'),
     palette5: get('--palette-5', '#4f7f9c'),
     yearLine: get('--year-line', 'rgba(28, 28, 26, 0.06)'),

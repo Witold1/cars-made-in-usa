@@ -3,6 +3,7 @@ export const dataConfig = {
   region: 'region',
   corporation: 'corporation',
   brand: 'brand',
+  model: 'model',
   id: 'id',
   value: 'value',
 };

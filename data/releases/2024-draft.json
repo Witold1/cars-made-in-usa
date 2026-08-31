@@ -1,0 +1,5270 @@
+[
+  {
+    "id": "1",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "e-tron GT",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 45
+      },
+      {
+        "country": "Poland",
+        "percent": 29
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Poland",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Battery: PL",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "2",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS e-tron GT",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 47
+      },
+      {
+        "country": "Poland",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Poland",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Battery: PL",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "3",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A3 40 FWD",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 52
+      },
+      {
+        "country": "Hungary",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "4",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A3 45 AWD",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 54
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "5",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A4 40",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 52
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "6",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A4 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 48
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "7",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A4 allroad 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 47
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "8",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A5 Cabriolet 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 60
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "9",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A5 Coupe S line 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 50
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "10",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A5 Sportback 40",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 47
+      },
+      {
+        "country": "Hungary",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "11",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A5 Sportback S line 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 50
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "12",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A6 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 49
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "13",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A6 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 47
+      },
+      {
+        "country": "Hungary",
+        "percent": 19
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "14",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A6 allroad",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 44
+      },
+      {
+        "country": "Hungary",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "15",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A7 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 44
+      },
+      {
+        "country": "Hungary",
+        "percent": 19
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "16",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "A8L 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 44
+      },
+      {
+        "country": "Hungary",
+        "percent": 20
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "17",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q3 40",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 28
+      },
+      {
+        "country": "Germany",
+        "percent": 28
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "JP",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "18",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q3 S line 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 46
+      },
+      {
+        "country": "Germany",
+        "percent": 24
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "JP",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "19",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q4 e-tron 40 RWD",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 93
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Belgium",
+        "role": "secondary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "20",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q4 e-tron 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 86
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Belgium",
+        "role": "secondary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "21",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q4 e-tron 50",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 94
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Belgium",
+        "role": "secondary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "22",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q4 e-tron 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 87
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Belgium",
+        "role": "secondary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "23",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q4 e-tron Sportback 50",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 95
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Belgium",
+        "role": "secondary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "24",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q4 e-tron Sportback 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 88
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "Belgium",
+        "role": "secondary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "25",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q5 40",
+    "value": 2,
+    "foreignPartsTotalPercent": 98,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 70
+      },
+      {
+        "country": "Germany",
+        "percent": 20
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "26",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q5 S line 45",
+    "value": 2,
+    "foreignPartsTotalPercent": 98,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 78
+      },
+      {
+        "country": "Germany",
+        "percent": 20
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "27",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q5 S line 55 e",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 51
+      },
+      {
+        "country": "Germany",
+        "percent": 42
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "28",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q5 Sportback S line 45",
+    "value": 2,
+    "foreignPartsTotalPercent": 98,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 78
+      },
+      {
+        "country": "Germany",
+        "percent": 19
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "29",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q7 45",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Slovakia",
+        "percent": 31
+      },
+      {
+        "country": "Hungary",
+        "percent": 22
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Slovakia",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "30",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q7 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Slovakia",
+        "percent": 33
+      },
+      {
+        "country": "Germany",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Slovakia",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "31",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q8 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 51
+      },
+      {
+        "country": "Slovakia",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Slovakia",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "32",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q8 e-tron 55",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 53
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Belgium",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "33",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q8 e-tron S line",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 53
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Belgium",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "34",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "Q8 e-tron Sportback",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 53
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Belgium",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "35",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS3",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 48
+      },
+      {
+        "country": "Hungary",
+        "percent": 27
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "36",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS5 Coupe",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 39
+      },
+      {
+        "country": "Hungary",
+        "percent": 30
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "37",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS5 Sportback",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 39
+      },
+      {
+        "country": "Hungary",
+        "percent": 31
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "38",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS6 Avant",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 60
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "39",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS7",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 56
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "40",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "RS Q8",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 49
+      },
+      {
+        "country": "Slovakia",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Slovakia",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "41",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S3",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 56
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "42",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S4",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 39
+      },
+      {
+        "country": "Hungary",
+        "percent": 30
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "43",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S5 Cabriolet",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 48
+      },
+      {
+        "country": "Hungary",
+        "percent": 25
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "44",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S5 Coupe",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 39
+      },
+      {
+        "country": "Hungary",
+        "percent": 30
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "45",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S5 Sportback",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 41
+      },
+      {
+        "country": "Hungary",
+        "percent": 29
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "46",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S6",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 37
+      },
+      {
+        "country": "Hungary",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "47",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S7",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 39
+      },
+      {
+        "country": "Hungary",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "48",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "S8L",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 63
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "49",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "SQ5",
+    "value": 2,
+    "foreignPartsTotalPercent": 98,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 68
+      },
+      {
+        "country": "Hungary",
+        "percent": 21
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "50",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "SQ5 Sportback",
+    "value": 2,
+    "foreignPartsTotalPercent": 98,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 68
+      },
+      {
+        "country": "Hungary",
+        "percent": 20
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "51",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "SQ7",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 54
+      },
+      {
+        "country": "Slovakia",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Slovakia",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "52",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "SQ8",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Slovakia",
+        "percent": 28
+      },
+      {
+        "country": "Hungary",
+        "percent": 25
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Slovakia",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "53",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "SQ8 e-tron",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 53
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Belgium",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "54",
+    "region": "",
+    "corporation": "Audi",
+    "brand": "Audi",
+    "model": "SQ8 e-tron Sportback",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 53
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Belgium",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Hungary",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "55",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Bentayga V8",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 65
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "56",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Bentayga EWB V8",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 64
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "57",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Bentayga Hybrid",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 50
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "58",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Continental GT V8",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 68
+      },
+      {
+        "country": "Great Britain",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "59",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Continental GT Convertible V8",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 65
+      },
+      {
+        "country": "Great Britain",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "60",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Continental GT Speed",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 68
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "61",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Continental GT Convertible Speed",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 66
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "62",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Flying Spur",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 64
+      },
+      {
+        "country": "Great Britain",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "63",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Flying Spur V8",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 69
+      },
+      {
+        "country": "Great Britain",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "64",
+    "region": "",
+    "corporation": "Bentley",
+    "brand": "Bentley",
+    "model": "Flying Spur Hybrid",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 59
+      },
+      {
+        "country": "Great Britain",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "65",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "2 Series Coupe/Convertible",
+    "value": 8,
+    "foreignPartsTotalPercent": 92,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 24
+      },
+      {
+        "country": "Mexico",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "66",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "2 Series Gran Coupe",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 37
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Japan",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "67",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "3 Series Sedan",
+    "value": 9,
+    "foreignPartsTotalPercent": 91,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 23
+      },
+      {
+        "country": "Mexico",
+        "percent": 21
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "68",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "4 Series Coupe/Convertible",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 48
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "69",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "4 Series  Gran Coupe",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 38
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "70",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "5 Series / i5",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 48
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "71",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "7 Series / i7",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 34
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "72",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "8 Series Coupe/Convertible",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 35
+      },
+      {
+        "country": "Other",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "73",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "8 Series Gran Coupe",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 35
+      },
+      {
+        "country": "Other",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "74",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "Cooper Clubman",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 30
+      },
+      {
+        "country": "Great Britain",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      },
+      {
+        "country": "J (JCW Auto,\nAWD)",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "75",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "Cooper Convertible",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 22
+      },
+      {
+        "country": "Poland",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Netherlands",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "76",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "Cooper Countryman",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 25
+      },
+      {
+        "country": "Poland",
+        "percent": 11
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Netherlands",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Japan",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "77",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "Cooper Hard Top 2 Door",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 30
+      },
+      {
+        "country": "Great Britain",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "78",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "Cooper Hard Top 4 Door",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 30
+      },
+      {
+        "country": "Great Britain",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Great Britain",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "79",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "i4",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 34
+      },
+      {
+        "country": "Great Britain",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "80",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "iX",
+    "value": 1,
+    "foreignPartsTotalPercent": 99,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 21
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "81",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "M2 Coupe",
+    "value": 5,
+    "foreignPartsTotalPercent": 95,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 29
+      },
+      {
+        "country": "Mexico",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "82",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "M3 Sedan",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 38
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "83",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "M3 CS Sedan",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 48
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "84",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "M8",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 52
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "85",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X1",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 34
+      },
+      {
+        "country": "Great Britain",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "86",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X2",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 35
+      },
+      {
+        "country": "Other",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "87",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X3",
+    "value": 23,
+    "foreignPartsTotalPercent": 77,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "AF",
+        "percent": 18
+      },
+      {
+        "country": "Germany",
+        "percent": 16
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "AF",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "88",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X3",
+    "value": 27,
+    "foreignPartsTotalPercent": 73,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A (4.0, M)",
+        "role": "primary"
+      },
+      {
+        "country": "UK (3.0)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "89",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X4",
+    "value": 32,
+    "foreignPartsTotalPercent": 68,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A (4.0, M)",
+        "role": "primary"
+      },
+      {
+        "country": "UK (3.0)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "90",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X5",
+    "value": 28,
+    "foreignPartsTotalPercent": 72,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 19
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "G (M)",
+        "role": "primary"
+      },
+      {
+        "country": "A (4.0, 5.0e)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "91",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X6",
+    "value": 30,
+    "foreignPartsTotalPercent": 70,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 21
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "G (M)",
+        "role": "primary"
+      },
+      {
+        "country": "A (4.0)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "92",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "X7",
+    "value": 25,
+    "foreignPartsTotalPercent": 75,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "G (M)",
+        "role": "primary"
+      },
+      {
+        "country": "A (4.0)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "93",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "XM",
+    "value": 21,
+    "foreignPartsTotalPercent": 79,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "94",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "BMW",
+    "model": "Z4",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 30
+      },
+      {
+        "country": "A",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "95",
+    "region": "",
+    "corporation": "BMW AG",
+    "brand": "Toyota",
+    "model": "Supra",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Germany",
+        "percent": 30
+      },
+      {
+        "country": "A",
+        "percent": 26
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "A",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "96",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Alfa Romeo",
+    "model": "Giulia",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Italy",
+        "percent": 69
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Cassino Italy",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Italy",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "97",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Alfa Romeo",
+    "model": "Stelvio",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Italy",
+        "percent": 55
+      },
+      {
+        "country": "France",
+        "percent": 13
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Cassino Italy",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Italy",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "98",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Alfa Romeo",
+    "model": "Tonale",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Italy",
+        "percent": 56
+      },
+      {
+        "country": "China",
+        "percent": 12
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Cassino Italy",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Italy",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Germany",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "99",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Chrysler",
+    "model": "Pacifica",
+    "value": 66,
+    "foreignPartsTotalPercent": 34,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 22
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Windsor ON Canada",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      },
+      {
+        "country": "United States",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "100",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Dodge",
+    "model": "Charger BEV",
+    "value": 51,
+    "foreignPartsTotalPercent": 49,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 28
+      },
+      {
+        "country": "Hungary",
+        "percent": 17
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Brampton ON\nCanada",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "101",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Dodge",
+    "model": "Durango",
+    "value": 69,
+    "foreignPartsTotalPercent": 31,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 22
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Detroit Ml USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Mexico",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Germany",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "102",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Dodge",
+    "model": "Hornet",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Italy",
+        "percent": 56
+      },
+      {
+        "country": "Philippines",
+        "percent": 12
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Pomigliano Italy",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "I, P",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Italy",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "103",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Fiat",
+    "model": "500E",
+    "value": 0,
+    "foreignPartsTotalPercent": 100,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Hungary",
+        "percent": 40
+      },
+      {
+        "country": "Italy",
+        "percent": 35
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Torino Italy",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Italy",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Italy",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "104",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Compass",
+    "value": 21,
+    "foreignPartsTotalPercent": 79,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 69
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Toluca Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Italy",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "105",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Gladiator",
+    "value": 68,
+    "foreignPartsTotalPercent": 32,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 21
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Toledo OH USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Mexico",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Japan",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "id": "106",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Grand Cherokee",
+    "value": 59,
+    "foreignPartsTotalPercent": 41,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Detroit Ml USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "I, M",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Germany",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "107",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Grand Cherokee L",
+    "value": 59,
+    "foreignPartsTotalPercent": 41,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Detroit Ml USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "I, M",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Germany",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "108",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Grand Wagoneer",
+    "value": 59,
+    "foreignPartsTotalPercent": 41,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 35
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Warren MI USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "109",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Wagoneer",
+    "value": 59,
+    "foreignPartsTotalPercent": 41,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 35
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Warren MI USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "110",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Wagoneer S",
+    "value": 24,
+    "foreignPartsTotalPercent": 76,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 48
+      },
+      {
+        "country": "Hungary",
+        "percent": 23
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Toluca Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "111",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "Jeep",
+    "model": "Wrangler  2d, 4d",
+    "value": 64,
+    "foreignPartsTotalPercent": 36,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Toledo OH USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "I, M",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "J, G",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "112",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "RAM",
+    "model": "Ram 1500",
+    "value": 61,
+    "foreignPartsTotalPercent": 39,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 32
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Sterling Heights MI\nUSA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Mexico",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Germany",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "id": "113",
+    "region": "",
+    "corporation": "Fiat Chrysler",
+    "brand": "RAM",
+    "model": "Ram 1500 CLASSIC",
+    "value": 67,
+    "foreignPartsTotalPercent": 33,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 27
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Warren MI USA",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Mexico",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Germany",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "id": "114",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Bronco",
+    "value": 18,
+    "foreignPartsTotalPercent": 82,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "M (2.3L)",
+        "role": "primary"
+      },
+      {
+        "country": "US (2.7L,\n3.0L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "115",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Bronco Sport",
+    "value": 20,
+    "foreignPartsTotalPercent": 80,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 64
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "ESP (2.0L)",
+        "role": "primary"
+      },
+      {
+        "country": "M (1.5L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "116",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Edge",
+    "value": 28,
+    "foreignPartsTotalPercent": 72,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Canada",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "ESP (2.0L)",
+        "role": "primary"
+      },
+      {
+        "country": "M (2.7L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "117",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Escape",
+    "value": 32,
+    "foreignPartsTotalPercent": 68,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 25
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "M (1.5L)",
+        "role": "primary"
+      },
+      {
+        "country": "US (2.0L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "118",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Escape PHEV",
+    "value": 32,
+    "foreignPartsTotalPercent": 68,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 25
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "MX (2.5L)",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "119",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Expedition",
+    "value": 25,
+    "foreignPartsTotalPercent": 75,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 15
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "120",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Explorer",
+    "value": 27,
+    "foreignPartsTotalPercent": 73,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "US (2.3L, 3.3L)",
+        "role": "primary"
+      },
+      {
+        "country": "M (3.0L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "121",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "F150 EV",
+    "value": 24,
+    "foreignPartsTotalPercent": 76,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "id": "122",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "F150",
+    "value": 32,
+    "foreignPartsTotalPercent": 68,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "US (2.7L, 5.0L)",
+        "role": "primary"
+      },
+      {
+        "country": "M (3.5L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "id": "123",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "F150",
+    "value": 32,
+    "foreignPartsTotalPercent": 68,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "M (3.5L)",
+        "role": "primary"
+      },
+      {
+        "country": "US (2.7L,\n5.0L, 5.2L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "Truck"
+  },
+  {
+    "id": "124",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Maverick",
+    "value": 20,
+    "foreignPartsTotalPercent": 80,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 55
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "M (2.5L)",
+        "role": "primary"
+      },
+      {
+        "country": "US (2.0L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "125",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Mustang",
+    "value": 60,
+    "foreignPartsTotalPercent": 40,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 17
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "US (5.0L)",
+        "role": "primary"
+      },
+      {
+        "country": "M (2.3L)",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "US (10 SPD), CH\n(6 SPD)",
+        "role": "primary"
+      },
+      {
+        "country": "M (6 SPD)",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "126",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Mustang Mach-E",
+    "value": 26,
+    "foreignPartsTotalPercent": 74,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "China",
+        "percent": 51
+      },
+      {
+        "country": "Mexico",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      },
+      {
+        "country": "China",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Japan",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "127",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Ford",
+    "model": "Ranger",
+    "value": 8,
+    "foreignPartsTotalPercent": 92,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "US (2.3L, 2.7L,\n3.0L)",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "128",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "model": "Aviator",
+    "value": 27,
+    "foreignPartsTotalPercent": 73,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "129",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "model": "Corsair",
+    "value": 47,
+    "foreignPartsTotalPercent": 53,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 25
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "130",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "model": "Corsair PHEV",
+    "value": 47,
+    "foreignPartsTotalPercent": 53,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 25
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "PC"
+  },
+  {
+    "id": "131",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "model": "Nautilus",
+    "value": 13,
+    "foreignPartsTotalPercent": 87,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "China",
+        "percent": 86
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "China",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "CH (2.0L)",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "China",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "132",
+    "region": "",
+    "corporation": "Ford Motor Company",
+    "brand": "Lincoln",
+    "model": "Navigator",
+    "value": 23,
+    "foreignPartsTotalPercent": 77,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "derived",
+    "foreignPartsBreakdown": [],
+    "foreignPartsNote": "Country breakdown not in source; total derived from 100% − U.S./Canadian.",
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "133",
+    "region": "",
+    "corporation": "GM LLC",
+    "brand": "Buick",
+    "model": "Enclave",
+    "value": 31,
+    "foreignPartsTotalPercent": 69,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Mexico",
+        "percent": 35
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "United States",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "United States",
+        "role": "primary"
+      },
+      {
+        "country": "Mexico",
+        "role": "secondary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "134",
+    "region": "",
+    "corporation": "GM LLC",
+    "brand": "Buick",
+    "model": "Encore GX",
+    "value": 2,
+    "foreignPartsTotalPercent": 98,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Korea",
+        "percent": 50
+      },
+      {
+        "country": "China",
+        "percent": 18
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Korea",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      },
+      {
+        "country": "Korea",
+        "role": "secondary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  },
+  {
+    "id": "135",
+    "region": "",
+    "corporation": "GM LLC",
+    "brand": "Buick",
+    "model": "Envista",
+    "value": 3,
+    "foreignPartsTotalPercent": 97,
+    "foreignPartsTotalSource": "derived",
+    "foreignPartsSource": "major_sources_2026",
+    "foreignPartsBreakdown": [
+      {
+        "country": "Korea",
+        "percent": 55
+      },
+      {
+        "country": "Mexico",
+        "percent": 21
+      }
+    ],
+    "finalAssemblyCountries": [
+      {
+        "country": "Korea",
+        "role": "primary"
+      }
+    ],
+    "engineOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "transmissionOrigins": [
+      {
+        "country": "Mexico",
+        "role": "primary"
+      }
+    ],
+    "vehicleTypePart567": "MPV"
+  }
+]

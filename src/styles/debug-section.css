@@ -2,113 +2,68 @@
  * Debug section layout (editorial chrome).
  * Colors/fonts come from src/styles/theme.css.
  */
+@layer components {
+  .debug-section {
+    max-width: none;
+    margin: var(--space-2xl) 0 0;
+    padding: 0;
+  }
 
-.debug-section {
-  max-width: none;
-  margin: 1.5rem 0 0;
-  padding: 0;
-}
+  .debug-section-inner {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
 
-.debug-section-inner {
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
+  .debug-panel {
+    margin-top: 0.5rem;
+    padding: 0.75rem var(--space-xl);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: var(--mono);
+    font-size: var(--type-label-size);
+    color: var(--text-secondary);
+    overflow-x: auto;
+  }
 
-.debug-toggle {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font-family: var(--font);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
+  .debug-block + .debug-block {
+    margin-top: 0.75rem;
+    padding-top: var(--panel-pad);
+    border-top: 1px solid var(--border);
+  }
 
-.debug-toggle:hover {
-  color: var(--text-secondary);
-}
+  .debug-block .editorial-heading {
+    display: block;
+    margin-bottom: 0.4rem;
+  }
 
-.debug-toggle:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
+  .debug-lines {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
 
-.debug-panel {
-  margin-top: 0.5rem;
-  padding: 0.75rem 0.85rem;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
-  overflow-x: auto;
-}
+  .debug-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) 0.5rem;
+  }
 
-.debug-block + .debug-block {
-  margin-top: 0.75rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid var(--border);
-}
+  .debug-key {
+    flex-shrink: 0;
+    color: var(--text-muted);
+  }
 
-.debug-block-heading {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-family: var(--font);
-  font-size: 0.625rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: var(--type-label-tracking);
-  color: var(--text-muted);
-}
+  .debug-value {
+    word-break: break-all;
+    color: var(--text-secondary);
+  }
 
-.debug-lines {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
+  .debug-error-actions {
+    margin-top: 0.5rem;
+  }
 
-.debug-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
-}
-
-.debug-key {
-  flex-shrink: 0;
-  color: var(--text-muted);
-}
-
-.debug-value {
-  word-break: break-all;
-  color: var(--text-secondary);
-}
-
-.debug-error-actions {
-  margin-top: 0.5rem;
-}
-
-.debug-link {
-  margin: 0.5rem 0.75rem 0 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-
-.debug-link:hover {
-  color: var(--text);
-}
-
-.debug-link:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  .debug-panel .text-link {
+    margin: 0.5rem 0.75rem 0 0;
+  }
 }

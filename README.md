@@ -43,6 +43,7 @@ Top bar:
 
 Dataset filters:
 
+- **Report** - shared AALA report year for charts and Origins (default: 2026 interim data)
 - Region / corporation / brand hierarchy
 - Optional marker style customization
 - Legend toggles mirror the same selections
@@ -53,11 +54,11 @@ URL query params keep chart type and filters shareable (`?chart=beeswarm&regions
 
 Source of truth is JSON under `data/`:
 
-- `meta.json` - dataset title, schema version, default release
+- `meta.json` - dataset title, schema version, default release (`2026-draft`)
 - `sources.json` - bibliography keyed by id (NHTSA, CFR, …)
-- `carlines.json` - beeswarm / jitter / simple table points
-- `releases/index.json` - Origins-table dropdown order and labels
-- `releases/{id}.json` - one Origins release each (published mocks + draft pipeline parses)
+- `carlines.json` - legacy synthetic plot points (not used by the live dashboard)
+- `releases/index.json` - release dropdown order and labels (charts + Origins table)
+- `releases/{id}.json` - one release each (`*-draft` from interim Excel + small mocks)
 
 Field notes and editing rules live in `[data/README.md](data/README.md)`. Origins row schema: `[docs/extended-data-plan.md](docs/extended-data-plan.md)`. Material changes should be logged in `[data/CHANGELOG.md](data/CHANGELOG.md)`.
 
@@ -95,7 +96,7 @@ src/
   index.css             Style barrel (@imports → Tailwind)
   components/
     Dashboard.vue       Shell (wires composables)
-    charts/             Beeswarm, jitter, legend, placeholders
+    charts/             Beeswarm, jitter, legend, placeholder
     filters/            Filter panel, markers
     tables/             Data + Origins tables
     layout/             Theme toggle
@@ -109,8 +110,8 @@ data/
   meta.json
   sources.json          Citeable source ids
   SOURCES.md            Human-readable source notes
-  carlines.json         Plot points
-  releases/             Per-release JSON + index.json
+  carlines.json         Legacy synthetic points (unused by UI)
+  releases/             Per-release JSON + index.json (charts + Origins)
   README.md             Dataset schema & methodology
   CHANGELOG.md
 docs/

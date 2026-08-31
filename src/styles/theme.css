@@ -1,7 +1,10 @@
 /**
  * Editorial design language for this app (copied from the shared product look:
- * Source Sans / Newsreader / IBM Plex Mono, paper-and-ink light, charcoal dark).
+ * Source Sans / Newsreader / IBM Plex Mono, neutral light, charcoal dark).
  * Light is the default; dark via html.dark (and optional data-theme).
+ *
+ * Breakpoints (CSS @media must use literals — see src/config/breakpoints.js):
+ *   xs 420 | sm 480 | md 640 | lg 720 | xl 960 | 2xl 1280
  */
 
 :root {
@@ -15,25 +18,45 @@
   --radius: 2px;
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 
-  --type-title-size: 2.375rem;
-  --type-lead-size: 0.8125rem;
-  --type-label-size: 0.625rem;
+  /* Type scale — 1rem body baseline; nothing critical below 0.875rem */
+  --type-title-size: 2.375rem; /* page titles */
+  --type-ui-size: 1rem; /* body, UI controls, subtitle */
+  --type-sm-size: 0.875rem; /* captions, tooltips, secondary UI */
+  --type-label-size: 0.75rem; /* uppercase section labels (floor) */
   --type-title-tracking: -0.015em;
   --type-body-tracking: 0.01em;
   --type-label-tracking: 0.08em;
 
-  /* Light - paper & ink */
+  /* Layout shell */
+  --layout-max: 1320px;
+  --sidebar-width: 18.5rem;
+  --filter-rail-width: 2.85rem;
+  --touch-min: 2.25rem;
+  --panel-toggle-bar-height: var(--touch-min);
+  --panel-pad: 0.65rem;
+
+  /* Spacing scale (prefer these over one-off rem values) */
+  --space-2xs: 0.15rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.35rem;
+  --space-md: 0.55rem;
+  --space-lg: 0.65rem;
+  --space-xl: 0.85rem;
+  --space-2xl: 1.5rem;
+
+  /* Light - neutral gray & white (no warm beige) */
   color-scheme: light;
-  --bg: #f4f1ea;
-  --chart-bg: #fffcf7;
-  --chart-bg-alt: #f7f4ed;
-  --surface: #fffcf7;
-  --surface-2: #ebe6dc;
-  --border: #d4cfc4;
-  --border-light: #c4bfb4;
-  --text: #1c1c1a;
-  --text-secondary: #3d3a36;
-  --text-muted: #5c5852;
+  --bg: #f4f5f7;
+  --chart-bg: #ffffff;
+  --chart-bg-alt: #eef0f3;
+  --surface: #ffffff;
+  --surface-2: #e4e7eb;
+  --border: #d0d4da;
+  --border-light: #bcc2ca;
+  --text: #000000;
+  /* One ink for accessibility — no gray hierarchy */
+  --text-secondary: var(--text);
+  --text-muted: var(--text);
 
   --independence: #8f6f1a;
   --independence-halo: rgba(143, 111, 26, 0.28);
@@ -68,8 +91,8 @@ html.dark,
   --border: #353a44;
   --border-light: #434956;
   --text: #f4f2ec;
-  --text-secondary: #c8c4bb;
-  --text-muted: #9a9690;
+  --text-secondary: var(--text);
+  --text-muted: var(--text);
 
   --independence: #d4af37;
   --independence-halo: rgba(212, 175, 55, 0.35);

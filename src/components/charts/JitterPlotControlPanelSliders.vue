@@ -1,45 +1,60 @@
 <template>
   <div class="plot-controls">
     <div class="plot-control-list">
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Height of each sub-chart in pixels.">Chart height</span>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Chart height
+          <InfoTip label="Explain chart height" tip="Height of each sub-chart in pixels." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="chartHeight" @input="emitChartHeight($event.target.value)" min="200" max="600" step="10" />
           <input type="number" :value="chartHeight" @input="emitChartHeight($event.target.value)" min="200" max="600" step="10" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Radius of each circle in pixels.">Circle radius</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Circle radius
+          <InfoTip label="Explain circle radius" tip="Radius of each circle in pixels." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="radius" @input="emitRadius($event.target.value)" min="3" max="7" step="0.1" />
           <input type="number" :value="radius" @input="emitRadius($event.target.value)" min="3" max="7" step="0.1" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Fill opacity (10–100%).">Fill opacity</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Fill opacity
+          <InfoTip label="Explain fill opacity" tip="Opacity of each circle’s fill (10–100%). Lower values make overlapping points easier to see through." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="fillOpacity" @input="emitFillOpacity($event.target.value)" min="10" max="100" step="5" />
           <input type="number" :value="fillOpacity" @input="emitFillOpacity($event.target.value)" min="10" max="100" step="5" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Stroke opacity (10–100%).">Stroke opacity</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Stroke opacity
+          <InfoTip label="Explain stroke opacity" tip="Opacity of each circle’s outline (10–100%)." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="strokeOpacity" @input="emitStrokeOpacity($event.target.value)" min="10" max="100" step="5" />
           <input type="number" :value="strokeOpacity" @input="emitStrokeOpacity($event.target.value)" min="10" max="100" step="5" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Stroke width in pixels.">Stroke width</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Stroke width
+          <InfoTip label="Explain stroke width" tip="Thickness of each circle’s outline in pixels." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="strokeWidth" @input="emitStrokeWidth($event.target.value)" min="0.1" max="2" step="0.1" />
           <input type="number" :value="strokeWidth" @input="emitStrokeWidth($event.target.value)" min="0.1" max="2" step="0.1" />
         </div>
-      </label>
+      </div>
     </div>
     <button
       type="button"
-      class="filter-clear-btn plot-control-reset"
+      class="text-link text-link--strong plot-control-reset"
       :disabled="justReset"
       @click="onReset"
     >
@@ -50,9 +65,12 @@
 
 <script>
 import { ref, onUnmounted } from 'vue';
+import { mqMax } from '../../config/breakpoints';
+import InfoTip from '../InfoTip.vue';
 
 export default {
   name: 'Sliders',
+  components: { InfoTip },
   props: {
     chartHeight: {
       type: Number,
@@ -116,7 +134,11 @@ export default {
     };
 
     const onReset = () => {
-      emit('update:chartHeight', 200);
+      const heightDefault =
+        typeof window !== 'undefined' && window.matchMedia(mqMax('md')).matches
+          ? 600
+          : 200;
+      emit('update:chartHeight', heightDefault);
       emit('update:radius', 3.8);
       emit('update:fillOpacity', 25);
       emit('update:strokeOpacity', 15);

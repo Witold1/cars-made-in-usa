@@ -1,65 +1,89 @@
 <template>
   <div class="plot-controls">
     <div class="plot-control-list">
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Chart height in pixels.">Chart height</span>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Chart height
+          <InfoTip label="Explain chart height" tip="Chart height in pixels." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="chartHeight" @input="emitChartHeight($event.target.value)" min="200" max="600" step="10" />
           <input type="number" :value="chartHeight" @input="emitChartHeight($event.target.value)" min="200" max="600" step="10" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Point radius in pixels.">Point radius</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Point radius
+          <InfoTip label="Explain point radius" tip="Radius of each data point in pixels." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="pointRadius" @input="emitPointRadius($event.target.value)" min="3" max="7" step="0.1" />
           <input type="number" :value="pointRadius" @input="emitPointRadius($event.target.value)" min="3" max="7" step="0.1" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Padding between points.">Padding factor</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Padding factor
+          <InfoTip label="Explain padding factor" tip="Spacing between points. Higher values push points farther apart to reduce overlap." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="paddingFactor" @input="emitPaddingFactor($event.target.value)" min="0.5" max="2" step="0.1" />
           <input type="number" :value="paddingFactor" @input="emitPaddingFactor($event.target.value)" min="0.5" max="2" step="0.1" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Random seed for layout.">Random seed</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Random seed
+          <InfoTip label="Explain random seed" tip="Seed for the layout’s random jitter. Same seed keeps point positions stable across redraws." />
+        </span>
         <div class="plot-control-inputs">
           <input type="number" :value="seed ?? 42" @input="emitSeed($event.target.value)" min="0" step="1" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Center of the band for 0% points.">Mean for 0s</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Mean for 0s
+          <InfoTip label="Explain mean for 0s" tip="Horizontal center of the band used to spread models at 0% U.S./Canadian parts content (for visibility)." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="center0" @input="emitCenter0($event.target.value)" min="-20" max="0" step="0.1" />
           <input type="number" :value="center0" @input="emitCenter0($event.target.value)" min="-20" max="0" step="0.1" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Band width for 0s.">Spread for 0s</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Spread for 0s
+          <InfoTip label="Explain spread for 0s" tip="Width of the band around the 0% reference. Wider spread separates stacked 0% points." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="spread0" @input="emitSpread0($event.target.value)" min="1" max="20" step="0.5" />
           <input type="number" :value="spread0" @input="emitSpread0($event.target.value)" min="1" max="20" step="0.5" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Center of the band for 1% points.">Mean for 1s</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Mean for 1s
+          <InfoTip label="Explain mean for 1s" tip="Horizontal center of the band used to spread models at 1% U.S./Canadian parts content (for visibility)." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="center1" @input="emitCenter1($event.target.value)" min="-10" max="10" step="0.1" />
           <input type="number" :value="center1" @input="emitCenter1($event.target.value)" min="-10" max="10" step="0.1" />
         </div>
-      </label>
-      <label class="plot-control-item">
-        <span class="plot-control-label" title="Band width for 1s.">Spread for 1s</span>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Spread for 1s
+          <InfoTip label="Explain spread for 1s" tip="Width of the band around the 1% reference. Wider spread separates stacked 1% points." />
+        </span>
         <div class="plot-control-inputs">
           <input type="range" :value="spread1" @input="emitSpread1($event.target.value)" min="1" max="20" step="0.5" />
           <input type="number" :value="spread1" @input="emitSpread1($event.target.value)" min="1" max="20" step="0.5" />
         </div>
-      </label>
+      </div>
     </div>
     <button
       type="button"
-      class="filter-clear-btn plot-control-reset"
+      class="text-link text-link--strong plot-control-reset"
       :disabled="justReset"
       @click="onReset"
     >
@@ -70,9 +94,12 @@
 
 <script>
 import { ref, onUnmounted } from 'vue';
+import { mqMax } from '../../config/breakpoints';
+import InfoTip from '../InfoTip.vue';
 
 export default {
   name: 'BeeswarmControlPanelSliders',
+  components: { InfoTip },
   props: {
     chartHeight: { type: Number, required: true },
     pointRadius: { type: Number, required: true },
@@ -159,7 +186,11 @@ export default {
     };
 
     const onReset = () => {
-      emit('update:chartHeight', 400);
+      const heightDefault =
+        typeof window !== 'undefined' && window.matchMedia(mqMax('md')).matches
+          ? 600
+          : 400;
+      emit('update:chartHeight', heightDefault);
       emit('update:pointRadius', 5.5);
       emit('update:paddingFactor', 1.3);
       emit('update:seed', 42);

@@ -24,6 +24,7 @@
       @change="$emit('update:marker-styles', { ...markerStyles, [option]: { ...markerStyles[option], color: $event.target.value } })"
       class="editorial-select marker-select"
     >
+      <option value="#4f7f9c">Default</option>
       <option value="#e6194B">Red</option>
       <option value="#3cb44b">Green</option>
       <option value="#ffe119">Yellow</option>

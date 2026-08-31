@@ -61,7 +61,7 @@
               >
                 <div class="data-table-detail-grid">
                   <div class="data-table-detail-section data-table-detail-section--full">
-                    <p class="data-table-detail-label">Content breakdown</p>
+                    <p class="editorial-heading">Content breakdown</p>
                     <p class="data-table-detail-text">
                       U.S./Canadian parts: <strong>{{ formatNumeric(row.value) }}</strong>.
                       <span v-if="row.foreignPartsBreakdown && row.foreignPartsBreakdown.length">
@@ -88,7 +88,7 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="data-table-detail-label">Engine origin</p>
+                    <p class="editorial-heading">Engine origin</p>
                     <p class="data-table-detail-text">
                       <span v-if="row.engineOrigins && row.engineOrigins.length">
                         {{ row.engineOrigins.map(p => p.role === 'primary' ? p.country : `${p.country} (additional)`).join(', ') }}.
@@ -97,7 +97,7 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="data-table-detail-label">Transmission origin</p>
+                    <p class="editorial-heading">Transmission origin</p>
                     <p class="data-table-detail-text">
                       <span v-if="row.transmissionOrigins && row.transmissionOrigins.length">
                         {{ row.transmissionOrigins.map(p => p.role === 'primary' ? p.country : `${p.country} (additional)`).join(', ') }}.
@@ -106,7 +106,7 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="data-table-detail-label">Final assembly</p>
+                    <p class="editorial-heading">Final assembly</p>
                     <p class="data-table-detail-text">
                       <span v-if="row.finalAssemblyCountries && row.finalAssemblyCountries.length">
                         {{ row.finalAssemblyCountries.map(p => p.role === 'primary' ? p.country : `${p.country} (additional)`).join(', ') }}.
@@ -115,7 +115,7 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="data-table-detail-label">Vehicle type (Part 567)</p>
+                    <p class="editorial-heading">Vehicle type (Part 567)</p>
                     <p class="data-table-detail-text">{{ row.vehicleTypePart567 || '-' }}</p>
                   </div>
                 </div>

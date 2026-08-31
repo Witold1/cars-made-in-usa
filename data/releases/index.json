@@ -1,35 +1,84 @@
 [
   {
+    "id": "2026-draft",
+    "label": "2026 (interim real data)",
+    "file": "2026-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2025-draft",
+    "label": "2025 (interim real data)",
+    "file": "2025-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2024-draft",
+    "label": "2024 (interim real data)",
+    "file": "2024-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2023-draft",
+    "label": "2023 (interim real data)",
+    "file": "2023-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2022-draft",
+    "label": "2022 (interim real data)",
+    "file": "2022-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2021-draft",
+    "label": "2021 (interim real data)",
+    "file": "2021-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2020-draft",
+    "label": "2020 (interim real data)",
+    "file": "2020-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2011-draft",
+    "label": "2011 (interim real data)",
+    "file": "2011-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
+    "id": "2008-draft",
+    "label": "2008 (interim real data)",
+    "file": "2008-draft.json",
+    "status": "draft",
+    "kind": "interim"
+  },
+  {
     "id": "2026",
-    "label": "2026",
+    "label": "2026 (mock)",
     "file": "2026.json",
     "status": "published",
     "kind": "mock"
   },
   {
-    "id": "2026-draft",
-    "label": "2026 (draft real data)",
-    "file": "2026-draft.json",
-    "status": "draft",
-    "kind": "pipeline"
-  },
-  {
     "id": "2025",
-    "label": "2025",
+    "label": "2025 (mock)",
     "file": "2025.json",
     "status": "published",
     "kind": "mock"
   },
   {
-    "id": "2025-draft",
-    "label": "2025 (draft real data)",
-    "file": "2025-draft.json",
-    "status": "draft",
-    "kind": "pipeline"
-  },
-  {
     "id": "2024",
-    "label": "2024",
+    "label": "2024 (mock)",
     "file": "2024.json",
     "status": "published",
     "kind": "mock"

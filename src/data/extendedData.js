@@ -1,9 +1,11 @@
 /**
- * Origins-table releases - JSON under data/releases/, indexed by releases/index.json.
- * Drafts are lazy-loaded so large pipeline files stay out of the initial bundle.
+ * Release rows for charts + Origins table — JSON under data/releases/, indexed by
+ * releases/index.json. Drafts are lazy-loaded so large pipeline files stay out of
+ * the initial bundle. Pipeline drafts get editorial region enrichment on load.
  */
 import releaseIndex from '../../data/releases/index.json';
 import meta from '../../data/meta.json';
+import { enrichReleaseRows } from './regionTaxonomy.js';
 
 const releaseModules = import.meta.glob('../../data/releases/*.json');
 
@@ -17,10 +19,15 @@ export const extendedDataReleaseOptions = releaseIndex.map((entry) => ({
   kind: entry.kind,
 }));
 
+/** Year stepper: interim releases only (newest → oldest per index order). */
+export const interimReleaseOptions = extendedDataReleaseOptions.filter(
+  (entry) => entry.kind === 'interim'
+);
+
 export const defaultReleaseKey =
   meta.defaultRelease ||
   extendedDataReleaseOptions[0]?.key ||
-  '2026';
+  '2026-draft';
 
 function entryFor(key) {
   return releaseIndex.find((e) => e.id === key) || null;
@@ -35,7 +42,7 @@ function resolveLoader(file) {
   return byName ? releaseModules[byName] : null;
 }
 
-/** Load one release array by index id (cached). */
+/** Load one release array by index id (cached; region-enriched). */
 export async function loadRelease(key) {
   if (cache.has(key)) return cache.get(key);
 
@@ -60,7 +67,8 @@ export async function loadRelease(key) {
   }
 
   const mod = await loader();
-  const rows = Array.isArray(mod.default) ? mod.default : [];
+  const raw = Array.isArray(mod.default) ? mod.default : [];
+  const rows = enrichReleaseRows(raw);
   cache.set(key, rows);
   return rows;
 }

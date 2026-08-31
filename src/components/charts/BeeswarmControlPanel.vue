@@ -1,18 +1,18 @@
 <template>
-  <div class="plot-control-panel">
+  <div class="plot-control-panel" :class="{ 'is-open': showSliders }">
     <button
       type="button"
       @click="togglePanel"
-      class="plot-control-toggle"
-      :class="{ 'is-open': showSliders }"
+      class="panel-toggle panel-toggle--plot"
       :aria-expanded="showSliders"
     >
-      <span class="plot-control-toggle-label">
-        <svg class="plot-control-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-        <span class="truncate">{{ showSliders ? 'Hide chart parameters' : 'Show chart parameters' }}</span>
+      <span class="panel-toggle-label">
+        <span class="truncate">
+          {{ showSliders ? 'Hide' : 'Show' }}
+          <span class="editorial-heading editorial-heading--ink">chart parameters</span>
+        </span>
       </span>
+      <span class="panel-toggle-icon" aria-hidden="true">{{ showSliders ? '▼' : '▶' }}</span>
     </button>
     <transition name="slide">
       <div v-if="showSliders" class="plot-control-inner">

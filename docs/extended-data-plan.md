@@ -128,7 +128,7 @@ Crowdsourced dataset lives at repo root under **`data/`** (see [`data/README.md`
 - **Content**: A single array of objects conforming to the schema above. No year key inside the file; the filename + `releases/index.json` indicate the release.
 - **Index**: `data/releases/index.json` - ordered list of `{ id, label, file, status, kind }` for the Origins table dropdown.
 - **Loader**: `src/data/extendedData.js` reads the index and **lazy-loads** release JSON (drafts stay out of the initial bundle).
-- **Carlines** (beeswarm / jitter): `data/carlines.json`, loaded by `src/data/initialData.js`; filter hierarchy is derived from those rows.
+- **Carlines / charts** (beeswarm / jitter / simple table): same `data/releases/*` rows as the Origins table (default `2026-draft`), loaded by `src/data/extendedData.js` with region enrichment from `src/data/regionTaxonomy.js`. Legacy `data/carlines.json` is unused by the UI.
 
 Adding a new release = add the JSON file under `data/releases/`, append a row to `data/releases/index.json`, and note it in `data/CHANGELOG.md`.
 

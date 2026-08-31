@@ -14,7 +14,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Chart',
+      default: 'Placeholder',
     },
     data: {
       type: Array,

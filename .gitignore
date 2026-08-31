@@ -19,6 +19,9 @@ npm-debug.log*
 Thumbs.db
 Desktop.ini
 
+# Experimental / scratch data extracts (not part of releases)
+data/processed/
+
 # Editors
 .idea/
 *.swp

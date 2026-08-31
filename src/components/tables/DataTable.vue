@@ -35,7 +35,7 @@
         <tbody class="data-table-tbody">
           <tr
             v-for="(row, index) in tableRows"
-            :key="row[config.id] + '-' + index"
+            :key="(row[config.id] || row[config.model] || index) + '-' + index"
             class="data-table-tr"
           >
             <td
@@ -47,6 +47,7 @@
               <span v-if="col.key === config.value" class="tabular-nums">
                 {{ formatValue(row[col.key]) }}
               </span>
+              <span v-else-if="col.key === config.model">{{ displayCarlineName(row) }}</span>
               <span v-else>{{ row[col.key] }}</span>
             </td>
           </tr>
@@ -59,6 +60,7 @@
 <script>
 import { ref, computed } from 'vue';
 import { dataConfig } from '../../data/dataConfig';
+import { displayCarlineName } from '../../utils/chartTooltip';
 
 export default {
   name: 'DataTable',
@@ -79,7 +81,7 @@ export default {
       { key: config.region, label: 'Region' },
       { key: config.corporation, label: 'Corporation' },
       { key: config.brand, label: 'Brand' },
-      { key: config.id, label: 'Model' },
+      { key: config.model, label: 'Model' },
       { key: config.value, label: 'Content %' }
     ];
 
@@ -95,7 +97,7 @@ export default {
       if (q) {
         rows = rows.filter((row) => {
           return columns.some((col) => {
-            const val = row[col.key];
+            const val = col.key === config.model ? displayCarlineName(row) : row[col.key];
             if (val == null) return false;
             return String(val).toLowerCase().includes(q);
           });
@@ -105,8 +107,8 @@ export default {
       const dir = sortDir.value;
       if (!key) return rows;
       rows.sort((a, b) => {
-        const va = a[key];
-        const vb = b[key];
+        const va = key === config.model ? displayCarlineName(a) : a[key];
+        const vb = key === config.model ? displayCarlineName(b) : b[key];
         const isNum = typeof va === 'number' && typeof vb === 'number';
         let cmp = 0;
         if (va == null && vb == null) cmp = 0;
@@ -128,7 +130,7 @@ export default {
       }
     };
 
-    return { config, columns, searchQuery, sortKey, sortDir, tableRows, formatValue, toggleSort };
+    return { config, columns, searchQuery, sortKey, sortDir, tableRows, formatValue, toggleSort, displayCarlineName };
   }
 };
 </script>

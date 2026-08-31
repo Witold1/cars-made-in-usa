@@ -9,48 +9,45 @@ data/
   meta.json              Dataset title, schema version, default release
   sources.json           Bibliography keyed by id (NHTSA, CFR, …)
   SOURCES.md             Human-readable source notes for parsers / editors
-  carlines.json          Core plot points (region, corporation, brand, value, id)
+  interim 2/             Manually cleaned AALA Excel (primary source for real data)
+  interim 1/             Earlier manual cleans; fallback when interim 2 is incomplete
+  carlines.json          Legacy synthetic plot points (unused by live UI)
   releases/
     index.json           Dropdown order + labels (array of release descriptors)
-    {id}.json            One Origins-table release file each
+    {id}.json            One release file each (charts + Origins table)
   README.md              This file
   CHANGELOG.md           Material data revisions
 ```
 
-Loaded by thin modules under `src/data/` (`initialData.js`, `extendedData.js`). Draft releases are lazy-loaded. See the root README for how to run the app. See **[SOURCES.md](./SOURCES.md)** for portals and release-file notes.
+Loaded by thin modules under `src/data/` (`extendedData.js` + region enrichment). Draft releases are lazy-loaded. **Rebuild** release JSON after editing interim Excel:
 
-## Carlines (`carlines.json`)
+```powershell
+py -m pip install -r scripts/requirements.txt
+npm run data:build
+```
 
-Array of plot points used by beeswarm, jitter, legend, and the simple table:
-
-| Field | Description |
-|-------|-------------|
-| `id` | Stable carline id |
-| `region` | `American` \| `European` \| `Asian` (app taxonomy) |
-| `corporation` | Parent company / group |
-| `brand` | Make |
-| `value` | U.S./Canadian equipment (parts) content, **0–100** |
-
-Filter hierarchy is **derived** from this file at load time (region → corporation → brands).
+See the root README for how to run the app. See **[SOURCES.md](./SOURCES.md)** for portals and release-file notes.
 
 ## Releases (`releases/`)
 
-One JSON array per release. Register it in `releases/index.json`:
+Charts (beeswarm / jitter / simple table) and the Origins table share the same release dropdown. Default is **`2026-draft`** (see `meta.json`). Pipeline drafts omit region in the raw JSON; the app fills `American` / `European` / `Asian` from `src/data/regionTaxonomy.js` on load.
+
+Register each file in `releases/index.json`:
 
 ```json
 {
-  "id": "2026",
-  "label": "2026",
-  "file": "2026.json",
-  "status": "published",
-  "kind": "mock"
+  "id": "2026-draft",
+  "label": "2026 (draft real data)",
+  "file": "2026-draft.json",
+  "status": "draft",
+  "kind": "pipeline"
 }
 ```
 
 | Field | Meaning |
 |-------|---------|
-| `status` | `published` (stable for UI) or `draft` (pipeline / real-data WIP) |
-| `kind` | `mock` (illustrative) or `pipeline` (parsed from a public NHTSA release) |
+| `status` | `published` (stable mock) or `draft` (real-data WIP) |
+| `kind` | `mock` (illustrative), `pipeline` (LLM parse), or `interim` (manual Excel → `scripts/build_releases_from_interim.py`) |
 
 Row schema (Origins table): [`docs/extended-data-plan.md`](../docs/extended-data-plan.md). Mark reported vs derived foreign totals with `foreignPartsTotalSource` / `foreignPartsNote`.
 
@@ -60,6 +57,11 @@ Row schema (Origins table): [`docs/extended-data-plan.md`](../docs/extended-data
 2. Append a descriptor to `releases/index.json` (order = dropdown order).
 3. Note the change in `CHANGELOG.md`.
 4. Link evidence in `sources.json` / `SOURCES.md` when applicable.
+5. If the release uses new manufacturer names, add them to `src/data/regionTaxonomy.js`.
+
+## Carlines (`carlines.json`)
+
+Legacy synthetic plot file. The live dashboard no longer imports it; kept for historical comparison and offline experiments.
 
 ## Editing
 

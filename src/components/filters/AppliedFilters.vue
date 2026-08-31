@@ -1,12 +1,12 @@
 <template>
-  <div class="mt-3 pt-3 border-t border-border">
-    <p class="editorial-heading mb-1.5">Applied</p>
-    <div v-if="appliedFilters.length > 0" class="max-h-32 overflow-y-auto">
-      <ul class="editorial-label space-y-0.5">
+  <div class="filter-section applied-filters" :class="{ 'has-filters': appliedFilters.length > 0 }">
+    <div class="applied-filters-heading editorial-heading editorial-heading--ink">Applied filters</div>
+    <div class="applied-filters-body">
+      <ul v-if="appliedFilters.length > 0" class="applied-filters-list max-h-32 overflow-y-auto">
         <li v-for="(filter, i) in appliedFilters" :key="i">{{ filter }}</li>
       </ul>
+      <p v-else class="applied-filters-empty">None</p>
     </div>
-    <p v-else class="editorial-label">None</p>
   </div>
 </template>
 
@@ -15,6 +15,6 @@ export default {
   name: 'AppliedFilters',
   props: {
     appliedFilters: Array,
-  }
+  },
 };
 </script>

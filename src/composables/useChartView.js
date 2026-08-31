@@ -1,5 +1,4 @@
-import { ref, computed, watch } from 'vue';
-import { initialData } from '../data/initialData';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import {
   extendedDataReleaseOptions,
   defaultReleaseKey,
@@ -15,6 +14,11 @@ import {
   getChartGuideTitle,
   getChartGuideBody,
 } from '../config/chartGuides';
+import { mqMax } from '../config/breakpoints';
+import { siteSubtitlePlain } from '../config/siteFooter';
+
+const CHART_HEIGHT_MAX = 600;
+const CHART_HEIGHT_MOBILE_MQ = mqMax('md');
 
 const DEFAULT_PLOT = {
   chartHeight: 400,
@@ -34,12 +38,24 @@ const JITTER_PLOT = {
   paddingFactor: 1,
 };
 
+function isSmallScreen() {
+  return typeof window !== 'undefined' && window.matchMedia(CHART_HEIGHT_MOBILE_MQ).matches;
+}
+
+function defaultChartHeight(chartType) {
+  if (isSmallScreen() && (chartType === 'beeswarm' || chartType === 'jitter')) {
+    return CHART_HEIGHT_MAX;
+  }
+  return chartType === 'jitter' ? JITTER_PLOT.chartHeight : DEFAULT_PLOT.chartHeight;
+}
+
 export const PNG_EXPORT_MODE_OPTIONS = [
   { value: 'wys', label: 'WYS', title: 'What you see - export the chart as currently laid out' },
   { value: 'fw', label: 'FW', title: 'Full width - reflow at 1200px for sharing on phones' },
 ];
 
 export function useChartView({
+  plotSource,
   filteredData,
   selectedPoint,
   handleApplyFilters,
@@ -48,9 +64,8 @@ export function useChartView({
   const selectedChartType = ref('beeswarm');
   const pngExportMode = ref('wys'); // wys | fw
   const extendedDataReleaseKey = ref(defaultReleaseKey);
-  const releaseRows = ref([]);
   const releaseLoading = ref(false);
-  const chartHeight = ref(DEFAULT_PLOT.chartHeight);
+  const chartHeight = ref(defaultChartHeight('beeswarm'));
   const pointRadius = ref(DEFAULT_PLOT.pointRadius);
   const paddingFactor = ref(DEFAULT_PLOT.paddingFactor);
   const center0 = ref(DEFAULT_PLOT.center0);
@@ -71,22 +86,46 @@ export function useChartView({
     try {
       const rows = await loadRelease(key);
       if (seq !== releaseLoadSeq) return;
-      releaseRows.value = rows;
+      plotSource.value = rows;
     } catch (err) {
       console.error(err);
-      if (seq === releaseLoadSeq) releaseRows.value = [];
+      if (seq === releaseLoadSeq) plotSource.value = [];
     } finally {
       if (seq === releaseLoadSeq) releaseLoading.value = false;
     }
   };
 
-  watch(extendedDataReleaseKey, (key) => {
-    refreshReleaseRows(key);
-  }, { immediate: true });
+  watch(
+    extendedDataReleaseKey,
+    (key, prev) => {
+      // Reset hierarchy selections when the user switches release (not on first load).
+      if (prev !== undefined) clearFilterSelections();
+      refreshReleaseRows(key);
+    },
+    { immediate: true }
+  );
+
+  let chartHeightBeforeMobile = null;
+  const mobileChartMq =
+    typeof window !== 'undefined' ? window.matchMedia(CHART_HEIGHT_MOBILE_MQ) : null;
+
+  const syncChartHeightToViewport = (chartType = selectedChartType.value) => {
+    if (chartType !== 'beeswarm' && chartType !== 'jitter') return;
+    if (mobileChartMq?.matches) {
+      if (chartHeight.value !== CHART_HEIGHT_MAX) {
+        chartHeightBeforeMobile = chartHeight.value;
+        chartHeight.value = CHART_HEIGHT_MAX;
+      }
+    } else if (chartHeightBeforeMobile != null) {
+      chartHeight.value = chartHeightBeforeMobile;
+      chartHeightBeforeMobile = null;
+    }
+  };
 
   const resetPlotParams = (chartType = selectedChartType.value) => {
     const isJitter = chartType === 'jitter';
-    chartHeight.value = isJitter ? JITTER_PLOT.chartHeight : DEFAULT_PLOT.chartHeight;
+    chartHeightBeforeMobile = null;
+    chartHeight.value = defaultChartHeight(chartType);
     pointRadius.value = isJitter ? JITTER_PLOT.pointRadius : DEFAULT_PLOT.pointRadius;
     paddingFactor.value = isJitter ? JITTER_PLOT.paddingFactor : DEFAULT_PLOT.paddingFactor;
     center0.value = DEFAULT_PLOT.center0;
@@ -122,7 +161,7 @@ export function useChartView({
   const handleResetFilters = () => {
     clearFilterSelections();
     resetPlotParams('beeswarm');
-    log('Filters Reset:', { filteredDataCount: initialData.length });
+    log('Filters Reset:', { filteredDataCount: plotSource.value.length });
   };
 
   const setLastRenderMs = (ms) => {
@@ -131,7 +170,7 @@ export function useChartView({
 
   const extendedTableData = computed(() => {
     if (selectedChartType.value === 'table-extended') {
-      return releaseRows.value;
+      return plotSource.value;
     }
     return filteredData.value;
   });
@@ -141,7 +180,12 @@ export function useChartView({
     return extendedDataReleaseOptions.find((o) => o.key === k)?.label || k;
   });
 
-  const extendedDataLength = computed(() => releaseRows.value.length);
+  const reportYear = computed(() => {
+    const m = String(extendedDataReleaseKey.value || '').match(/^(\d{4})/);
+    return m ? m[1] : extendedReleaseLabel.value;
+  });
+
+  const extendedDataLength = computed(() => plotSource.value.length);
 
   const chartComponent = computed(() => getChartComponentName(selectedChartType.value));
   const chartTitle = computed(() => getChartTitle(selectedChartType.value));
@@ -149,14 +193,16 @@ export function useChartView({
   const chartGuideBody = computed(() => getChartGuideBody(selectedChartType.value));
 
   const chartCountLabel = computed(() => {
+    if (releaseLoading.value) {
+      return `Loading ${reportYear.value}…`;
+    }
     if (selectedChartType.value === 'table-extended') {
-      if (releaseLoading.value) return `Loading ${extendedReleaseLabel.value}…`;
-      return `${extendedDataLength.value} rows (${extendedReleaseLabel.value})`;
+      return `${extendedDataLength.value} rows`;
     }
     if (selectedChartType.value === 'table') {
       return `${filteredData.value.length} rows`;
     }
-    return `${filteredData.value.length} / ${initialData.length} car lines`;
+    return `${filteredData.value.length} / ${extendedDataLength.value} car lines`;
   });
 
   const exportChartPng = async () => {
@@ -170,9 +216,8 @@ export function useChartView({
         expandRoot: card,
         findSvg: () => card.querySelector('svg[data-export="chart"]'),
         title: 'How American Is Your Car?',
-        subtitle:
-          "U.S. and Canadian parts content reported under NHTSA's American Automobile Labeling Act (Part 583).",
-        meta: `${filteredData.value.length} / ${initialData.length} car lines · ${selectedChartType.value} view`,
+        subtitle: siteSubtitlePlain,
+        meta: `${filteredData.value.length} / ${extendedDataLength.value} car lines · ${reportYear.value} report · ${selectedChartType.value} view`,
       });
     } catch (err) {
       console.error(err);
@@ -181,6 +226,19 @@ export function useChartView({
       exportingPng.value = false;
     }
   };
+
+  const onMobileChartHeightChange = () => {
+    syncChartHeightToViewport();
+  };
+
+  onMounted(() => {
+    syncChartHeightToViewport();
+    mobileChartMq?.addEventListener('change', onMobileChartHeightChange);
+  });
+
+  onUnmounted(() => {
+    mobileChartMq?.removeEventListener('change', onMobileChartHeightChange);
+  });
 
   return {
     selectedChartType,

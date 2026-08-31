@@ -18,6 +18,9 @@
       @update:spread1="updateSpread1($event)"
       @update:seed="updateSeed($event)"
     />
+    <div v-if="$slots['release-stepper']" class="release-stepper-block">
+      <slot name="release-stepper" />
+    </div>
     <div ref="svgRef" class="chart-frame w-full"></div>
   </div>
 </template>
@@ -26,7 +29,7 @@
 import { ref, watch, onMounted, onUnmounted, inject } from 'vue';
 import * as d3 from 'd3';
 import { AccurateBeeswarm } from 'accurate-beeswarm-plot';
-import { renderPoint, updatePointAttributes, renderAverageLine, renderAverageLineVertical, renderGridlinesHorizontal, renderGridlinesVertical, applyNoise } from '../../utils/chartUtils';
+import { renderPoint, updatePointAttributes, renderAverageLine, renderAverageLineVertical, renderGridlinesHorizontal, renderGridlinesVertical, applyNoise, CHART_TICK } from '../../utils/chartUtils';
 import { log, error as logError } from '../../utils/logger';
 import { readThemeTokens } from '../../utils/themeTokens';
 import { showPointTooltip, hideChartTooltip } from '../../utils/chartTooltip';
@@ -73,7 +76,7 @@ export default {
       hoverRadius: (props.pointRadius || 5.5) + 2,
       width: 800,
       height: props.chartHeight || 400,
-      margin: { top: 20, right: 20, bottom: 40, left: 40 },
+      margin: { top: 20, right: 20, bottom: 32, left: 40 },
       paddingFactor: props.paddingFactor || 1.3
     });
     const isDarkMode = ref(document.documentElement.classList.contains('dark'));
@@ -203,9 +206,12 @@ export default {
 
         let pointsToRender = beeswarm;
         if (isVertical) {
-          const leftMargin = Math.max(margin.left, 52);
-          const plotWidth = parentWidth - leftMargin - margin.right;
-          const vertMargin = { ...margin, left: leftMargin };
+          // Narrow side gutters; Y ticks centered in the left band
+          const leftMargin = 28;
+          const rightMargin = 8;
+          const plotWidth = parentWidth - leftMargin - rightMargin;
+          const vertMargin = { ...margin, left: leftMargin, right: rightMargin };
+          const tickX = leftMargin / 2;
           const yMin = margin.top;
           const yMax = height - margin.bottom;
           const yScale = d3.scaleLinear()
@@ -228,7 +234,7 @@ export default {
           renderAverageLineVertical(svg, yScale, formattedData, parentWidth, height, vertMargin);
           const gridStroke = themeTokens.value.yearLineMajor;
           const x1 = leftMargin;
-          const x2 = parentWidth - margin.right;
+          const x2 = parentWidth - rightMargin;
           [props.center0, props.center1].forEach((val, i) => {
             const yRaw = yScale(val);
             const y = Math.max(yMin, Math.min(yMax, yRaw));
@@ -241,14 +247,14 @@ export default {
               .attr("stroke", gridStroke)
               .attr("stroke-width", 0.5);
             svg.append("text")
-              .attr("x", leftMargin - 8)
+              .attr("x", tickX)
               .attr("y", y)
-              .attr("text-anchor", "end")
+              .attr("text-anchor", "middle")
               .attr("dominant-baseline", "middle")
-              .attr("font-size", "11px")
+              .attr("font-size", CHART_TICK.fontMajor)
               .attr("font-family", themeTokens.value.fontChart)
               .attr("fill", themeTokens.value.textMuted)
-              .text(i === 0 ? "0%" : "1%");
+              .text(i === 0 ? "0%" : "1");
           });
         } else {
           // Gridlines at 10, 20, 30, ... then average + 0% / 1% on top
@@ -266,12 +272,13 @@ export default {
               .attr("stroke-width", 0.5);
             svg.append("text")
               .attr("x", x)
-              .attr("y", height - margin.bottom + 14)
+              .attr("y", height - margin.bottom + CHART_TICK.gapBottom)
               .attr("text-anchor", "middle")
-              .attr("font-size", "11px")
+              .attr("dominant-baseline", "hanging")
+              .attr("font-size", CHART_TICK.fontMajor)
               .attr("font-family", themeTokens.value.fontChart)
               .attr("fill", themeTokens.value.textMuted)
-              .text(i === 0 ? "0%" : "1%");
+              .text(i === 0 ? "0%" : "1");
           });
         }
 

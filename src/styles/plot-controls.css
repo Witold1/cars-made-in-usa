@@ -1,66 +1,112 @@
 @layer components {
   .plot-control-panel {
-    @apply w-full mb-4;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+    overflow: visible;
+    background: var(--input-bg);
   }
-  .plot-control-toggle {
-    @apply w-full text-left py-1.5 flex items-center gap-2 text-sm font-medium text-ink-secondary hover:text-ink transition-colors border-0 bg-transparent cursor-pointer;
+
+  .plot-control-panel > .panel-toggle {
+    border-radius: var(--radius);
   }
-  .plot-control-toggle-label {
-    @apply min-w-0 flex items-center gap-1.5;
+
+  .plot-control-panel.is-open > .panel-toggle {
+    border-radius: var(--radius) var(--radius) 0 0;
   }
-  .plot-control-toggle-icon {
-    @apply w-3.5 h-3.5 flex-shrink-0 transition-transform;
-    color: var(--text-muted);
+
+  .release-stepper-block {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 0 0.5rem;
+    padding: 0.45rem var(--panel-pad);
+    border-radius: var(--radius);
+    background: var(--input-bg);
   }
-  .plot-control-toggle.is-open .plot-control-toggle-icon {
-    transform: rotate(90deg);
+
+  .release-stepper-block .release-stepper {
+    margin-bottom: 0;
   }
-  .plot-control-toggle:hover .plot-control-toggle-icon {
-    color: var(--text);
-  }
-  .panel-section-title {
-    margin: 0 0 0.75rem;
-    font-family: var(--font);
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--text);
-  }
+
   .plot-control-inner {
-    @apply pt-3 pb-1 border-t border-border mt-1;
+    padding: 0 var(--panel-pad) var(--panel-pad);
   }
+
   .plot-controls {
-    @apply max-w-2xl;
+    max-width: 42rem;
   }
+
   .plot-control-list {
-    @apply grid gap-x-6 gap-y-2.5;
+    display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
+
+  /* bp-sm — sync src/config/breakpoints.js */
   @media (max-width: 480px) {
+    .plot-controls {
+      max-width: none;
+    }
+
     .plot-control-list {
-      grid-template-columns: 1fr;
+      gap: 0.75rem;
     }
   }
+
   .plot-control-item {
-    @apply contents;
+    display: contents;
   }
+
   .plot-control-item .plot-control-label {
-    @apply text-xs font-normal text-ink-muted tracking-tight self-center;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    align-self: center;
+    position: relative;
+    font-family: var(--font);
+    font-size: var(--type-sm-size);
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--text);
   }
+
   .plot-control-item .plot-control-inputs {
-    @apply flex items-center gap-2 min-w-0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    min-height: 2rem;
   }
+
   .plot-control-item .plot-control-inputs input[type="range"] {
-    @apply flex-1 min-w-0;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 1.25rem;
     accent-color: var(--accent);
+    cursor: pointer;
   }
+
   .plot-control-item .plot-control-inputs input[type="number"] {
-    @apply flex-shrink-0 text-right text-xs font-mono text-ink-secondary bg-transparent border-b border-border rounded-none py-0.5 px-1 w-14 focus:ring-0;
+    flex: 0 0 auto;
+    width: 3.75rem;
+    padding: 0.3rem 0.4rem;
+    font-family: var(--mono);
+    font-size: var(--type-sm-size);
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: right;
+    color: var(--text);
+    background: var(--row-alt);
+    border: none;
+    border-radius: var(--radius);
   }
-  .plot-control-item .plot-control-inputs input[type="number"]:focus {
-    border-color: var(--border-light);
+
+  .plot-control-item .plot-control-inputs input[type="number"]:focus,
+  .plot-control-item .plot-control-inputs input[type="number"]:focus-visible {
     outline: none;
+    box-shadow: var(--focus-ring);
   }
+
   .plot-control-reset {
     margin-top: 0.75rem;
   }

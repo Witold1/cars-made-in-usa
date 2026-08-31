@@ -41,14 +41,6 @@
   .data-table-detail-section--full {
     grid-column: 1 / -1;
   }
-  .data-table-detail-label {
-    font-family: var(--font);
-    font-size: var(--type-label-size);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: var(--type-label-tracking);
-    color: var(--text-muted);
-  }
   .data-table-detail-text {
     @apply leading-snug;
   }

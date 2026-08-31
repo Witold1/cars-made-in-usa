@@ -1,5 +1,6 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { log } from '../utils/logger';
+import { BREAKPOINTS, mqMax, mqMin } from '../config/breakpoints';
 
 export const PAGE_LAYOUT_OPTIONS = [
   { value: 'auto', label: 'Auto' },
@@ -16,12 +17,16 @@ export const CHART_ORIENTATION_OPTIONS = [
 export function useDashboardLayout({ filtersOpen, selectedChartType }) {
   const settingsOpen = ref(false);
   const settingsRef = ref(null);
-  const headerCompact = ref(false);
+  const headerActionsOpen = ref(false);
   const pageLayout = ref('auto'); // auto | wide | stacked
   const chartOrientation = ref('auto'); // auto | horizontal | vertical
-  const viewportWide = ref(typeof window !== 'undefined' ? window.innerWidth >= 1280 : true);
+  const viewportWide = ref(
+    typeof window !== 'undefined' ? window.innerWidth >= BREAKPOINTS['2xl'] : true
+  );
 
-  const mediaQuery = typeof window !== 'undefined' ? window.matchMedia('(min-width: 1280px)') : null;
+  const mediaQuery = typeof window !== 'undefined' ? window.matchMedia(mqMin('2xl')) : null;
+  const mobileHeaderMq =
+    typeof window !== 'undefined' ? window.matchMedia(mqMax('xl')) : null;
 
   const updateViewportWide = () => {
     if (mediaQuery) viewportWide.value = mediaQuery.matches;
@@ -46,21 +51,28 @@ export function useDashboardLayout({ filtersOpen, selectedChartType }) {
     log('Chart orientation:', value);
   };
 
+  const toggleHeaderActions = () => {
+    headerActionsOpen.value = !headerActionsOpen.value;
+    if (!headerActionsOpen.value) settingsOpen.value = false;
+  };
+
+  const onMobileHeaderChange = (event) => {
+    if (!event.matches) {
+      headerActionsOpen.value = false;
+      settingsOpen.value = false;
+    }
+  };
+
   const onSettingsPointerDown = (event) => {
     if (!settingsOpen.value || !settingsRef.value) return;
     if (!settingsRef.value.contains(event.target)) settingsOpen.value = false;
   };
 
   const onSettingsKeydown = (event) => {
-    if (event.key === 'Escape') settingsOpen.value = false;
-  };
-
-  const updateHeaderCompact = () => {
-    if (typeof window === 'undefined') return;
-    const isSmall = window.matchMedia('(max-width: 960px)').matches;
-    const next = isSmall && window.scrollY > 12;
-    if (next && !headerCompact.value) settingsOpen.value = false;
-    headerCompact.value = next;
+    if (event.key === 'Escape') {
+      settingsOpen.value = false;
+      if (mobileHeaderMq?.matches) headerActionsOpen.value = false;
+    }
   };
 
   onMounted(() => {
@@ -68,25 +80,25 @@ export function useDashboardLayout({ filtersOpen, selectedChartType }) {
       mediaQuery.addEventListener('change', updateViewportWide);
       updateViewportWide();
     }
+    if (mobileHeaderMq) {
+      mobileHeaderMq.addEventListener('change', onMobileHeaderChange);
+    }
     document.addEventListener('pointerdown', onSettingsPointerDown);
     document.addEventListener('keydown', onSettingsKeydown);
-    window.addEventListener('scroll', updateHeaderCompact, { passive: true });
-    window.addEventListener('resize', updateHeaderCompact);
-    updateHeaderCompact();
   });
 
   onUnmounted(() => {
     if (mediaQuery) mediaQuery.removeEventListener('change', updateViewportWide);
+    if (mobileHeaderMq) mobileHeaderMq.removeEventListener('change', onMobileHeaderChange);
     document.removeEventListener('pointerdown', onSettingsPointerDown);
     document.removeEventListener('keydown', onSettingsKeydown);
-    window.removeEventListener('scroll', updateHeaderCompact);
-    window.removeEventListener('resize', updateHeaderCompact);
   });
 
   return {
     settingsOpen,
     settingsRef,
-    headerCompact,
+    headerActionsOpen,
+    toggleHeaderActions,
     pageLayout,
     pageLayoutOptions: PAGE_LAYOUT_OPTIONS,
     setPageLayout,

@@ -1,6 +1,6 @@
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { applyFilters } from '../utils/filterUtils';
-import { initialData, hierarchy } from '../data/initialData';
+import { buildHierarchy } from '../data/hierarchy.js';
 import {
   toggleRegionSelection,
   toggleCorporationSelection,
@@ -9,27 +9,32 @@ import {
 import { log } from '../utils/logger';
 import { isEmojiShape } from '../utils/chartUtils';
 
-export function useDashboardFilters() {
+/**
+ * @param {import('vue').Ref<Array>} sourceData - full plot rows for the active release
+ */
+export function useDashboardFilters(sourceData) {
   const selectedRegions = ref([]);
   const selectedCorporations = ref([]);
   const selectedBrands = ref([]);
-  const filteredData = ref(initialData);
+  const filteredData = ref([]);
   const selectedPoint = ref(null);
   const markerStyles = ref({});
   const showAdvancedCustomization = ref(false);
   const enableEmojiMarkers = ref(false);
 
-  const regions = computed(() => Object.keys(hierarchy).sort());
+  const hierarchy = computed(() => buildHierarchy(sourceData.value));
+
+  const regions = computed(() => Object.keys(hierarchy.value).sort());
   const corporations = computed(() =>
-    [...new Set(Object.values(hierarchy).flatMap((r) => Object.keys(r)))].sort()
+    [...new Set(Object.values(hierarchy.value).flatMap((r) => Object.keys(r)))].sort()
   );
   const brands = computed(() =>
-    [...new Set(Object.values(hierarchy).flatMap((r) => Object.values(r).flat()))].sort()
+    [...new Set(Object.values(hierarchy.value).flatMap((r) => Object.values(r).flat()))].sort()
   );
 
   const handleApplyFilters = () => {
     const filtered = applyFilters(
-      initialData,
+      sourceData.value,
       selectedRegions.value,
       selectedCorporations.value,
       selectedBrands.value
@@ -44,9 +49,24 @@ export function useDashboardFilters() {
     });
   };
 
+  const clearFilterSelections = () => {
+    selectedRegions.value = [];
+    selectedCorporations.value = [];
+    selectedBrands.value = [];
+    filteredData.value = sourceData.value;
+    markerStyles.value = {};
+    showAdvancedCustomization.value = false;
+    selectedPoint.value = null;
+  };
+
+  // Re-filter when the active release rows change; keep selections (URL / UI).
+  watch(sourceData, () => {
+    handleApplyFilters();
+  });
+
   const handleRegionChange = (region) => {
     const updated = toggleRegionSelection(
-      hierarchy,
+      hierarchy.value,
       region,
       selectedRegions.value,
       selectedCorporations.value,
@@ -61,7 +81,7 @@ export function useDashboardFilters() {
 
   const handleCorporationChange = (corp) => {
     const updated = toggleCorporationSelection(
-      hierarchy,
+      hierarchy.value,
       corp,
       selectedRegions.value,
       selectedCorporations.value,
@@ -76,7 +96,7 @@ export function useDashboardFilters() {
 
   const handleBrandChange = (brand) => {
     const updated = toggleBrandSelection(
-      hierarchy,
+      hierarchy.value,
       brand,
       selectedRegions.value,
       selectedCorporations.value,
@@ -92,16 +112,6 @@ export function useDashboardFilters() {
       newCorporations: selectedCorporations.value,
       newRegions: selectedRegions.value,
     });
-  };
-
-  const clearFilterSelections = () => {
-    selectedRegions.value = [];
-    selectedCorporations.value = [];
-    selectedBrands.value = [];
-    filteredData.value = initialData;
-    markerStyles.value = {};
-    showAdvancedCustomization.value = false;
-    selectedPoint.value = null;
   };
 
   const updateMarkerStyles = (newStyles) => {
