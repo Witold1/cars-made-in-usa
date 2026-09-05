@@ -18,14 +18,12 @@
   --radius: 2px;
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 
-  /* Type scale — 1rem body baseline; nothing critical below 0.875rem */
+  /* Type scale — title + 1rem UI (no smaller reading sizes) */
   --type-title-size: 2.375rem; /* page titles */
-  --type-ui-size: 1rem; /* body, UI controls, subtitle */
-  --type-sm-size: 0.875rem; /* captions, tooltips, secondary UI */
-  --type-label-size: 0.75rem; /* uppercase section labels (floor) */
+  --type-ui-size: 1rem; /* body, controls, labels, captions */
   --type-title-tracking: -0.015em;
   --type-body-tracking: 0.01em;
-  --type-label-tracking: 0.08em;
+  --type-label-tracking: 0.08em; /* uppercase labels; size stays --type-ui-size */
 
   /* Layout shell */
   --layout-max: 1320px;
@@ -44,15 +42,15 @@
   --space-xl: 0.85rem;
   --space-2xl: 1.5rem;
 
-  /* Light - neutral gray & white (no warm beige) */
+  /* Light - white page, gray active panels (no warm beige) */
   color-scheme: light;
-  --bg: #f4f5f7;
-  --chart-bg: #ffffff;
-  --chart-bg-alt: #eef0f3;
-  --surface: #ffffff;
-  --surface-2: #e4e7eb;
-  --border: #d0d4da;
-  --border-light: #bcc2ca;
+  --bg: #ffffff;
+  --chart-bg: #e8eaee;
+  --chart-bg-alt: #dde1e6;
+  --surface: #e8eaee;
+  --surface-2: #d4d8de;
+  --border: #c5cad1;
+  --border-light: #b0b6bf;
   --text: #000000;
   /* One ink for accessibility — no gray hierarchy */
   --text-secondary: var(--text);
@@ -60,13 +58,14 @@
 
   --independence: #8f6f1a;
   --independence-halo: rgba(143, 111, 26, 0.28);
+  --avg-line: #111111;
 
-  --year-line: rgba(28, 28, 26, 0.06);
-  --year-line-major: rgba(28, 28, 26, 0.2);
+  --year-line: rgba(28, 28, 26, 0.1);
+  --year-line-major: rgba(28, 28, 26, 0.34);
 
-  --row-alt: rgba(28, 28, 26, 0.028);
+  --row-alt: rgba(28, 28, 26, 0.04);
   --tooltip-shadow: 0 6px 24px rgba(28, 28, 26, 0.12);
-  --input-bg: #ffffff;
+  --input-bg: #e8eaee;
 
   --palette-1: #9e5849;
   --palette-2: #9a7428;
@@ -83,26 +82,27 @@ html.dark,
 
   --accent: #4f7f9c;
 
-  --bg: #121316;
-  --chart-bg: #181a1f;
-  --chart-bg-alt: #1e2128;
-  --surface: #1c1f24;
-  --surface-2: #252930;
-  --border: #353a44;
-  --border-light: #434956;
+  --bg: #0e0f12;
+  --chart-bg: #1c1f26;
+  --chart-bg-alt: #242830;
+  --surface: #1c1f26;
+  --surface-2: #2a2f38;
+  --border: #3d4350;
+  --border-light: #4e5564;
   --text: #f4f2ec;
   --text-secondary: var(--text);
   --text-muted: var(--text);
 
   --independence: #d4af37;
   --independence-halo: rgba(212, 175, 55, 0.35);
+  --avg-line: #f4f2ec;
 
-  --year-line: rgba(244, 242, 236, 0.055);
-  --year-line-major: rgba(244, 242, 236, 0.2);
+  --year-line: rgba(244, 242, 236, 0.12);
+  --year-line-major: rgba(244, 242, 236, 0.4);
 
-  --row-alt: rgba(255, 255, 255, 0.022);
+  --row-alt: rgba(255, 255, 255, 0.035);
   --tooltip-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
-  --input-bg: #14161a;
+  --input-bg: #1c1f26;
 
   --palette-1: #b86b5c;
   --palette-2: #b8923a;

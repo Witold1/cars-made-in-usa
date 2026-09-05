@@ -187,9 +187,9 @@ export function updatePointAttributes(g, d, state, radius, hoverRadius, height, 
 
 /** Shared value-axis tick chrome (beeswarm grid labels + jitter axis). */
 export const CHART_TICK = {
-  fontMajor: '13px',
-  fontMinor: '13px',
-  fontAvg: '14px',
+  fontMajor: '1rem',
+  fontMinor: '1rem',
+  fontAvg: '1rem',
   /** Distance from plot edge to label (bottom axis). */
   gapBottom: 8,
   /** Distance from plot edge to label (left / vertical axis). */
@@ -289,6 +289,34 @@ export function renderGridlinesHorizontal(svg, xScale, height, margin, minValue,
   });
 }
 
+/** 0% / 1 reference lines + labels (horizontal value axis). */
+export function renderZeroOneTicksHorizontal(svg, xScale, height, margin, center0 = 0, center1 = 1) {
+  const t = readThemeTokens();
+  const stroke = t.yearLineMajor;
+  const y1 = margin.top;
+  const y2 = height - margin.bottom;
+  [center0, center1].forEach((val, i) => {
+    const x = xScale(val);
+    if (!Number.isFinite(x)) return;
+    svg.append('line')
+      .attr('x1', x)
+      .attr('x2', x)
+      .attr('y1', y1)
+      .attr('y2', y2)
+      .attr('stroke', stroke)
+      .attr('stroke-width', 0.5);
+    svg.append('text')
+      .attr('x', x)
+      .attr('y', height - margin.bottom + CHART_TICK.gapBottom)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'hanging')
+      .attr('font-size', CHART_TICK.fontMajor)
+      .attr('font-family', t.fontChart)
+      .attr('fill', t.textMuted)
+      .text(i === 0 ? '0%' : '1');
+  });
+}
+
 /** Horizontal gridlines at 10, 20, 30, ... with labels (vertical layout). Minor at 5, 15, 25, ... */
 export function renderGridlinesVertical(svg, yScale, width, height, margin, minValue, maxValue) {
   const t = readThemeTokens();
@@ -340,22 +368,55 @@ export function renderGridlinesVertical(svg, yScale, width, height, margin, minV
   });
 }
 
+/** Zig-zag path along a vertical axis (value-on-X charts). */
+function zigzagPathVertical(x, y1, y2, amplitude = 3.5, step = 7) {
+  const len = Math.abs(y2 - y1);
+  if (!Number.isFinite(x) || !Number.isFinite(len) || len < 1) {
+    return `M${x},${y1}L${x},${y2}`;
+  }
+  const dir = y2 >= y1 ? 1 : -1;
+  const parts = [`M${x},${y1}`];
+  let i = 0;
+  for (let d = step; d < len; d += step, i += 1) {
+    const side = i % 2 === 0 ? amplitude : -amplitude;
+    parts.push(`L${x + side},${y1 + dir * d}`);
+  }
+  parts.push(`L${x},${y2}`);
+  return parts.join('');
+}
+
+/** Zig-zag path along a horizontal axis (value-on-Y charts). */
+function zigzagPathHorizontal(y, x1, x2, amplitude = 3.5, step = 7) {
+  const len = Math.abs(x2 - x1);
+  if (!Number.isFinite(y) || !Number.isFinite(len) || len < 1) {
+    return `M${x1},${y}L${x2},${y}`;
+  }
+  const dir = x2 >= x1 ? 1 : -1;
+  const parts = [`M${x1},${y}`];
+  let i = 0;
+  for (let d = step; d < len; d += step, i += 1) {
+    const side = i % 2 === 0 ? amplitude : -amplitude;
+    parts.push(`L${x1 + dir * d},${y + side}`);
+  }
+  parts.push(`L${x2},${y}`);
+  return parts.join('');
+}
+
 export function renderAverageLine(svg, xScale, data, height, margin) {
   const t = readThemeTokens();
-  const strokeColor = t.palette5;
+  const strokeColor = t.avgLine;
   if (data.length > 0) {
     const averageValue = data.reduce((sum, d) => sum + d.originalValue, 0) / data.length;
-    svg.append("line")
-      .attr("x1", xScale(averageValue))
-      .attr("x2", xScale(averageValue))
-      .attr("y1", margin.top)
-      .attr("y2", height - margin.bottom)
-      .attr("stroke", strokeColor)
-      .attr("stroke-dasharray", "8,4")
-      .attr("stroke-width", 1);
+    const x = xScale(averageValue);
+    svg.append('path')
+      .attr('d', zigzagPathVertical(x, margin.top, height - margin.bottom))
+      .attr('fill', 'none')
+      .attr('stroke', strokeColor)
+      .attr('stroke-width', 1.25)
+      .attr('stroke-linejoin', 'miter');
 
     svg.append("text")
-      .attr("x", xScale(averageValue))
+      .attr("x", x)
       .attr("y", margin.top - 5)
       .attr("text-anchor", "middle")
       .attr("font-size", CHART_TICK.fontAvg)
@@ -369,21 +430,19 @@ export function renderAverageLine(svg, xScale, data, height, margin) {
 /** Horizontal average line for vertical (value-on-Y) layout. Label inside chart at right edge. */
 export function renderAverageLineVertical(svg, yScale, data, width, height, margin) {
   const t = readThemeTokens();
-  const strokeColor = t.palette5;
+  const strokeColor = t.avgLine;
   if (data.length > 0) {
     const averageValue = data.reduce((sum, d) => sum + d.originalValue, 0) / data.length;
     const yRaw = yScale(averageValue);
     const y = Math.max(margin.top, Math.min(height - margin.bottom, yRaw));
     const x1 = margin.left;
     const x2 = width - margin.right;
-    svg.append("line")
-      .attr("x1", x1)
-      .attr("x2", x2)
-      .attr("y1", y)
-      .attr("y2", y)
-      .attr("stroke", strokeColor)
-      .attr("stroke-dasharray", "8,4")
-      .attr("stroke-width", 1);
+    svg.append('path')
+      .attr('d', zigzagPathHorizontal(y, x1, x2))
+      .attr('fill', 'none')
+      .attr('stroke', strokeColor)
+      .attr('stroke-width', 1.25)
+      .attr('stroke-linejoin', 'miter');
 
     svg.append("text")
       .attr("x", x2 - 6)

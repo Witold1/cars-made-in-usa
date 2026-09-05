@@ -5,23 +5,16 @@
     gap: 0.35em;
   }
   .export-link .export-icon {
-    display: inline-flex;
-    flex-shrink: 0;
-    color: inherit;
-    opacity: 0.85;
-    text-decoration: none;
-  }
-  .export-link .export-icon svg {
-    display: block;
     width: 13px;
     height: 13px;
+    opacity: 0.85;
   }
   .export-link:hover .export-icon {
     opacity: 1;
   }
 
   .editorial-select {
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 400;
     color: var(--text);
     background-color: var(--input-bg);
@@ -55,7 +48,7 @@
 
   .release-stepper-heading {
     flex-shrink: 0;
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-secondary);
@@ -80,7 +73,7 @@
     background: transparent;
     color: var(--text);
     font-family: var(--font);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-style: italic;
     line-height: 1.2;
     letter-spacing: 0.02em;
@@ -117,7 +110,7 @@
     min-width: 2.5rem;
     padding: 0 0.15rem;
     font-family: var(--font);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     line-height: 1;
     font-variant-numeric: tabular-nums;
@@ -151,7 +144,7 @@
     background: transparent;
     color: var(--text-secondary);
     font-family: var(--font);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     font-weight: 400;
     font-style: italic;
     letter-spacing: 0.1em;
@@ -180,7 +173,7 @@
     border-right: 1px solid var(--border);
     background: transparent;
     color: var(--text-secondary);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     font-style: normal;
     letter-spacing: 0.02em;
@@ -208,6 +201,41 @@
     color: var(--text);
     font-weight: 600;
     font-style: normal;
+  }
+
+  /* Single-select searchable list (same search input as filter sections) */
+  .searchable-pick.is-disabled {
+    opacity: 0.55;
+  }
+  .searchable-pick-body {
+    padding: 0 var(--panel-pad) var(--space-md);
+  }
+  .searchable-pick-search {
+    padding: 0 0 0.4rem;
+  }
+  .searchable-pick-options {
+    max-height: 7.75rem;
+    overflow-y: auto;
+  }
+  .searchable-pick-title-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+  .searchable-pick-summary {
+    display: block;
+    margin-top: var(--space-2xs);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: var(--type-body-tracking);
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .searchable-pick-empty {
+    margin: var(--space-sm) 0 0;
   }
 
   /* bp-md — sync src/config/breakpoints.js */

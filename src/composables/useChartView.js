@@ -61,7 +61,7 @@ export function useChartView({
   handleApplyFilters,
   clearFilterSelections,
 }) {
-  const selectedChartType = ref('beeswarm');
+  const selectedChartType = ref('page');
   const pngExportMode = ref('wys'); // wys | fw
   const extendedDataReleaseKey = ref(defaultReleaseKey);
   const releaseLoading = ref(false);
@@ -196,6 +196,9 @@ export function useChartView({
     if (releaseLoading.value) {
       return `Loading ${reportYear.value}…`;
     }
+    if (selectedChartType.value === 'page') {
+      return `${extendedDataLength.value} carlines in ${reportYear.value} report`;
+    }
     if (selectedChartType.value === 'table-extended') {
       return `${extendedDataLength.value} rows`;
     }
@@ -211,13 +214,15 @@ export function useChartView({
     exportingPng.value = true;
     hideChartTooltip();
     try {
-      await exportSvgAsPng(null, exportFilename(`chart-${selectedChartType.value}`), {
+      const typeLabel = getChartTitle(selectedChartType.value);
+      const typeSlug = typeLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      await exportSvgAsPng(null, exportFilename(`chart-${typeSlug || selectedChartType.value}`), {
         mode: pngExportMode.value,
         expandRoot: card,
         findSvg: () => card.querySelector('svg[data-export="chart"]'),
         title: 'How American Is Your Car?',
         subtitle: siteSubtitlePlain,
-        meta: `${filteredData.value.length} / ${extendedDataLength.value} car lines · ${reportYear.value} report · ${selectedChartType.value} view`,
+        meta: `${filteredData.value.length} / ${extendedDataLength.value} car lines, ${reportYear.value} report, ${typeLabel}`,
       });
     } catch (err) {
       console.error(err);

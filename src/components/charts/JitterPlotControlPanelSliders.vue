@@ -51,6 +51,18 @@
           <input type="number" :value="strokeWidth" @input="emitStrokeWidth($event.target.value)" min="0.1" max="2" step="0.1" />
         </div>
       </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
+          Full 0–100 axis
+          <InfoTip label="Explain full axis" tip="Extend the value axis through 100%. On by default for jitter — turn off to stop the axis near the highest data value." />
+        </span>
+        <div class="plot-control-inputs">
+          <label class="plot-control-check">
+            <input type="checkbox" :checked="fullAxis" @change="emitFullAxis($event.target.checked)" />
+            <span>Show</span>
+          </label>
+        </div>
+      </div>
     </div>
     <button
       type="button"
@@ -91,9 +103,13 @@ export default {
     strokeWidth: {
       type: Number,
       required: true
+    },
+    fullAxis: {
+      type: Boolean,
+      default: true
     }
   },
-  emits: ['update:chartHeight', 'update:radius', 'update:fillOpacity', 'update:strokeOpacity', 'update:strokeWidth'],
+  emits: ['update:chartHeight', 'update:radius', 'update:fillOpacity', 'update:strokeOpacity', 'update:strokeWidth', 'update:fullAxis'],
   setup(props, { emit }) {
     const justReset = ref(false);
     let resetFeedbackTimer = null;
@@ -133,6 +149,10 @@ export default {
       }
     };
 
+    const emitFullAxis = (checked) => {
+      emit('update:fullAxis', !!checked);
+    };
+
     const onReset = () => {
       const heightDefault =
         typeof window !== 'undefined' && window.matchMedia(mqMax('md')).matches
@@ -143,6 +163,7 @@ export default {
       emit('update:fillOpacity', 25);
       emit('update:strokeOpacity', 15);
       emit('update:strokeWidth', 1.3);
+      emit('update:fullAxis', true);
       justReset.value = true;
       if (resetFeedbackTimer) clearTimeout(resetFeedbackTimer);
       resetFeedbackTimer = setTimeout(() => {
@@ -162,6 +183,7 @@ export default {
       emitFillOpacity,
       emitStrokeOpacity,
       emitStrokeWidth,
+      emitFullAxis,
       onReset
     };
   }

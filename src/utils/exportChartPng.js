@@ -242,7 +242,7 @@ function measureHeaderHeight(title, subtitle, contentW, tokens) {
   }
   if (subtitle) {
     if (title) h += 8;
-    ctx.font = `400 13px ${tokens.fontChart || 'sans-serif'}`;
+    ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
     h += measureWrapped(ctx, subtitle, contentW).height;
   }
   // Hairline + padding under header (matches drawHeader)
@@ -262,7 +262,7 @@ function drawHeader(ctx, title, subtitle, x, y, maxW, tokens) {
   }
   if (subtitle) {
     if (title) cursor += 8;
-    ctx.font = `400 13px ${tokens.fontChart || 'sans-serif'}`;
+    ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
     ctx.fillStyle = tokens.textSecondary || tokens.textMuted;
     ctx.textBaseline = 'top';
     const block = measureWrapped(ctx, subtitle, maxW);
@@ -293,10 +293,10 @@ function measureFooterHeight(footerLines, meta, contentW, tokens) {
   const ctx = canvas.getContext('2d');
   let h = 12; // top hairline + gap
   if (meta) {
-    ctx.font = `400 11px ${tokens.fontChart || 'sans-serif'}`;
+    ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
     h += measureWrapped(ctx, meta, contentW).height + 6;
   }
-  ctx.font = `400 12px ${tokens.fontChart || 'sans-serif'}`;
+  ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
   footerLines.forEach((line, i) => {
     if (i) h += 4;
     h += measureWrapped(ctx, line, contentW).height;
@@ -316,14 +316,14 @@ function drawFooter(ctx, footerLines, meta, x, y, maxW, tokens) {
 
   ctx.textBaseline = 'top';
   if (meta) {
-    ctx.font = `400 11px ${tokens.fontChart || 'sans-serif'}`;
+    ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
     ctx.fillStyle = tokens.textMuted || tokens.textSecondary;
     const block = measureWrapped(ctx, meta, maxW);
     drawWrapped(ctx, meta, x, cursor, maxW);
     cursor += block.height + 6;
   }
 
-  ctx.font = `400 12px ${tokens.fontChart || 'sans-serif'}`;
+  ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
   ctx.fillStyle = tokens.textMuted || tokens.textSecondary;
   footerLines.forEach((line, i) => {
     if (i) cursor += 4;

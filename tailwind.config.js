@@ -34,13 +34,12 @@ export default {
         mono: ['var(--mono)', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        // Accessible scale: body/UI at 1rem; sm/xs remapped above Tailwind defaults
+        // Title + 1rem UI only (no smaller reading sizes)
         title: ['var(--type-title-size)', { lineHeight: '1.2', letterSpacing: 'var(--type-title-tracking)' }],
         ui: ['var(--type-ui-size)', { lineHeight: '1.5', letterSpacing: 'var(--type-body-tracking)' }],
-        caption: ['var(--type-sm-size)', { lineHeight: '1.5', letterSpacing: 'var(--type-body-tracking)' }],
-        label: ['var(--type-label-size)', { lineHeight: '1.4', letterSpacing: 'var(--type-label-tracking)' }],
+        base: ['var(--type-ui-size)', { lineHeight: '1.5', letterSpacing: 'var(--type-body-tracking)' }],
         sm: ['var(--type-ui-size)', { lineHeight: '1.5', letterSpacing: 'var(--type-body-tracking)' }],
-        xs: ['var(--type-sm-size)', { lineHeight: '1.5', letterSpacing: 'var(--type-body-tracking)' }],
+        xs: ['var(--type-ui-size)', { lineHeight: '1.5', letterSpacing: 'var(--type-body-tracking)' }],
       },
       borderRadius: {
         DEFAULT: 'var(--radius)',

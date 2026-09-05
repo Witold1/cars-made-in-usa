@@ -8,7 +8,7 @@
           @change="$emit('update:show-advanced-customization', $event.target.checked)"
           class="mr-2 rounded border-border text-ink-secondary flex-shrink-0"
         />
-        <span class="editorial-label">Customize marker styles & show legend</span>
+        <span class="editorial-label">Customize markers & show legend</span>
       </label>
       <InfoTip
         label="Explain marker customization"

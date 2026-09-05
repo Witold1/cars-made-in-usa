@@ -8,11 +8,22 @@
     box-shadow: var(--focus-ring);
   }
 
+  /* Monochrome icons from public/icons/ (CSS mask → currentColor) */
+  .ui-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask: var(--ui-icon) center / contain no-repeat;
+    mask: var(--ui-icon) center / contain no-repeat;
+  }
+
   /* Uppercase section / control labels */
   .editorial-heading {
     margin: 0;
     font-family: var(--font);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: var(--type-label-tracking);
@@ -21,6 +32,11 @@
   }
   .editorial-heading--ink {
     color: var(--text);
+  }
+  .editorial-heading-with-tip {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
   }
 
   /* Accordion / disclosure headers (filters, plot controls) */
@@ -53,13 +69,13 @@
   }
   .panel-toggle-icon {
     flex: 0 0 auto;
-    font-size: 0.7rem;
+    font-size: 0.85em;
     color: var(--text-muted);
     line-height: 1;
   }
 
   .panel-toggle--section {
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: var(--type-label-tracking);
@@ -68,7 +84,7 @@
 
   .panel-toggle--plot {
     gap: 0.5rem;
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 400;
     color: var(--text-secondary);
     min-height: var(--panel-toggle-bar-height);
@@ -97,7 +113,7 @@
     border-radius: 0;
     background: none;
     font-family: var(--font);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 400;
     color: var(--text-muted);
     cursor: pointer;
@@ -130,11 +146,29 @@
   }
   .text-link--mono {
     font-family: var(--mono);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     color: var(--text-secondary);
   }
   .text-link--mono:hover {
     color: var(--text);
+  }
+
+  /* Inline methodology / sourcing notes (page + tables) */
+  .method-note {
+    display: block;
+    margin-top: 0;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.45;
+  }
+  .method-note::before {
+    content: "#";
+    margin-right: 0;
+    font-size: 0.75em;
+    font-weight: 600;
+    font-style: normal;
+    vertical-align: super;
+    line-height: 0;
   }
 
   /* Inline “explain this” tip (click to toggle bubble) */
@@ -157,6 +191,11 @@
     opacity: 0.7;
     line-height: 0;
     cursor: pointer;
+  }
+
+  .info-tip-icon {
+    width: 14px;
+    height: 14px;
   }
 
   .info-tip:hover,
@@ -186,12 +225,65 @@
     box-shadow: var(--tooltip-shadow);
     color: var(--text);
     font-family: var(--font);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 400;
     letter-spacing: 0;
     text-transform: none;
     line-height: 1.35;
     white-space: normal;
+  }
+
+  /* Mobile: bottom drawer (footnote-style) instead of floating bubble */
+  .info-tip-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: color-mix(in srgb, var(--text) 28%, transparent);
+  }
+
+  .info-tip-drawer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 81;
+    max-height: min(42vh, 20rem);
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--panel-pad) var(--space-xl);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    box-shadow: var(--tooltip-shadow);
+  }
+
+  .info-tip-drawer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: var(--touch-min);
+    padding: var(--space-sm) 0;
+    flex: 0 0 auto;
+  }
+
+  .info-tip-drawer-toggle {
+    margin: 0;
+    padding: 0.25rem 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .info-tip-drawer-body {
+    margin: 0;
+    padding-bottom: var(--space-md);
+    overflow-y: auto;
+    font-family: var(--font);
+    font-size: var(--type-ui-size);
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: var(--type-body-tracking);
+    color: var(--text);
+    text-transform: none;
   }
 
   .panel-toggle--with-tip {

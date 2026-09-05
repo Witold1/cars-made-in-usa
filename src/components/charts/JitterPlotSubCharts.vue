@@ -7,8 +7,8 @@
 <script>
 import { ref, watch, onMounted, onUnmounted, computed, inject } from 'vue';
 import * as d3 from 'd3';
-import { spacedJitter, getXScale, addSharedThings, addMeanLines } from '../../utils/jitterUtils';
-import { renderPoint, updatePointAttributes } from '../../utils/chartUtils';
+import { spacedJitter, getXScale, addMeanLines } from '../../utils/jitterUtils';
+import { renderPoint, updatePointAttributes, renderGridlinesHorizontal, CHART_TICK } from '../../utils/chartUtils';
 import { log, warn, error as logError } from '../../utils/logger';
 import { showPointTooltip, hideChartTooltip } from '../../utils/chartTooltip';
 import { readThemeTokens } from '../../utils/themeTokens';
@@ -59,6 +59,10 @@ export default {
     strokeWidth: {
       type: Number,
       required: true
+    },
+    fullAxis: {
+      type: Boolean,
+      default: true
     },
     markerStyles: {
       type: Object,
@@ -137,7 +141,7 @@ export default {
           return;
         }
         const { width, height, containerWidth, plotHeight } = updateSvgDimensions();
-        const x = getXScale(width, props.data);
+        const x = getXScale(width, props.data, { fullAxis: props.fullAxis });
         const svg = d3.select(`#${props.id}`);
         if (!svg.node()) {
           logError(`SVG #${props.id} not found`);
@@ -152,11 +156,45 @@ export default {
 
         svg.selectAll("*").remove();
 
+        // Beeswarm-style value grid + labels (absolute SVG coords)
+        const [domainMin, domainMax] = x.domain();
+        const xAbs = d3.scaleLinear()
+          .domain([domainMin, domainMax])
+          .range([props.margin.left, containerWidth - props.margin.right]);
+        renderGridlinesHorizontal(svg, xAbs, height, props.margin, domainMin, domainMax);
+        // Origin ticks (beeswarm-style major chrome; labels are plain 0 / 1)
+        {
+          const t = readThemeTokens();
+          const y1 = props.margin.top;
+          const y2 = height - props.margin.bottom;
+          const labelY = y2 + CHART_TICK.gapBottom;
+          [0, 1].forEach((v) => {
+            if (v < domainMin || v > domainMax) return;
+            const px = xAbs(v);
+            if (!Number.isFinite(px)) return;
+            svg.append('line')
+              .attr('x1', px)
+              .attr('x2', px)
+              .attr('y1', y1)
+              .attr('y2', y2)
+              .attr('stroke', t.yearLineMajor)
+              .attr('stroke-width', 0.5);
+            svg.append('text')
+              .attr('x', px)
+              .attr('y', labelY)
+              .attr('text-anchor', 'middle')
+              .attr('dominant-baseline', 'hanging')
+              .attr('font-size', CHART_TICK.fontMajor)
+              .attr('font-family', t.fontChart)
+              .attr('fill', t.textMuted)
+              .text(String(v));
+          });
+        }
+
         const svgGroup = svg.append("g")
           .attr("transform", `translate(${props.margin.left},${props.margin.top})`);
 
         addMeanLines(svgGroup, props.data, props.region, x, plotHeight);
-        addSharedThings(svgGroup, x, plotHeight, width);
 
         if (!jitterDataCache.value || cacheKey.value !== jitterDataCache.value.key) {
           jitterDataCache.value = { key: cacheKey.value, data: computeJitterData() };
@@ -352,8 +390,8 @@ export default {
 
     const debouncedRenderChart = debounce(renderChart, 50);
 
-    watch([() => props.data, () => props.chartHeight, () => props.radius, () => props.fillOpacity, () => props.strokeOpacity, () => props.strokeWidth, () => props.markerStyles, () => props.selectedPointId, isDarkMode], () => {
-      log(`JitterPlotSubCharts ${props.region}: Scheduling render, chartHeight: ${props.chartHeight}, radius: ${props.radius}, fillOpacity: ${props.fillOpacity}, strokeOpacity: ${props.strokeOpacity}, strokeWidth: ${props.strokeWidth}, isDarkMode: ${isDarkMode.value}, selectedPointId: ${props.selectedPointId}`);
+    watch([() => props.data, () => props.chartHeight, () => props.radius, () => props.fillOpacity, () => props.strokeOpacity, () => props.strokeWidth, () => props.fullAxis, () => props.markerStyles, () => props.selectedPointId, isDarkMode], () => {
+      log(`JitterPlotSubCharts ${props.region}: Scheduling render, chartHeight: ${props.chartHeight}, radius: ${props.radius}, fillOpacity: ${props.fillOpacity}, strokeOpacity: ${props.strokeOpacity}, strokeWidth: ${props.strokeWidth}, fullAxis: ${props.fullAxis}, isDarkMode: ${isDarkMode.value}, selectedPointId: ${props.selectedPointId}`);
       debouncedRenderChart();
     }, { immediate: true, deep: true });
 
@@ -362,17 +400,25 @@ export default {
       debouncedRenderChart();
     });
 
+    let resizeObserver = null;
     onMounted(() => {
       log(`JitterPlotSubCharts ${props.region}: Mounted, SVG ID: ${props.id}`);
       observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme'] });
-      window.addEventListener('resize', debouncedRenderChart);
+      const parent = document.getElementById(props.id)?.parentElement;
+      if (parent && typeof ResizeObserver !== 'undefined') {
+        resizeObserver = new ResizeObserver(() => debouncedRenderChart());
+        resizeObserver.observe(parent);
+      }
       debouncedRenderChart();
     });
 
     onUnmounted(() => {
       observer.disconnect();
       hideChartTooltip();
-      window.removeEventListener('resize', debouncedRenderChart);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
     });
 
     return {};
@@ -390,20 +436,11 @@ export default {
   stroke-dasharray: 5,5;
   opacity: 0.55;
 }
-.x-axis text {
-  fill: var(--text);
-  font-family: var(--font-chart);
-  font-size: 13px;
-  font-weight: 600;
-}
-.x-axis path.domain {
-  stroke: var(--text);
-}
 .error-message {
   color: var(--accent);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  font-size: var(--type-sm-size);
+  font-size: var(--type-ui-size);
 }
 .error-message:empty {
   display: none;

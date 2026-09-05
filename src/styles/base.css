@@ -3,7 +3,7 @@
     color-scheme: light;
     background-color: var(--bg);
     color: var(--text);
-    /* Rem root stays browser default (16px); title 2.375rem ≈ 38px */
+    /* Root UI size = 1rem (browser default ~16px); titles use --type-title-size */
     font-family: var(--font);
     font-size: var(--type-ui-size);
     line-height: 1.5;

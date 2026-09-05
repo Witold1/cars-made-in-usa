@@ -25,6 +25,7 @@
           :center1="center1"
           :spread1="spread1"
           :seed="seed"
+          :fullAxis="fullAxis"
           @update:chartHeight="emitUpdate('chartHeight', $event)"
           @update:pointRadius="emitUpdate('pointRadius', $event)"
           @update:paddingFactor="emitUpdate('paddingFactor', $event)"
@@ -33,6 +34,7 @@
           @update:center1="emitUpdate('center1', $event)"
           @update:spread1="emitUpdate('spread1', $event)"
           @update:seed="emitUpdate('seed', $event)"
+          @update:fullAxis="emitUpdate('fullAxis', $event)"
         />
       </div>
     </transition>
@@ -54,7 +56,8 @@ export default {
     spread0: { type: Number, required: true },
     center1: { type: Number, required: true },
     spread1: { type: Number, required: true },
-    seed: { type: Number, default: 42 }
+    seed: { type: Number, default: 42 },
+    fullAxis: { type: Boolean, default: false }
   },
   emits: [
     'update:chartHeight',
@@ -64,7 +67,8 @@ export default {
     'update:spread0',
     'update:center1',
     'update:spread1',
-    'update:seed'
+    'update:seed',
+    'update:fullAxis'
   ],
   setup(props, { emit }) {
     const showSliders = ref(false);

@@ -6,16 +6,19 @@
       :fillOpacity="fillOpacity"
       :strokeOpacity="strokeOpacity"
       :strokeWidth="strokeWidth"
+      :fullAxis="fullAxis"
       @update:chartHeight="updateChartHeight($event)"
       @update:radius="updateRadius($event)"
       @update:fillOpacity="updateFillOpacity($event)"
       @update:strokeOpacity="updateStrokeOpacity($event)"
       @update:strokeWidth="updateStrokeWidth($event)"
+      @update:fullAxis="updateFullAxis($event)"
     />
     <div v-if="$slots['release-stepper']" class="release-stepper-block">
       <slot name="release-stepper" />
     </div>
-    <div id="error" class="error-message" aria-live="polite"></div>    <!-- Aggregated Chart -->
+    <div id="error" class="error-message" aria-live="polite"></div>
+    <!-- Aggregated Chart -->
     <div v-for="chart in aggregatedContainer" :key="chart.id" :id="chart.id" class="svg-container chart-frame w-full mb-6">
       <div class="chart-header flex flex-row items-center justify-between gap-2 flex-wrap mb-2 px-1 py-1 xl:px-4 xl:py-3">
         <div class="flex flex-row items-center space-x-4">
@@ -29,12 +32,7 @@
           :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
           @click="exportChartPng(chart)"
         >
-          <span class="export-icon" aria-hidden="true">
-            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 2v8.2M5.2 7.5 8 10.3l2.8-2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3 12.5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
-          </span>
+          <UiIcon name="save-png" icon-class="export-icon" />
           {{ exportingPngId === chart.id ? 'Exporting…' : 'Save PNG' }}
         </button>
       </div>
@@ -50,20 +48,33 @@
         :fillOpacity="fillOpacity"
         :strokeOpacity="strokeOpacity"
         :strokeWidth="strokeWidth"
+        :fullAxis="fullAxis"
         :markerStyles="markerStyles"
         :selectedPoint="selectedPoint"
         :selectedPointId="selectedPointId"
         @update:selected-point="updateSelectedPoint($event)"
       />
     </div>
-    <!-- Section: By region -->
-    <div class="py-4 flex items-center label-muted before:flex-1 before:border-t before:border-border before:me-4 after:flex-1 after:border-t after:border-border after:ms-4">By region</div>
-    <!-- By-Region Charts -->
-    <div v-for="chart in regionContainers" :key="chart.id" :id="chart.id" class="svg-container chart-frame w-full mb-6">
+    <!-- Compare-by facet switcher + small multiples -->
+    <div class="jitter-compare-divider py-4 flex items-center label-muted before:flex-1 before:border-t before:border-border before:me-4 after:flex-1 after:border-t after:border-border after:ms-4">
+      <span>Compare by</span>
+      <label class="sr-only" for="jitter-compare-by">Compare by</label>
+      <select
+        id="jitter-compare-by"
+        class="editorial-select jitter-compare-select"
+        :value="compareBy"
+        @change="setCompareBy($event.target.value)"
+      >
+        <option v-for="dim in compareDimensions" :key="dim.value" :value="dim.value">
+          {{ dim.label.toLowerCase() }}
+        </option>
+      </select>
+    </div>
+    <div v-for="chart in groupContainers" :key="chart.id" :id="chart.id" class="svg-container chart-frame w-full mb-6">
       <div class="chart-header flex flex-row items-center justify-between gap-2 flex-wrap mb-2 px-1 py-1 xl:px-4 xl:py-3">
-        <div class="flex flex-row items-center space-x-4">
-          <span class="region-title editorial-label font-medium text-ink-secondary">{{ chart.region }}</span>
-          <span :id="chart.counterId" class="point-counter editorial-label">{{ chart.data.length }} / {{ chart.total }} car lines</span>
+        <div class="flex flex-row items-center space-x-4 min-w-0">
+          <span class="region-title editorial-label font-medium text-ink-secondary truncate" :title="chart.region">{{ chart.region }}</span>
+          <span :id="chart.counterId" class="point-counter editorial-label shrink-0">{{ chart.data.length }} / {{ chart.total }} car lines</span>
         </div>
         <button
           type="button"
@@ -72,12 +83,7 @@
           :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
           @click="exportChartPng(chart)"
         >
-          <span class="export-icon" aria-hidden="true">
-            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 2v8.2M5.2 7.5 8 10.3l2.8-2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M3 12.5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
-          </span>
+          <UiIcon name="save-png" icon-class="export-icon" />
           {{ exportingPngId === chart.id ? 'Exporting…' : 'Save PNG' }}
         </button>
       </div>
@@ -93,6 +99,7 @@
         :fillOpacity="fillOpacity"
         :strokeOpacity="strokeOpacity"
         :strokeWidth="strokeWidth"
+        :fullAxis="fullAxis"
         :markerStyles="markerStyles"
         :selectedPoint="selectedPoint"
         :selectedPointId="selectedPointId"
@@ -106,19 +113,47 @@
 import { ref, computed, watch, inject } from 'vue';
 import JitterPlotSubCharts from './JitterPlotSubCharts.vue';
 import JitterPlotControlPanel from './JitterPlotControlPanel.vue';
+import UiIcon from '../UiIcon.vue';
+import { COMPARE_DIMENSIONS, DEFAULT_COMPARE_BY } from '../../data/dataConfig';
 import { log } from '../../utils/logger';
 import { hideChartTooltip } from '../../utils/chartTooltip';
 import { exportSvgAsPng, exportFilename } from '../../utils/exportChartPng';
+import { getChartTitle } from '../../config/chartGuides';
+
+const CHART_MARGIN = { top: 20, right: 20, bottom: 32, left: 20 };
+
+function slugifyGroup(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    || 'group';
+}
+
+function orderedGroupKeys(keys, preferredOrder) {
+  const set = new Set(keys);
+  const ordered = [];
+  if (Array.isArray(preferredOrder)) {
+    preferredOrder.forEach((k) => {
+      if (set.has(k)) {
+        ordered.push(k);
+        set.delete(k);
+      }
+    });
+  }
+  [...set].sort((a, b) => a.localeCompare(b)).forEach((k) => ordered.push(k));
+  return ordered;
+}
 
 export default {
   name: 'JitterPlot',
-  components: { JitterPlotSubCharts, JitterPlotControlPanel },
+  components: { JitterPlotSubCharts, JitterPlotControlPanel, UiIcon },
   props: {
     data: {
       type: Array,
       required: true
     },
-    /** Full active-release rows (unfiltered) for reference strip + region totals. */
+    /** Full active-release rows (unfiltered) for reference strip + group totals. */
     sourceData: {
       type: Array,
       default: null
@@ -143,11 +178,25 @@ export default {
     const fillOpacity = ref(25);
     const strokeOpacity = ref(15);
     const strokeWidth = ref(1.3);
+    const fullAxis = ref(true);
     const selectedPointId = ref(null);
+    const compareBy = ref(DEFAULT_COMPARE_BY);
+    const compareDimensions = COMPARE_DIMENSIONS;
 
     const allRows = computed(() =>
       Array.isArray(props.sourceData) ? props.sourceData : props.data
     );
+
+    const activeDimension = computed(() =>
+      COMPARE_DIMENSIONS.find((d) => d.value === compareBy.value) || COMPARE_DIMENSIONS[0]
+    );
+
+    const setCompareBy = (value) => {
+      if (COMPARE_DIMENSIONS.some((d) => d.value === value)) {
+        compareBy.value = value;
+        log('JitterPlot: compareBy →', value);
+      }
+    };
 
     const updateChartHeight = (value) => {
       const numValue = +value;
@@ -189,6 +238,11 @@ export default {
       }
     };
 
+    const updateFullAxis = (value) => {
+      fullAxis.value = !!value;
+      log('JitterPlot: Updated fullAxis:', fullAxis.value);
+    };
+
     const updateSelectedPoint = (event) => {
       selectedPointId.value = event && event.__data__ && event.__data__.datum ? event.__data__.datum.id : null;
       emit('update:selected-point', event);
@@ -207,31 +261,45 @@ export default {
           data: rows,
           total: rows.length,
           isMain: true,
-          margin: { top: 20, right: 20, bottom: 32, left: 40 }
+          margin: { ...CHART_MARGIN }
         }
       ];
     });
 
-    const regionContainers = computed(() => {
-      const allRegions = ['European', 'American', 'Asian'];
-      const charts = [];
-      allRegions.forEach(region => {
-        const filteredData = props.data.filter(d => d.region === region);
-        const totalInRegion = allRows.value.filter(d => d.region === region).length;
-        if (filteredData.length > 0) {
-          charts.push({
-            id: `jitter-${region.toLowerCase()}-container`,
-            svgId: `jitter-${region.toLowerCase()}-svg`,
-            counterId: `jitter-${region.toLowerCase()}-counter`,
-            region,
-            data: filteredData,
-            total: totalInRegion,
-            isMain: false,
-            margin: { top: 20, right: 20, bottom: 32, left: 40 }
-          });
-        }
+    const groupContainers = computed(() => {
+      const dim = activeDimension.value;
+      const field = dim.field;
+      const filtered = Array.isArray(props.data) ? props.data : [];
+      const source = allRows.value;
+
+      const keysFromFiltered = [
+        ...new Set(
+          filtered
+            .map((d) => String(d?.[field] ?? '').trim())
+            .filter(Boolean)
+        )
+      ];
+      const keys = orderedGroupKeys(keysFromFiltered, dim.preferredOrder);
+      const charts = keys.map((key) => {
+        const slug = slugifyGroup(key);
+        const groupData = filtered.filter((d) => String(d?.[field] ?? '').trim() === key);
+        const totalInGroup = source.filter((d) => String(d?.[field] ?? '').trim() === key).length;
+        return {
+          id: `jitter-${dim.value}-${slug}-container`,
+          svgId: `jitter-${dim.value}-${slug}-svg`,
+          counterId: `jitter-${dim.value}-${slug}-counter`,
+          region: key,
+          data: groupData,
+          total: totalInGroup,
+          isMain: false,
+          margin: { ...CHART_MARGIN }
+        };
+      }).filter((c) => c.data.length > 0);
+
+      log('JitterPlot group containers:', {
+        compareBy: dim.value,
+        groups: charts.map((c) => ({ label: c.region, count: c.data.length }))
       });
-      log('JitterPlot region containers computed:', charts.map(c => ({ region: c.region, count: c.data.length })));
       return charts;
     });
 
@@ -254,7 +322,7 @@ export default {
       if (exportingPngId.value) return;
       const root = document.getElementById(chart.id);
       if (!root) return;
-      const safeName = String(chart.region).replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '') || 'chart';
+      const safeName = slugifyGroup(chart.region);
       exportingPngId.value = chart.id;
       hideChartTooltip();
       try {
@@ -263,8 +331,8 @@ export default {
           expandRoot: root,
           findSvg: () => document.getElementById(chart.svgId),
           title: 'How American Is Your Car?',
-          subtitle: `${chart.region} · U.S./Canadian parts content (NHTSA Part 583).`,
-          meta: `${chart.data.length} / ${chart.total} car lines · jitter view`,
+          subtitle: `${chart.region}. U.S./Canadian parts content (NHTSA Part 583).`,
+          meta: `${chart.data.length} / ${chart.total} car lines, ${getChartTitle('jitter')}`,
         });
       } catch (err) {
         console.error(err);
@@ -283,14 +351,19 @@ export default {
       fillOpacity,
       strokeOpacity,
       strokeWidth,
+      fullAxis,
+      compareBy,
+      compareDimensions,
+      setCompareBy,
       aggregatedContainer,
-      regionContainers,
+      groupContainers,
       selectedPointId,
       updateChartHeight,
       updateRadius,
       updateFillOpacity,
       updateStrokeOpacity,
       updateStrokeWidth,
+      updateFullAxis,
       updateSelectedPoint
     };
   }
@@ -315,10 +388,24 @@ export default {
   color: var(--accent);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  font-size: var(--type-sm-size);
+  font-size: var(--type-ui-size);
 }
 .error-message:empty {
   display: none;
   margin: 0;
+}
+.jitter-compare-divider {
+  gap: 0.35rem;
+}
+.jitter-compare-select {
+  font-weight: 500;
+  color: var(--text-muted);
+  background-color: transparent;
+  border-color: var(--border);
+  padding: 0.15rem 1.4rem 0.15rem 0.35rem;
+  line-height: 1.2;
+}
+.jitter-compare-select:focus {
+  color: var(--text);
 }
 </style>

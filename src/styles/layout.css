@@ -47,6 +47,7 @@
   .title-row {
     display: flex;
     align-items: flex-start;
+    gap: var(--space-sm);
   }
 
   .title-row h1 {
@@ -54,6 +55,7 @@
     min-width: 0;
   }
 
+  /* Desktop: chevron hidden; title-block is not a control. */
   .header-actions-toggle {
     display: none;
     flex: 0 0 auto;
@@ -81,6 +83,8 @@
 
   .header-actions-chevron {
     display: block;
+    width: 28px;
+    height: 14px;
     transition: transform 0.22s ease;
   }
 
@@ -144,7 +148,7 @@
   .settings-control-label {
     flex: 0 0 auto;
     font-family: var(--font);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     color: inherit;
     text-transform: uppercase;
@@ -188,6 +192,8 @@
   .settings-icon {
     display: block;
     flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
   }
 
   .settings-panel {
@@ -219,7 +225,7 @@
 
   .settings-hint {
     font-family: var(--font);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     color: var(--text-muted);
     margin: calc(var(--space-2xs) * -1) 0 var(--space-2xs);
     line-height: 1.35;
@@ -273,6 +279,11 @@
       align-items: center;
     }
 
+    /* Whole title-block toggles (title + chevron), like Empire */
+    .title-block {
+      cursor: pointer;
+    }
+
     .header-actions-toggle {
       display: inline-flex;
     }
@@ -319,6 +330,13 @@
       padding-right: 0;
     }
 
+    /* Edge inset for text chrome when body padding is removed */
+    .chart-meta-row,
+    .chart-guide-block {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
     .theme-switcher {
       gap: 0.05rem;
     }
@@ -348,7 +366,7 @@
   margin-top: 0.5rem;
   padding: var(--space-xl) 0 0;
   font-family: var(--font);
-  font-size: var(--type-sm-size);
+  font-size: var(--type-ui-size);
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: var(--type-body-tracking);
@@ -360,14 +378,14 @@
 }
 
 .footer-sources {
+  margin-top: 0;
+}
+
+.footer-credit {
   margin-top: 0.25rem;
 }
 
-.footer-credit + .footer-sources {
-  margin-top: 0.25rem;
-}
-
-.footer-sources-processed {
+.footer-source-code {
   margin-top: 0.25rem;
 }
 
@@ -381,4 +399,12 @@
 .footer-link:hover {
   color: var(--text-secondary);
   text-decoration-color: currentColor;
+}
+
+/* bp-md — sync src/config/breakpoints.js */
+@media (max-width: 640px) {
+  .footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

@@ -8,30 +8,56 @@
       :aria-label="label"
       @click.stop="toggle"
     >
-      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
-        <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5" />
-        <circle cx="8" cy="5" r="1" fill="currentColor" />
-        <path
-          d="M8 7.25v4.5"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-        />
-      </svg>
+      <UiIcon name="info" icon-class="info-tip-icon" />
     </button>
-    <span class="info-tip-bubble" role="tooltip" :hidden="!open">{{ tip }}</span>
+    <span
+      v-if="!useDrawer"
+      class="info-tip-bubble"
+      role="tooltip"
+      :hidden="!open"
+    >{{ tip }}</span>
   </span>
+
+  <Teleport to="body">
+    <template v-if="useDrawer && open">
+      <div
+        class="info-tip-drawer-backdrop"
+        aria-hidden="true"
+        @click="close"
+      />
+      <div
+        ref="drawerRef"
+        class="info-tip-drawer"
+        role="dialog"
+        :aria-label="label"
+      >
+        <div class="info-tip-drawer-bar">
+          <button
+            type="button"
+            class="info-tip-drawer-toggle text-link text-link--strong"
+            @click="close"
+          >
+            Close note
+          </button>
+        </div>
+        <p class="info-tip-drawer-body">{{ tip }}</p>
+      </div>
+    </template>
+  </Teleport>
 </template>
 
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
+import UiIcon from './UiIcon.vue';
+import { mqMax } from '../config/breakpoints';
 
 let tipSeq = 0;
 const OPEN_EVENT = 'info-tip:open';
+const DRAWER_MQ = mqMax('md');
 
 export default {
   name: 'InfoTip',
+  components: { UiIcon },
   props: {
     tip: { type: String, required: true },
     label: { type: String, required: true },
@@ -39,6 +65,8 @@ export default {
   setup() {
     const open = ref(false);
     const btnRef = ref(null);
+    const drawerRef = ref(null);
+    const useDrawer = ref(false);
     const tipId = `info-tip-${++tipSeq}`;
 
     const close = () => {
@@ -62,6 +90,7 @@ export default {
       if (!open.value) return;
       const wrap = btnRef.value?.closest('.info-tip-wrap');
       if (wrap && wrap.contains(event.target)) return;
+      if (drawerRef.value?.contains(event.target)) return;
       close();
     };
 
@@ -69,19 +98,35 @@ export default {
       if (event.key === 'Escape') close();
     };
 
+    const syncDrawerMode = () => {
+      const compact =
+        typeof window !== 'undefined' && window.matchMedia(DRAWER_MQ).matches;
+      useDrawer.value = compact;
+      if (!compact) return;
+      // Bubble → drawer switch: keep open state, layout changes via template
+    };
+
+    let mediaQuery = null;
+
     onMounted(() => {
       document.addEventListener(OPEN_EVENT, onOpenEvent);
       document.addEventListener('click', onDocClick);
       document.addEventListener('keydown', onKeydown);
+      if (typeof window !== 'undefined') {
+        mediaQuery = window.matchMedia(DRAWER_MQ);
+        syncDrawerMode();
+        mediaQuery.addEventListener('change', syncDrawerMode);
+      }
     });
 
     onUnmounted(() => {
       document.removeEventListener(OPEN_EVENT, onOpenEvent);
       document.removeEventListener('click', onDocClick);
       document.removeEventListener('keydown', onKeydown);
+      mediaQuery?.removeEventListener('change', syncDrawerMode);
     });
 
-    return { open, btnRef, toggle };
+    return { open, btnRef, drawerRef, useDrawer, toggle, close };
   },
 };
 </script>

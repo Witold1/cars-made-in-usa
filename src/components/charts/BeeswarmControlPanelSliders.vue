@@ -42,6 +42,18 @@
       </div>
       <div class="plot-control-item">
         <span class="plot-control-label">
+          Full 0–100 axis
+          <InfoTip label="Explain full axis" tip="Extend the value axis through 100%. Off by default — the axis stops near the highest data value, which is often well below 100%." />
+        </span>
+        <div class="plot-control-inputs">
+          <label class="plot-control-check">
+            <input type="checkbox" :checked="fullAxis" @change="emitFullAxis($event.target.checked)" />
+            <span>Show</span>
+          </label>
+        </div>
+      </div>
+      <div class="plot-control-item">
+        <span class="plot-control-label">
           Mean for 0s
           <InfoTip label="Explain mean for 0s" tip="Horizontal center of the band used to spread models at 0% U.S./Canadian parts content (for visibility)." />
         </span>
@@ -108,7 +120,8 @@ export default {
     spread0: { type: Number, required: true },
     center1: { type: Number, required: true },
     spread1: { type: Number, required: true },
-    seed: { type: Number, default: 42 }
+    seed: { type: Number, default: 42 },
+    fullAxis: { type: Boolean, default: false }
   },
   emits: [
     'update:chartHeight',
@@ -118,7 +131,8 @@ export default {
     'update:spread0',
     'update:center1',
     'update:spread1',
-    'update:seed'
+    'update:seed',
+    'update:fullAxis'
   ],
   setup(props, { emit }) {
     const justReset = ref(false);
@@ -185,6 +199,10 @@ export default {
       }
     };
 
+    const emitFullAxis = (checked) => {
+      emit('update:fullAxis', !!checked);
+    };
+
     const onReset = () => {
       const heightDefault =
         typeof window !== 'undefined' && window.matchMedia(mqMax('md')).matches
@@ -198,6 +216,7 @@ export default {
       emit('update:spread0', 9);
       emit('update:center1', -2);
       emit('update:spread1', 6);
+      emit('update:fullAxis', false);
       justReset.value = true;
       if (resetFeedbackTimer) clearTimeout(resetFeedbackTimer);
       resetFeedbackTimer = setTimeout(() => {
@@ -220,6 +239,7 @@ export default {
       emitCenter1,
       emitSpread1,
       emitSeed,
+      emitFullAxis,
       onReset
     };
   }

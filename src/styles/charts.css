@@ -1,6 +1,6 @@
 @layer components {
   .legend-item {
-    @apply flex items-center gap-2 py-1 pr-2 text-xs font-normal text-ink-secondary hover:text-ink cursor-pointer transition-colors;
+    @apply flex items-center gap-2 py-1 pr-2 font-normal text-ink-secondary hover:text-ink cursor-pointer transition-colors;
   }
   .legend-item.selected {
     @apply text-ink font-medium;
@@ -8,6 +8,19 @@
 
   .chart-guide-block {
     margin-top: 0.75rem;
+  }
+  .chart-guide-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+  }
+  .chart-guide-icon {
+    width: 1em;
+    height: 1em;
+    opacity: 0.85;
+  }
+  .chart-guide-toggle:hover .chart-guide-icon {
+    opacity: 1;
   }
   .chart-guide {
     @apply border-t border-border pt-3 mt-3;
@@ -33,7 +46,7 @@
     color: var(--independence);
   }
   .chart-guide-body {
-    @apply text-xs text-ink-secondary leading-relaxed;
+    @apply text-ink-secondary leading-relaxed;
   }
   .chart-guide-body p {
     @apply mt-2 first:mt-0;
@@ -63,9 +76,8 @@
     padding: 0.4rem var(--space-md) 0.45rem;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-top: 2px solid var(--accent);
     border-radius: var(--radius);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     line-height: 1.3;
     pointer-events: none;
     box-shadow: var(--tooltip-shadow);
@@ -77,7 +89,7 @@
     display: block;
     margin-bottom: 0.1rem;
     font-family: var(--font-display);
-    font-size: var(--type-sm-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     line-height: 1.25;
     color: var(--text);
@@ -87,7 +99,7 @@
   .tooltip .role {
     display: block;
     color: var(--text-secondary);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     line-height: 1.35;
     white-space: normal;
   }
@@ -98,7 +110,7 @@
 
   .tooltip .dates {
     font-family: var(--font-chart);
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     font-weight: 600;
     font-feature-settings: "tnum" 1;
     color: var(--text);
@@ -109,8 +121,174 @@
 
   .tooltip .tooltip-note {
     margin: var(--space-xs) 0 0;
-    font-size: var(--type-label-size);
+    font-size: var(--type-ui-size);
     line-height: 1.4;
     color: var(--text-muted);
+  }
+
+  /* Page chart — year / make / model lookup */
+  .car-page {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+  .car-page-selectors {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+    align-items: start;
+  }
+  .car-page-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .car-page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+  .car-page-action {
+    margin: 0;
+    min-height: var(--touch-min);
+    padding: 0.5rem var(--space-xl);
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--input-bg);
+    color: var(--text-secondary);
+    font-family: var(--font);
+    font-size: var(--type-ui-size);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: var(--type-label-tracking);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .car-page-action:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+  .car-page-action:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  .car-page-action:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .car-page-action--primary {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+  .car-page-action--primary:hover {
+    background: var(--border);
+  }
+  .car-page-action--reset {
+    min-height: auto;
+    padding: 0.35rem var(--space-md);
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    align-self: center;
+  }
+  .car-page-hero {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--border);
+  }
+  .car-page-hero-name {
+    margin: 0 0 var(--space-md);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+    font-weight: 600;
+    letter-spacing: var(--type-title-tracking);
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .car-page-hero-make {
+    display: block;
+    font-size: 0.72em;
+    font-weight: 500;
+    letter-spacing: var(--type-label-tracking);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2xs);
+  }
+  .car-page-hero-value {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+  .car-page-hero-number {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 8vw, 4.25rem);
+    font-weight: 600;
+    font-feature-settings: "tnum" 1;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text);
+  }
+  .car-page-hero-unit {
+    font-family: var(--font);
+    font-size: var(--type-ui-size);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--type-label-tracking);
+    color: var(--text-secondary);
+  }
+  .car-page-rank {
+    margin: var(--space-lg) 0 0;
+    max-width: 36em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .car-page-detail-grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+  }
+  .car-page-detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .car-page-detail-text {
+    margin: 0;
+    line-height: 1.45;
+    color: var(--text-secondary);
+  }
+  .car-page-detail-text strong {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .car-page-detail-text .chart-guide-link {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-color: var(--border-light);
+  }
+  .car-page-detail-text .chart-guide-link:hover {
+    color: var(--text);
+    text-decoration-color: var(--text-muted);
+  }
+
+  @media (min-width: 640px) {
+    .car-page-detail-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .car-page-detail-section--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .car-page-selectors {
+      grid-template-columns: 1fr;
+    }
   }
 }

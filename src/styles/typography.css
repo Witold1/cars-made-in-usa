@@ -1,16 +1,16 @@
 @layer components {
   .heading-3 {
-    @apply font-sans text-sm xl:text-base font-semibold text-ink tracking-tight;
+    @apply font-sans font-semibold text-ink tracking-tight;
   }
   .label-muted {
-    @apply text-sm font-medium text-ink-muted;
+    @apply font-medium text-ink-muted;
   }
   .body-muted {
-    @apply text-sm text-ink-muted;
+    @apply text-ink-muted;
   }
 
   .editorial-label {
-    @apply text-xs font-normal text-ink-muted tracking-tight;
+    @apply font-normal text-ink-muted tracking-tight;
   }
 }
 

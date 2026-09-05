@@ -61,13 +61,19 @@
               >
                 <div class="data-table-detail-grid">
                   <div class="data-table-detail-section data-table-detail-section--full">
-                    <p class="editorial-heading">Content breakdown</p>
+                    <p class="editorial-heading editorial-heading-with-tip">
+                      Content breakdown
+                      <InfoTip
+                        label="Explain content breakdown"
+                        tip="U.S./Canadian equipment (parts) content and foreign parts share from the AALA report. When shown, major foreign sources are countries contributing at least 15% of total equipment value (49 CFR §583.7(e))."
+                      />
+                    </p>
                     <p class="data-table-detail-text">
                       U.S./Canadian parts: <strong>{{ formatNumeric(row.value) }}</strong>.
                       <span v-if="row.foreignPartsBreakdown && row.foreignPartsBreakdown.length">
                         Foreign parts: <strong>{{ formatNumeric(row.foreignPartsTotalPercent) }}</strong>.<br />
                         Major foreign sources: {{ row.foreignPartsBreakdown.map(p => `${p.country} ${formatNumeric(p.percent)}`).join(', ') }}.
-                        <span class="block mt-1 text-ink-muted text-[0.65rem]">
+                        <span class="method-note">
                           Per
                           <a
                             href="https://www.ecfr.gov/current/title-49/part-583/section-583.7#p-583.7(e)"
@@ -83,12 +89,18 @@
                       <span v-else>
                         Foreign parts: <strong>{{ formatNumeric(row.foreignPartsTotalPercent) }}</strong>.<br />
                         Major foreign sources: not reported in this public release for this vehicle/year.
-                        <span v-if="row.foreignPartsNote" class="block mt-1 text-ink-muted text-[0.65rem]">{{ row.foreignPartsNote }}</span>
+                        <span v-if="row.foreignPartsNote" class="method-note">{{ row.foreignPartsNote }}</span>
                       </span>
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="editorial-heading">Engine origin</p>
+                    <p class="editorial-heading editorial-heading-with-tip">
+                      Engine origin
+                      <InfoTip
+                        label="Explain engine origin"
+                        tip="Country where the engine was manufactured, as reported for this carline."
+                      />
+                    </p>
                     <p class="data-table-detail-text">
                       <span v-if="row.engineOrigins && row.engineOrigins.length">
                         {{ row.engineOrigins.map(p => p.role === 'primary' ? p.country : `${p.country} (additional)`).join(', ') }}.
@@ -97,7 +109,13 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="editorial-heading">Transmission origin</p>
+                    <p class="editorial-heading editorial-heading-with-tip">
+                      Transmission origin
+                      <InfoTip
+                        label="Explain transmission origin"
+                        tip="Country where the transmission was manufactured, as reported for this carline."
+                      />
+                    </p>
                     <p class="data-table-detail-text">
                       <span v-if="row.transmissionOrigins && row.transmissionOrigins.length">
                         {{ row.transmissionOrigins.map(p => p.role === 'primary' ? p.country : `${p.country} (additional)`).join(', ') }}.
@@ -106,7 +124,13 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="editorial-heading">Final assembly</p>
+                    <p class="editorial-heading editorial-heading-with-tip">
+                      Final assembly
+                      <InfoTip
+                        label="Explain final assembly"
+                        tip="Country of final vehicle assembly, as reported for this carline."
+                      />
+                    </p>
                     <p class="data-table-detail-text">
                       <span v-if="row.finalAssemblyCountries && row.finalAssemblyCountries.length">
                         {{ row.finalAssemblyCountries.map(p => p.role === 'primary' ? p.country : `${p.country} (additional)`).join(', ') }}.
@@ -115,7 +139,13 @@
                     </p>
                   </div>
                   <div class="data-table-detail-section">
-                    <p class="editorial-heading">Vehicle type (Part 567)</p>
+                    <p class="editorial-heading editorial-heading-with-tip">
+                      Vehicle type (Part 567)
+                      <InfoTip
+                        label="Explain vehicle type"
+                        tip="Passenger-vehicle classification under 49 CFR Part 567 (for example PC or MPV), as given in the release."
+                      />
+                    </p>
                     <p class="data-table-detail-text">{{ row.vehicleTypePart567 || '-' }}</p>
                   </div>
                 </div>
@@ -130,9 +160,11 @@
 
 <script>
 import { ref, computed } from 'vue';
+import InfoTip from '../InfoTip.vue';
 
 export default {
   name: 'ExtendedDataTable',
+  components: { InfoTip },
   inheritAttrs: false,
   props: {
     data: {

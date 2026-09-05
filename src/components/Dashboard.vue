@@ -5,7 +5,7 @@
         <div class="header-toolbar">
           <ThemeToggle />
         </div>
-        <div class="title-block">
+        <div class="title-block" @click="onTitleBlockActivate">
           <div class="title-row">
             <h1>How American Is Your Car?</h1>
             <button
@@ -14,11 +14,9 @@
               :aria-expanded="headerActionsOpen"
               aria-controls="header-actions"
               :aria-label="headerActionsOpen ? 'Hide details' : 'Show details'"
-              @click="toggleHeaderActions"
+              @click.stop="toggleHeaderActions"
             >
-              <svg class="header-actions-chevron" viewBox="0 0 24 12" width="28" height="14" aria-hidden="true" focusable="false">
-                <path d="M4 9.5 12 2.5l8 7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <UiIcon name="chevron-up" icon-class="header-actions-chevron" />
             </button>
           </div>
           <p class="subtitle" v-html="siteSubtitleHtml"></p>
@@ -49,10 +47,7 @@
               @click="settingsOpen = !settingsOpen"
             >
               <span class="settings-control-label">Settings</span>
-              <svg class="settings-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke-linecap="round" stroke-linejoin="round"></path>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
+              <UiIcon name="settings" icon-class="settings-icon" />
             </button>
             <div
               id="layout-settings-panel"
@@ -62,19 +57,21 @@
               aria-label="Layout settings"
             >
               <div class="settings-panel-inner">
-                <p class="editorial-heading">Dataset filters position</p>
-                <div class="theme-switch-group settings-switch-group" role="group" aria-label="Dataset filters position">
-                  <button
-                    v-for="opt in pageLayoutOptions"
-                    :key="opt.value"
-                    type="button"
-                    :aria-pressed="pageLayout === opt.value"
-                    :class="['theme-btn', { 'is-active': pageLayout === opt.value }]"
-                    @click="setPageLayout(opt.value)"
-                  >
-                    {{ opt.label }}
-                  </button>
-                </div>
+                <template v-if="selectedChartType !== 'page'">
+                  <p class="editorial-heading">Dataset filters position</p>
+                  <div class="theme-switch-group settings-switch-group" role="group" aria-label="Dataset filters position">
+                    <button
+                      v-for="opt in pageLayoutOptions"
+                      :key="opt.value"
+                      type="button"
+                      :aria-pressed="pageLayout === opt.value"
+                      :class="['theme-btn', { 'is-active': pageLayout === opt.value }]"
+                      @click="setPageLayout(opt.value)"
+                    >
+                      {{ opt.label }}
+                    </button>
+                  </div>
+                </template>
                 <template v-if="supportsChartOrientation">
                   <p class="editorial-heading">Chart orientation</p>
                   <div class="theme-switch-group settings-switch-group" role="group" aria-label="Chart orientation">
@@ -105,26 +102,28 @@
                     {{ opt.label }}
                   </button>
                 </div>
-                <p class="editorial-heading">Experimental</p>
-                <p class="settings-hint">Emoji region markers (🌎🌍🌏)</p>
-                <div class="theme-switch-group settings-switch-group" role="group" aria-label="Emoji marker styles">
-                  <button
-                    type="button"
-                    :aria-pressed="!enableEmojiMarkers"
-                    :class="['theme-btn', { 'is-active': !enableEmojiMarkers }]"
-                    @click="setEnableEmojiMarkers(false)"
-                  >
-                    Off
-                  </button>
-                  <button
-                    type="button"
-                    :aria-pressed="enableEmojiMarkers"
-                    :class="['theme-btn', { 'is-active': enableEmojiMarkers }]"
-                    @click="setEnableEmojiMarkers(true)"
-                  >
-                    On
-                  </button>
-                </div>
+                <template v-if="selectedChartType !== 'page'">
+                  <p class="editorial-heading">Experimental</p>
+                  <p class="settings-hint">Emoji region markers (🌎🌍🌏)</p>
+                  <div class="theme-switch-group settings-switch-group" role="group" aria-label="Emoji marker styles">
+                    <button
+                      type="button"
+                      :aria-pressed="!enableEmojiMarkers"
+                      :class="['theme-btn', { 'is-active': !enableEmojiMarkers }]"
+                      @click="setEnableEmojiMarkers(false)"
+                    >
+                      Off
+                    </button>
+                    <button
+                      type="button"
+                      :aria-pressed="enableEmojiMarkers"
+                      :class="['theme-btn', { 'is-active': enableEmojiMarkers }]"
+                      @click="setEnableEmojiMarkers(true)"
+                    >
+                      On
+                    </button>
+                  </div>
+                </template>
               </div>
             </div>
           </div>
@@ -136,10 +135,11 @@
       <div
         :class="[
           'dashboard-panels flex',
-          isNarrow ? 'flex-col' : 'flex-row items-stretch gap-5 lg:gap-6',
+          isNarrow ? 'flex-col' : 'flex-row items-stretch gap-2 lg:gap-3',
         ]"
       >
         <div
+          v-if="selectedChartType !== 'page'"
           :class="[
             'filter-column min-w-0',
             isNarrow ? 'w-full' : 'filter-column--sidebar shrink-0',
@@ -232,12 +232,27 @@
         </div>
         <div :class="['chart-area min-w-0', isNarrow ? 'w-full' : 'flex-1']">
           <div ref="chartCardRef" class="chart-card w-full">
+            <div
+              v-if="!chartHasPlotParameters && selectedChartType !== 'page'"
+              class="release-stepper-block"
+            >
+              <ReleaseStepper
+                v-model="extendedDataReleaseKey"
+                :options="interimReleaseOptions"
+                :disabled="releaseLoading"
+              />
+            </div>
             <component
               :is="chartComponent"
               :data="extendedTableData"
               :source-data="plotSource"
+              :release-key="extendedDataReleaseKey"
+              :release-options="interimReleaseOptions"
+              :disabled="releaseLoading"
               :selected-point="selectedPoint"
               @update:selected-point="selectedPoint = $event"
+              @update:release-key="extendedDataReleaseKey = $event"
+              @update:has-selection="pageHasCarSelection = $event"
               :marker-styles="markerStyles"
               :selected-regions="selectedRegions"
               :chartHeight="chartHeight"
@@ -267,29 +282,22 @@
                 />
               </template>
             </component>
-            <div v-if="!chartHasPlotParameters" class="release-stepper-block">
-              <ReleaseStepper
-                v-model="extendedDataReleaseKey"
-                :options="interimReleaseOptions"
-                :disabled="releaseLoading"
-              />
-            </div>
-            <div class="mt-2 flex items-center justify-between gap-2 flex-wrap">
-              <p class="editorial-label">{{ chartCountLabel }}</p>
+            <div class="chart-meta-row mt-2 flex items-center justify-between gap-2 flex-wrap">
+              <p
+                v-if="selectedChartType !== 'page' || pageHasCarSelection"
+                class="editorial-label"
+              >
+                {{ chartCountLabel }}
+              </p>
               <button
-                v-if="selectedChartType !== 'jitter' && selectedChartType !== 'placeholder' && selectedChartType !== 'table' && selectedChartType !== 'table-extended'"
+                v-if="selectedChartType !== 'jitter' && selectedChartType !== 'page' && selectedChartType !== 'placeholder' && selectedChartType !== 'table' && selectedChartType !== 'table-extended'"
                 type="button"
                 class="text-link export-link"
                 :disabled="exportingPng"
                 :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
                 @click="exportChartPng"
               >
-                <span class="export-icon" aria-hidden="true">
-                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 2v8.2M5.2 7.5 8 10.3l2.8-2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M3 12.5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                  </svg>
-                </span>
+                <UiIcon name="save-png" icon-class="export-icon" />
                 {{ exportingPng ? 'Exporting…' : 'Save PNG' }}
               </button>
             </div>
@@ -297,11 +305,12 @@
           <div class="chart-guide-block">
             <button
               type="button"
-              class="text-link text-link--strong"
+              class="text-link text-link--strong chart-guide-toggle"
               :aria-expanded="guideOpen"
               @click="guideOpen = !guideOpen"
             >
-              {{ guideOpen ? 'Hide this note' : 'How to read this chart' }}
+              <UiIcon name="chart-guide" icon-class="chart-guide-icon" />
+              {{ guideOpen ? 'Hide this note' : 'How to read this product' }}
             </button>
             <div v-if="guideOpen" class="chart-guide">
               <p class="chart-guide-draft" role="note">This explainer is an AI auto-generated draft.</p>
@@ -310,6 +319,7 @@
             </div>
           </div>
           <Legend
+            v-if="selectedChartType !== 'page'"
             :filtered-data="filteredData"
             :selected-regions="selectedRegions"
             :selected-corporations="selectedCorporations"
@@ -323,10 +333,10 @@
         </div>
       </div>
 
-      <footer class="footer">
-        <p class="footer-credit" v-html="siteCreditHtml"></p>
+      <footer v-if="showSiteFooter" class="footer">
         <p class="footer-sources" v-html="siteSourcesHtml"></p>
-        <p class="footer-sources-processed" v-html="siteSourcesProcessedHtml"></p>
+        <p class="footer-credit" v-html="siteCreditHtml"></p>
+        <p class="footer-source-code" v-html="siteSourceCodeHtml"></p>
       </footer>
 
       <DebugSection
@@ -341,19 +351,21 @@
 </template>
 
 <script>
-import { ref, provide, computed } from 'vue';
+import { ref, provide, computed, watch } from 'vue';
 import FilterPanel from './filters/FilterPanel.vue';
 import BeeswarmPlot from './charts/BeeswarmPlot.vue';
 import JitterPlot from './charts/JitterPlot.vue';
 import PlaceholderChart from './charts/PlaceholderChart.vue';
+import CarPage from './charts/CarPage.vue';
 import DataTable from './tables/DataTable.vue';
 import ExtendedDataTable from './tables/ExtendedDataTable.vue';
 import Legend from './charts/Legend.vue';
 import ThemeToggle from './layout/ThemeToggle.vue';
 import DebugSection from './debug/DebugSection.vue';
 import ReleaseStepper from './controls/ReleaseStepper.vue';
+import UiIcon from './UiIcon.vue';
 import { interimReleaseOptions } from '../data/extendedData';
-import { getSiteSubtitleHtml, getSiteSourcesHtml, getSiteSourcesProcessedHtml, getSiteCreditHtml } from '../config/siteFooter';
+import { getSiteSubtitleHtml, getSiteSourcesHtml, getSiteCreditHtml, getSiteSourceCodeHtml } from '../config/siteFooter';
 import { useDashboardFilters } from '../composables/useDashboardFilters';
 import { useChartView } from '../composables/useChartView';
 import { useDashboardLayout } from '../composables/useDashboardLayout';
@@ -365,6 +377,7 @@ export default {
     FilterPanel,
     BeeswarmPlot,
     JitterPlot,
+    CarPage,
     PlaceholderChart,
     DataTable,
     ExtendedDataTable,
@@ -372,6 +385,7 @@ export default {
     ThemeToggle,
     DebugSection,
     ReleaseStepper,
+    UiIcon,
   },
   setup() {
     const filtersOpen = ref(false);
@@ -450,6 +464,7 @@ export default {
       settingsRef,
       headerActionsOpen,
       toggleHeaderActions,
+      onTitleBlockActivate,
       pageLayout,
       pageLayoutOptions,
       setPageLayout,
@@ -476,6 +491,15 @@ export default {
       () => selectedChartType.value === 'beeswarm' || selectedChartType.value === 'jitter'
     );
 
+    const pageHasCarSelection = ref(false);
+    const showSiteFooter = computed(
+      () => selectedChartType.value !== 'page' || pageHasCarSelection.value
+    );
+
+    watch(selectedChartType, (type) => {
+      if (type !== 'page') pageHasCarSelection.value = false;
+    });
+
     return {
       filtersOpen,
       filtersDrawerOpen,
@@ -484,11 +508,14 @@ export default {
       settingsRef,
       headerActionsOpen,
       toggleHeaderActions,
+      onTitleBlockActivate,
       isNarrow,
       siteSubtitleHtml: getSiteSubtitleHtml(),
       siteCreditHtml: getSiteCreditHtml(),
       siteSourcesHtml: getSiteSourcesHtml(),
-      siteSourcesProcessedHtml: getSiteSourcesProcessedHtml(),
+      siteSourceCodeHtml: getSiteSourceCodeHtml(),
+      showSiteFooter,
+      pageHasCarSelection,
       pageLayout,
       pageLayoutOptions,
       setPageLayout,

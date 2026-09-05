@@ -24,23 +24,34 @@ function formatPartsPercent(datum) {
   return `${Math.round(pct)}%`;
 }
 
+function formatOriginList(entries) {
+  if (!Array.isArray(entries) || !entries.length) return '';
+  return entries
+    .map((p) => (p.role === 'primary' ? p.country : `${p.country} (additional)`))
+    .filter(Boolean)
+    .join(', ');
+}
+
 /**
- * Minimal floating readout - same facts as the old info strip,
- * with the model as the only emphasized line.
+ * Minimal floating readout - carline emphasized, then labeled fields.
  */
 export function buildPointTooltipHtml(datum) {
   if (!datum) return '';
   const title = escapeHtml(displayCarlineName(datum));
-  const trail = [datum.region, datum.corporation, datum.brand]
-    .filter(Boolean)
-    .map(escapeHtml)
-    .join(' / ');
   const pct = escapeHtml(formatPartsPercent(datum));
+  const assembly = formatOriginList(datum.finalAssemblyCountries);
+
+  const lines = [
+    datum.brand ? `Brand: ${escapeHtml(datum.brand)}` : '',
+    datum.corporation ? `Make: ${escapeHtml(datum.corporation)}` : '',
+    datum.region ? `Region: ${escapeHtml(datum.region)}` : '',
+    `U.S./Canadian parts: ${pct}`,
+    assembly ? `Final assembly: ${escapeHtml(assembly)}` : '',
+  ].filter(Boolean);
 
   return [
     `<strong>${title}</strong>`,
-    trail ? `<span class="role">${trail}</span>` : '',
-    `<div class="dates">${pct}</div>`,
+    lines.length ? `<div class="dates">${lines.join('<br />')}</div>` : '',
   ].join('');
 }
 
@@ -50,11 +61,10 @@ export function getChartTooltipEl() {
     : null;
 }
 
-export function showChartTooltip(html, clientX, clientY, accentColor, el = getChartTooltipEl()) {
+export function showChartTooltip(html, clientX, clientY, _accentColor, el = getChartTooltipEl()) {
   if (!el || !html) return;
   el.innerHTML = html;
   el.hidden = false;
-  el.style.borderTopColor = accentColor || '';
   const rect = el.getBoundingClientRect();
   let left = clientX + 12;
   let top = clientY + 12;
@@ -70,7 +80,6 @@ export function hideChartTooltip(el = getChartTooltipEl()) {
   if (!el) return;
   el.hidden = true;
   el.innerHTML = '';
-  el.style.borderTopColor = '';
 }
 
 export function showPointTooltip(datum, clientX, clientY, accentColor) {

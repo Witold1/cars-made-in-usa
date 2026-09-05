@@ -1,13 +1,14 @@
 # How American Is Your Car?
 
-[![Website](https://img.shields.io/badge/Website-live-22863a?style=flat-square)](https://witold1.github.io/cars-made-in-usa/)
-![Vue](https://img.shields.io/badge/Vue-3-42b883?style=flat-square&logo=vuedotjs&logoColor=white)
-![D3](https://img.shields.io/badge/D3-7-f9a03c?style=flat-square&logo=d3dotjs&logoColor=white)
+[![Website](https://img.shields.io/badge/Website-live-22863a?style=flat-square)](https://witold1.github.io/cars-made-in-usa/)<br>
 ![Vite](https://img.shields.io/badge/Vite-5-646cff?style=flat-square&logo=vite&logoColor=white)
+![Vue](https://img.shields.io/badge/Vue-3-42b883?style=flat-square&logo=vuedotjs&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)
+![D3](https://img.shields.io/badge/D3-7-f9a03c?style=flat-square&logo=d3dotjs&logoColor=white)<br>
 ![JSON](https://img.shields.io/badge/Data-JSON-000000?style=flat-square&logo=json&logoColor=white)
-![Status](https://img.shields.io/badge/Status-private--alpha-orange?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT%20%2B%20CC%20BY--SA%204.0-lightgrey?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT%20%2B%20CC%20BY--SA%204.0-lightgrey?style=flat-square)<br>
+![Data quality](https://img.shields.io/badge/Data--quality-public--alpha-orange?style=flat-square)
+![Dashboard status](https://img.shields.io/badge/Dashboard--status-public--beta-orange?style=flat-square)
 ![AI Assistance](https://img.shields.io/badge/AI--Assistance-high-informational?style=flat-square)
 
 Interactive dashboard of U.S./Canadian parts content for passenger vehicle carlines, based on public NHTSA American Automobile Labeling Act (Part 583) releases.
@@ -21,13 +22,14 @@ Vue 3 + Vite + D3. Dataset is plain JSON under `data/` - edit files, refresh the
 ### 1. Views
 
 
-| View          | Meaning                                                              |
-| ------------- | -------------------------------------------------------------------- |
-| Beeswarm      | One point per carline; U.S./Canadian parts content on the value axis |
-| Jitter        | Same data, one small chart per region under a reference strip        |
-| Table         | Searchable / sortable carline rows                                   |
-| Origins table | Extended release rows (foreign parts, origins, assembly)             |
-| Bar / Line    | Placeholders - coming soon                                           |
+| View                 | Meaning                                                              |
+| -------------------- | -------------------------------------------------------------------- |
+| Exploration widget   | Year → make → model lookup for one carline’s content and origins     |
+| Visual summary       | One point per carline; U.S./Canadian parts content on the value axis |
+| Visual comparison    | Same data, one small chart per region under a reference strip        |
+| Data table           | Extended release rows (foreign parts, origins, assembly)             |
+| Placeholder          | Reserved slot for a future chart type                                |
+| Artificially generated table | Searchable / sortable carline rows                          |
 
 
 Hover points for model, corporation, brand, and content %.

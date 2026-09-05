@@ -9,6 +9,7 @@
       :center1="center1"
       :spread1="spread1"
       :seed="seed"
+      :fullAxis="fullAxis"
       @update:chartHeight="updateChartHeight($event)"
       @update:pointRadius="updatePointRadius($event)"
       @update:paddingFactor="updatePaddingFactor($event)"
@@ -17,6 +18,7 @@
       @update:center1="updateCenter1($event)"
       @update:spread1="updateSpread1($event)"
       @update:seed="updateSeed($event)"
+      @update:fullAxis="updateFullAxis($event)"
     />
     <div v-if="$slots['release-stepper']" class="release-stepper-block">
       <slot name="release-stepper" />
@@ -79,6 +81,7 @@ export default {
       margin: { top: 20, right: 20, bottom: 32, left: 40 },
       paddingFactor: props.paddingFactor || 1.3
     });
+    const fullAxis = ref(false);
     const isDarkMode = ref(document.documentElement.classList.contains('dark'));
     const themeTokens = ref(readThemeTokens());
     const selectedPointId = ref(null);
@@ -161,6 +164,10 @@ export default {
       }
     };
 
+    const updateFullAxis = (value) => {
+      fullAxis.value = !!value;
+    };
+
     // Chart goes vertical only when container is narrow (< 768). Side-by-side at 1024px gives chart ~768px, so horizontal.
     const CHART_VERTICAL_BREAKPOINT = 768;
 
@@ -190,10 +197,12 @@ export default {
         const rand = seededRandom(seed.value);
         const formattedData = applyNoise(props.data, props.center0, props.spread0, props.center1, props.spread1, props.noisePower, rand);
 
-        const maxValue = formattedData.length > 0 ? d3.max(formattedData, d => Number(d.value)) : 1;
+        const dataMax = formattedData.length > 0 ? d3.max(formattedData, d => Number(d.value)) : 1;
         const minValue = Math.min(props.center0 - props.spread0 / 2, props.center1 - props.spread1 / 2);
+        const maxValue = fullAxis.value ? 100 : dataMax;
+        const domainMax = fullAxis.value ? 100 : dataMax + 1;
         const xScale = d3.scaleLinear()
-          .domain([minValue, maxValue + 1])
+          .domain([minValue, domainMax])
           .range([margin.left, parentWidth - margin.right]);
 
         const beeswarm = new AccurateBeeswarm(
@@ -215,7 +224,7 @@ export default {
           const yMin = margin.top;
           const yMax = height - margin.bottom;
           const yScale = d3.scaleLinear()
-            .domain([minValue, maxValue + 1])
+            .domain([minValue, domainMax])
             .range([yMax, yMin]);
           // Beeswarm returns d.y as offset from center; use actual extent so points fit in plot
           const jitterExtent = d3.extent(beeswarm, d => d.y);
@@ -389,7 +398,8 @@ export default {
       () => props.spread1,
       () => props.noisePower,
       () => props.randomSeed,
-      () => props.orientation
+      () => props.orientation,
+      fullAxis
     ], () => {
       chartConfig.value.radius = props.pointRadius || 5.5;
       chartConfig.value.hoverRadius = (props.pointRadius || 5.5) + 2;
@@ -402,6 +412,7 @@ export default {
     return {
       svgRef,
       chartConfig,
+      fullAxis,
       updateChartHeight,
       updatePointRadius,
       updatePaddingFactor,
@@ -409,7 +420,8 @@ export default {
       updateSpread0,
       updateCenter1,
       updateSpread1,
-      updateSeed
+      updateSeed,
+      updateFullAxis
     };
   }
 };

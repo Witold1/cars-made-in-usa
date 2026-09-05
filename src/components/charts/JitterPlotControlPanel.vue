@@ -22,11 +22,13 @@
           :fillOpacity="fillOpacity"
           :strokeOpacity="strokeOpacity"
           :strokeWidth="strokeWidth"
+          :fullAxis="fullAxis"
           @update:chartHeight="emitUpdate('chartHeight', $event)"
           @update:radius="emitUpdate('radius', $event)"
           @update:fillOpacity="emitUpdate('fillOpacity', $event)"
           @update:strokeOpacity="emitUpdate('strokeOpacity', $event)"
           @update:strokeWidth="emitUpdate('strokeWidth', $event)"
+          @update:fullAxis="emitUpdate('fullAxis', $event)"
         />
       </div>
     </transition>
@@ -60,9 +62,13 @@ export default {
     strokeWidth: {
       type: Number,
       required: true
+    },
+    fullAxis: {
+      type: Boolean,
+      default: true
     }
   },
-  emits: ['update:chartHeight', 'update:radius', 'update:fillOpacity', 'update:strokeOpacity', 'update:strokeWidth'],
+  emits: ['update:chartHeight', 'update:radius', 'update:fillOpacity', 'update:strokeOpacity', 'update:strokeWidth', 'update:fullAxis'],
   setup(props, { emit }) {
     const showSliders = ref(false);
 
