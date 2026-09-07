@@ -11,6 +11,7 @@ const PAD_X = 28;
 const PAD_Y = 24;
 const HEADER_GAP = 14;
 const FOOTER_GAP = 12;
+const SVG_NS = 'http://www.w3.org/2000/svg';
 
 const DEFAULT_TITLE = 'How American Is Your Car?';
 const DEFAULT_SUBTITLE = siteSubtitlePlain;
@@ -22,55 +23,11 @@ const DEFAULT_SUBTITLE = siteSubtitlePlain;
  * @param {SVGSVGElement | null} svgEl - Live SVG (re-queried after layout expand when possible)
  * @param {string} filename - Download filename
  * @param {object} [options]
- * @param {string} [options.title]
- * @param {string} [options.subtitle]
- * @param {string | string[]} [options.footer] - Footer lines (defaults to site credit + sources)
- * @param {string} [options.meta] - Optional meta line above the footer (e.g. point count)
- * @param {'wys' | 'fw'} [options.mode] - fw = preset export width (default); wys = as on screen
- * @param {HTMLElement | null} [options.expandRoot] - Container to widen when mode is fw
- * @param {number} [options.exportWidth]
- * @param {number} [options.scale]
- * @param {() => (SVGSVGElement | null)} [options.findSvg] - Re-find SVG after resize/redraw
- * @param {() => SVGSVGElement[]} [options.findSvgs] - Multiple SVGs stacked (optional)
  * @returns {Promise<boolean>}
  */
 export async function exportSvgAsPng(svgEl, filename = 'chart.png', options = {}) {
-  const {
-    title = DEFAULT_TITLE,
-    subtitle = DEFAULT_SUBTITLE,
-    footer = getSiteFooterLines(),
-    meta = '',
-    mode = 'fw',
-    expandRoot = null,
-    exportWidth = EXPORT_WIDTH,
-    scale = SCALE,
-    findSvg = null,
-    findSvgs = null,
-  } = options;
-
-  const tokens = readThemeTokens();
-  const footerLines = normalizeFooterLines(footer);
-  const useFullWidth = mode === 'fw';
-  const restore = useFullWidth && expandRoot ? expandForCapture(expandRoot, exportWidth) : null;
-  document.body.classList.add('is-exporting');
-
-  try {
-    if (useFullWidth && expandRoot) {
-      // Jitter listens to window resize; beeswarm uses ResizeObserver on the parent.
-      window.dispatchEvent(new Event('resize'));
-    }
-    if (document.fonts?.ready) await document.fonts.ready;
-    await nextPaint();
-    if (useFullWidth) {
-      // Beeswarm ResizeObserver + jitter debounce(~50ms)
-      await sleep(120);
-      await nextPaint();
-    }
-
-    const svgs = resolveSvgs({ svgEl, findSvg, findSvgs, expandRoot });
-    if (!svgs.length) return false;
-
-    const prepared = await Promise.all(svgs.map((el) => prepareSvgClone(el)));
+  return runExportCapture(svgEl, { ...options, rasterizeImages: true }, async (ctx) => {
+    const { prepared, tokens, title, subtitle, footerLines, meta, scale = SCALE } = ctx;
     const images = await Promise.all(prepared.map((p) => svgToImage(p.svgString)));
 
     const contentW = Math.max(...prepared.map((p) => p.width), 320);
@@ -84,31 +41,151 @@ export async function exportSvgAsPng(svgEl, filename = 'chart.png', options = {}
     const canvas = document.createElement('canvas');
     canvas.width = Math.round(cssW * scale);
     canvas.height = Math.round(cssH * scale);
-    const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    ctx.fillStyle = tokens.bg || tokens.chartBg;
-    ctx.fillRect(0, 0, cssW, cssH);
+    const c2d = canvas.getContext('2d');
+    c2d.imageSmoothingEnabled = true;
+    c2d.imageSmoothingQuality = 'high';
+    c2d.setTransform(scale, 0, 0, scale, 0, 0);
+    c2d.fillStyle = tokens.bg || tokens.chartBg;
+    c2d.fillRect(0, 0, cssW, cssH);
 
     let y = PAD_Y;
-    y = drawHeader(ctx, title, subtitle, PAD_X, y, contentW, tokens);
+    y = drawHeader(c2d, title, subtitle, PAD_X, y, contentW, tokens);
     y += HEADER_GAP;
 
     for (let i = 0; i < images.length; i++) {
       const { width, height } = prepared[i];
-      // Chart frame stays transparent - page --bg shows through.
-      ctx.drawImage(images[i], PAD_X, y, width, height);
+      c2d.drawImage(images[i], PAD_X, y, width, height);
       y += height + (i < images.length - 1 ? 16 : 0);
     }
 
     if (footerBlockH) {
       y += FOOTER_GAP;
-      drawFooter(ctx, footerLines, meta, PAD_X, y, contentW, tokens);
+      drawFooter(c2d, footerLines, meta, PAD_X, y, contentW, tokens);
     }
 
     triggerDownload(canvas.toDataURL('image/png'), filename);
     return true;
+  });
+}
+
+/**
+ * Export chart SVG(s) as a single SVG file with title/footer chrome.
+ * Same layout modes as PNG; brand emblems stay vector (SVG data URLs).
+ * @param {SVGSVGElement | null} svgEl
+ * @param {string} filename
+ * @param {object} [options]
+ * @returns {Promise<boolean>}
+ */
+export async function exportSvgAsSvg(svgEl, filename = 'chart.svg', options = {}) {
+  return runExportCapture(svgEl, { ...options, rasterizeImages: false }, async (ctx) => {
+    const { prepared, tokens, title, subtitle, footerLines, meta } = ctx;
+
+    const contentW = Math.max(...prepared.map((p) => p.width), 320);
+    const chartsH = prepared.reduce((sum, p) => sum + p.height, 0) + Math.max(0, prepared.length - 1) * 16;
+
+    const headerH = measureHeaderHeight(title, subtitle, contentW, tokens);
+    const footerBlockH = measureFooterHeight(footerLines, meta, contentW, tokens);
+    const cssW = contentW + PAD_X * 2;
+    const cssH = PAD_Y + headerH + HEADER_GAP + chartsH + (footerBlockH ? FOOTER_GAP + footerBlockH : 0) + PAD_Y;
+
+    const root = document.createElementNS(SVG_NS, 'svg');
+    root.setAttribute('xmlns', SVG_NS);
+    root.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+    root.setAttribute('width', String(cssW));
+    root.setAttribute('height', String(cssH));
+    root.setAttribute('viewBox', `0 0 ${cssW} ${cssH}`);
+
+    const bg = document.createElementNS(SVG_NS, 'rect');
+    bg.setAttribute('width', String(cssW));
+    bg.setAttribute('height', String(cssH));
+    bg.setAttribute('fill', tokens.bg || tokens.chartBg || '#ffffff');
+    root.appendChild(bg);
+
+    let y = PAD_Y;
+    y = appendSvgHeader(root, title, subtitle, PAD_X, y, contentW, tokens);
+    y += HEADER_GAP;
+
+    for (let i = 0; i < prepared.length; i++) {
+      const { svgString, width, height } = prepared[i];
+      const nested = parseSvgRoot(svgString);
+      if (nested) {
+        nested.setAttribute('x', String(PAD_X));
+        nested.setAttribute('y', String(y));
+        nested.setAttribute('width', String(width));
+        nested.setAttribute('height', String(height));
+        root.appendChild(document.importNode(nested, true));
+      }
+      y += height + (i < prepared.length - 1 ? 16 : 0);
+    }
+
+    if (footerBlockH) {
+      y += FOOTER_GAP;
+      appendSvgFooter(root, footerLines, meta, PAD_X, y, contentW, tokens);
+    }
+
+    const markup = `<?xml version="1.0" encoding="UTF-8"?>\n${new XMLSerializer().serializeToString(root)}`;
+    const blob = new Blob([markup], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    triggerDownload(url, filename);
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    return true;
+  });
+}
+
+/**
+ * Shared layout expand + SVG clone preparation for PNG/SVG exports.
+ * @param {SVGSVGElement | null} svgEl
+ * @param {object} options
+ * @param {(ctx: object) => Promise<boolean>} buildAndDownload
+ */
+async function runExportCapture(svgEl, options, buildAndDownload) {
+  const {
+    title = DEFAULT_TITLE,
+    subtitle = DEFAULT_SUBTITLE,
+    footer = getSiteFooterLines(),
+    meta = '',
+    mode = 'fw',
+    expandRoot = null,
+    exportWidth = EXPORT_WIDTH,
+    scale = SCALE,
+    findSvg = null,
+    findSvgs = null,
+    rasterizeImages = true,
+  } = options;
+
+  const tokens = readThemeTokens();
+  const footerLines = normalizeFooterLines(footer);
+  const useFullWidth = mode === 'fw';
+  const restore = useFullWidth && expandRoot ? expandForCapture(expandRoot, exportWidth) : null;
+  document.body.classList.add('is-exporting');
+
+  try {
+    if (useFullWidth && expandRoot) {
+      window.dispatchEvent(new Event('resize'));
+    }
+    if (document.fonts?.ready) await document.fonts.ready;
+    await nextPaint();
+    if (useFullWidth) {
+      await sleep(120);
+      await nextPaint();
+    }
+
+    const svgs = resolveSvgs({ svgEl, findSvg, findSvgs, expandRoot });
+    if (!svgs.length) return false;
+
+    const prepared = await Promise.all(
+      svgs.map((el) => prepareSvgClone(el, { rasterizeImages }))
+    );
+
+    return await buildAndDownload({
+      prepared,
+      tokens,
+      title,
+      subtitle,
+      footerLines,
+      meta,
+      scale,
+    });
   } finally {
     document.body.classList.remove('is-exporting');
     restore?.();
@@ -155,7 +232,7 @@ function expandForCapture(el, width) {
   };
 }
 
-async function prepareSvgClone(svgEl) {
+async function prepareSvgClone(svgEl, { rasterizeImages = true } = {}) {
   const width =
     parseFloat(svgEl.getAttribute('width')) ||
     svgEl.clientWidth ||
@@ -173,13 +250,13 @@ async function prepareSvgClone(svgEl) {
   if (!clone.getAttribute('viewBox')) {
     clone.setAttribute('viewBox', `0 0 ${width} ${height}`);
   }
-  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  clone.setAttribute('xmlns', SVG_NS);
   clone.classList.remove('bg-chart-bg');
 
   inlineComputedStyles(svgEl, clone);
-  await inlineExternalImages(clone);
+  await inlineExternalImages(clone, { rasterizeSvg: rasterizeImages });
 
-  // Transparent chart frame - matches page bg in the PNG, not --chart-bg.
+  // Transparent chart frame - matches page bg in the export, not --chart-bg.
   clone.style.background = 'transparent';
   clone.style.backgroundColor = 'transparent';
 
@@ -187,14 +264,15 @@ async function prepareSvgClone(svgEl) {
   return { svgString, width, height };
 }
 
-/** Cache: absolute URL → data URL (so repeat exports skip refetch). */
+/** Cache: `${absolute}|png` / `${absolute}|svg` → data URL */
 const imageDataUrlCache = new Map();
 
 /**
  * External <image href> (e.g. brand emblems) do not load inside blob SVGs.
- * Fetch + rasterize to PNG data URLs before serialize → canvas.
+ * PNG export: rasterize nested SVGs to PNG data URLs (canvas-safe).
+ * SVG export: keep SVG as vector data URLs.
  */
-async function inlineExternalImages(svgRoot) {
+async function inlineExternalImages(svgRoot, { rasterizeSvg = true } = {}) {
   const nodes = [...svgRoot.querySelectorAll('image')];
   if (!nodes.length) return;
 
@@ -207,7 +285,7 @@ async function inlineExternalImages(svgRoot) {
       '';
     if (!href || href.startsWith('data:')) continue;
     if (!jobs.has(href)) {
-      jobs.set(href, fetchAsDataUrl(href));
+      jobs.set(href, fetchAsDataUrl(href, { rasterizeSvg }));
     }
   }
 
@@ -231,7 +309,7 @@ async function inlineExternalImages(svgRoot) {
   }
 }
 
-async function fetchAsDataUrl(href) {
+async function fetchAsDataUrl(href, { rasterizeSvg = true } = {}) {
   let absolute;
   try {
     absolute = new URL(href, window.location.href).href;
@@ -239,8 +317,9 @@ async function fetchAsDataUrl(href) {
     return null;
   }
 
-  if (imageDataUrlCache.has(absolute)) {
-    return imageDataUrlCache.get(absolute);
+  const cacheKey = `${absolute}|${rasterizeSvg ? 'png' : 'svg'}`;
+  if (imageDataUrlCache.has(cacheKey)) {
+    return imageDataUrlCache.get(cacheKey);
   }
 
   try {
@@ -252,17 +331,23 @@ async function fetchAsDataUrl(href) {
       contentType.includes('svg') ||
       absolute.toLowerCase().endsWith('.svg');
 
-    // Nested SVG data-URLs inside SVG→Image→canvas are unreliable; rasterize to PNG.
-    const dataUrl = isSvg
-      ? await svgBufferToPngDataUrl(buffer)
-      : arrayBufferToDataUrl(
-          buffer,
-          contentType && contentType !== 'application/octet-stream'
-            ? contentType
-            : 'application/octet-stream'
-        );
+    let dataUrl;
+    if (isSvg && rasterizeSvg) {
+      // Nested SVG data-URLs inside SVG→Image→canvas are unreliable; rasterize to PNG.
+      dataUrl = await svgBufferToPngDataUrl(buffer);
+    } else if (isSvg) {
+      const svgText = new TextDecoder().decode(buffer);
+      dataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgText)}`;
+    } else {
+      dataUrl = arrayBufferToDataUrl(
+        buffer,
+        contentType && contentType !== 'application/octet-stream'
+          ? contentType
+          : 'application/octet-stream'
+      );
+    }
 
-    if (dataUrl) imageDataUrlCache.set(absolute, dataUrl);
+    if (dataUrl) imageDataUrlCache.set(cacheKey, dataUrl);
     return dataUrl;
   } catch {
     return null;
@@ -349,6 +434,15 @@ function inlineComputedStyles(sourceRoot, cloneRoot) {
   }
 }
 
+function parseSvgRoot(svgString) {
+  const doc = new DOMParser().parseFromString(svgString, 'image/svg+xml');
+  const root = doc.documentElement;
+  if (!root || root.tagName.toLowerCase() !== 'svg' || doc.querySelector('parsererror')) {
+    return null;
+  }
+  return root;
+}
+
 function svgToImage(svgString) {
   return new Promise((resolve, reject) => {
     const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
@@ -414,6 +508,51 @@ function drawHeader(ctx, title, subtitle, x, y, maxW, tokens) {
   return cursor;
 }
 
+function appendSvgHeader(root, title, subtitle, x, y, maxW, tokens) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  let cursor = y;
+
+  if (title) {
+    ctx.font = `600 28px ${tokens.fontDisplay || 'Georgia, serif'}`;
+    const block = measureWrapped(ctx, title, maxW);
+    appendWrappedSvgText(root, block.lines, x, cursor, {
+      fill: tokens.text,
+      fontFamily: tokens.fontDisplay || 'Georgia, serif',
+      fontSize: 28,
+      fontWeight: 600,
+      lineH: block.lineH,
+      gap: block.gap,
+    });
+    cursor += block.height;
+  }
+  if (subtitle) {
+    if (title) cursor += 8;
+    ctx.font = `400 16px ${tokens.fontChart || 'sans-serif'}`;
+    const block = measureWrapped(ctx, subtitle, maxW);
+    appendWrappedSvgText(root, block.lines, x, cursor, {
+      fill: tokens.textSecondary || tokens.textMuted,
+      fontFamily: tokens.fontChart || 'sans-serif',
+      fontSize: 16,
+      fontWeight: 400,
+      lineH: block.lineH,
+      gap: block.gap,
+    });
+    cursor += block.height;
+  }
+  cursor += 10;
+  const line = document.createElementNS(SVG_NS, 'line');
+  line.setAttribute('x1', String(x));
+  line.setAttribute('y1', String(cursor));
+  line.setAttribute('x2', String(x + maxW));
+  line.setAttribute('y2', String(cursor));
+  line.setAttribute('stroke', tokens.border || 'rgba(0,0,0,0.15)');
+  line.setAttribute('stroke-width', '1');
+  root.appendChild(line);
+  cursor += 2;
+  return cursor;
+}
+
 function normalizeFooterLines(footer) {
   if (footer == null || footer === false) return [];
   if (Array.isArray(footer)) return footer.map((l) => String(l).trim()).filter(Boolean);
@@ -468,6 +607,70 @@ function drawFooter(ctx, footerLines, meta, x, y, maxW, tokens) {
   return cursor;
 }
 
+function appendSvgFooter(root, footerLines, meta, x, y, maxW, tokens) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  let cursor = y;
+
+  const rule = document.createElementNS(SVG_NS, 'line');
+  rule.setAttribute('x1', String(x));
+  rule.setAttribute('y1', String(cursor));
+  rule.setAttribute('x2', String(x + maxW));
+  rule.setAttribute('y2', String(cursor));
+  rule.setAttribute('stroke', tokens.border || 'rgba(0,0,0,0.15)');
+  rule.setAttribute('stroke-width', '1');
+  root.appendChild(rule);
+  cursor += 10;
+
+  const muted = tokens.textMuted || tokens.textSecondary;
+  const fontFamily = tokens.fontChart || 'sans-serif';
+
+  if (meta) {
+    ctx.font = `400 16px ${fontFamily}`;
+    const block = measureWrapped(ctx, meta, maxW);
+    appendWrappedSvgText(root, block.lines, x, cursor, {
+      fill: muted,
+      fontFamily,
+      fontSize: 16,
+      fontWeight: 400,
+      lineH: block.lineH,
+      gap: block.gap,
+    });
+    cursor += block.height + 6;
+  }
+
+  ctx.font = `400 16px ${fontFamily}`;
+  footerLines.forEach((line, i) => {
+    if (i) cursor += 4;
+    const block = measureWrapped(ctx, line, maxW);
+    appendWrappedSvgText(root, block.lines, x, cursor, {
+      fill: muted,
+      fontFamily,
+      fontSize: 16,
+      fontWeight: 400,
+      lineH: block.lineH,
+      gap: block.gap,
+    });
+    cursor += block.height;
+  });
+  return cursor;
+}
+
+function appendWrappedSvgText(root, lines, x, y, style) {
+  lines.forEach((line, i) => {
+    const t = document.createElementNS(SVG_NS, 'text');
+    t.setAttribute('x', String(x));
+    t.setAttribute('y', String(y + i * (style.lineH + style.gap)));
+    t.setAttribute('fill', style.fill || '#000');
+    t.setAttribute('font-family', style.fontFamily);
+    t.setAttribute('font-size', String(style.fontSize));
+    t.setAttribute('font-weight', String(style.fontWeight));
+    t.setAttribute('dominant-baseline', 'hanging');
+    t.textContent = line;
+    root.appendChild(t);
+  });
+}
+
 function measureWrapped(ctx, text, maxW) {
   const lines = wrapText(ctx, text, maxW);
   const metrics = ctx.measureText('Mg');
@@ -517,7 +720,7 @@ function sleep(ms) {
 }
 
 /** Timestamped filename like the timeline export. */
-export function exportFilename(base = 'how-american-is-your-car') {
+export function exportFilename(base = 'how-american-is-your-car', ext = 'png') {
   const d = new Date();
   const pad = (n) => String(n).padStart(2, '0');
   const stamp = [
@@ -528,5 +731,6 @@ export function exportFilename(base = 'how-american-is-your-car') {
     pad(d.getMinutes()),
     pad(d.getSeconds()),
   ].join('-');
-  return `${base}-${stamp}.png`;
+  const cleanExt = String(ext || 'png').replace(/^\./, '');
+  return `${base}-${stamp}.${cleanExt}`;
 }

@@ -1,16 +1,59 @@
 @layer components {
-  .export-link {
+  /* Compact “Save image: SVG / PNG” control (same pattern as rulers-of-kazakh-khanate) */
+  .export-tools {
     display: inline-flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.35em;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font);
+    font-size: var(--type-ui-size);
+    font-weight: 400;
+    line-height: inherit;
+    color: var(--text-muted);
   }
-  .export-link .export-icon {
+  .export-tools .export-icon {
     width: 13px;
     height: 13px;
-    opacity: 0.85;
+    opacity: 0.7;
   }
-  .export-link:hover .export-icon {
+  .export-tools .export-prefix {
+    margin-right: 0.05em;
+  }
+  .export-tools button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  .export-tools:hover .export-icon,
+  .export-tools button:hover,
+  .export-tools button:focus-visible {
     opacity: 1;
+    outline: none;
+  }
+  .export-tools button:hover,
+  .export-tools button:focus-visible {
+    color: var(--text-secondary);
+    border-bottom-color: currentColor;
+  }
+  .export-tools button:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+  .export-tools button:disabled {
+    opacity: 0.45;
+    cursor: wait;
+    border-bottom-color: transparent;
+  }
+  .export-sep {
+    opacity: 0.45;
+    user-select: none;
   }
 
   .editorial-select {

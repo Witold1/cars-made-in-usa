@@ -87,9 +87,9 @@
                     </button>
                   </div>
                 </template>
-                <p class="editorial-heading">Save PNG</p>
-                <p class="settings-hint">Preset size exports a wide, sharp PNG for sharing. WYS saves exactly what you see on screen.</p>
-                <div class="theme-switch-group settings-switch-group" role="group" aria-label="Save PNG layout">
+                <p class="editorial-heading">Save image</p>
+                <p class="settings-hint">Preset size exports a wide, sharp image for sharing. WYS saves exactly what you see on screen. Applies to PNG and SVG.</p>
+                <div class="theme-switch-group settings-switch-group" role="group" aria-label="Save image layout">
                   <button
                     v-for="opt in pngExportModeOptions"
                     :key="opt.value"
@@ -295,17 +295,13 @@
               >
                 {{ chartCountLabel }}
               </p>
-              <button
+              <ExportImageTools
                 v-if="selectedChartType !== 'jitter' && selectedChartType !== 'page' && selectedChartType !== 'placeholder' && selectedChartType !== 'table' && selectedChartType !== 'table-extended'"
-                type="button"
-                class="text-link export-link"
-                :disabled="exportingPng"
-                :title="pngExportMode === 'fw' ? 'Save PNG (preset size)' : 'Save PNG (WYS)'"
-                @click="exportChartPngWithFiltersClosed"
-              >
-                <UiIcon name="save-png" icon-class="export-icon" />
-                {{ savePngLabel(pngExportMode, { exporting: exportingPng }) }}
-              </button>
+                :disabled="exportingAny"
+                :mode="pngExportMode"
+                @save-png="exportChartPngWithFiltersClosed"
+                @save-svg="exportChartSvgWithFiltersClosed"
+              />
             </div>
           </div>
           <div class="chart-guide-block">
@@ -381,6 +377,7 @@ import ThemeToggle from './layout/ThemeToggle.vue';
 import DebugSection from './debug/DebugSection.vue';
 import ReleaseStepper from './controls/ReleaseStepper.vue';
 import UiIcon from './UiIcon.vue';
+import ExportImageTools from './ExportImageTools.vue';
 import { interimReleaseOptions } from '../data/extendedData';
 import { getSiteSubtitleHtml, getSiteSourcesHtml, getSiteCreditHtml, getSiteSourceCodeHtml, getSitePrivacyHtml } from '../config/siteFooter';
 import { useDashboardFilters } from '../composables/useDashboardFilters';
@@ -403,6 +400,7 @@ export default {
     DebugSection,
     ReleaseStepper,
     UiIcon,
+    ExportImageTools,
   },
   setup() {
     const filtersOpen = ref(false);
@@ -441,7 +439,6 @@ export default {
       pngExportMode,
       pngExportModeOptions,
       setPngExportMode,
-      savePngLabel,
       handleResetFilters,
       extendedDataReleaseKey,
       extendedDataReleaseOptions,
@@ -456,8 +453,9 @@ export default {
       chartCountLabel,
       guideOpen,
       chartCardRef,
-      exportingPng,
+      exportingAny,
       exportChartPng,
+      exportChartSvg,
       lastRenderMs,
       setLastRenderMs,
       chartHeight,
@@ -522,6 +520,11 @@ export default {
       await exportChartPng();
     };
 
+    const exportChartSvgWithFiltersClosed = async () => {
+      await collapseDatasetFiltersForExport();
+      await exportChartSvg();
+    };
+
     watch(enableBrandEmblems, (on) => {
       if (on) {
         import('../data/brandEmblems.js').then((m) => m.ensureBrandEmblemSprite());
@@ -568,11 +571,10 @@ export default {
       pngExportMode,
       pngExportModeOptions,
       setPngExportMode,
-      savePngLabel,
       enableBrandEmblems,
       setEnableBrandEmblems,
       chartCardRef,
-      exportingPng,
+      exportingAny,
       chartHasPlotParameters,
       plotSource,
       extendedDataReleaseKey,
@@ -584,6 +586,7 @@ export default {
       extendedTableData,
       extendedDataLength,
       exportChartPngWithFiltersClosed,
+      exportChartSvgWithFiltersClosed,
       lastRenderMs,
       selectedRegions,
       selectedCorporations,

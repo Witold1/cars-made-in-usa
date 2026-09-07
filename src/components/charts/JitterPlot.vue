@@ -25,16 +25,12 @@
           <span class="region-title editorial-label font-medium text-ink-secondary">{{ chart.region }}</span>
           <span :id="chart.counterId" class="point-counter editorial-label">{{ chart.data.length }} / {{ chart.total }} car lines</span>
         </div>
-        <button
-          type="button"
-          class="text-link export-link"
-          :disabled="exportingPngId === chart.id"
-          :title="pngExportMode === 'fw' ? 'Save PNG (preset size)' : 'Save PNG (WYS)'"
-          @click="exportChartPng(chart)"
-        >
-          <UiIcon name="save-png" icon-class="export-icon" />
-          {{ savePngLabel(pngExportMode, { exporting: exportingPngId === chart.id }) }}
-        </button>
+        <ExportImageTools
+          :disabled="!!exportingId"
+          :mode="pngExportMode"
+          @save-png="exportChart(chart, 'png')"
+          @save-svg="exportChart(chart, 'svg')"
+        />
       </div>
       <JitterPlotSubCharts
         :id="chart.svgId"
@@ -76,16 +72,12 @@
           <span class="region-title editorial-label font-medium text-ink-secondary truncate" :title="chart.region">{{ chart.region }}</span>
           <span :id="chart.counterId" class="point-counter editorial-label shrink-0">{{ chart.data.length }} / {{ chart.total }} car lines</span>
         </div>
-        <button
-          type="button"
-          class="text-link export-link"
-          :disabled="exportingPngId === chart.id"
-          :title="pngExportMode === 'fw' ? 'Save PNG (preset size)' : 'Save PNG (WYS)'"
-          @click="exportChartPng(chart)"
-        >
-          <UiIcon name="save-png" icon-class="export-icon" />
-          {{ savePngLabel(pngExportMode, { exporting: exportingPngId === chart.id }) }}
-        </button>
+        <ExportImageTools
+          :disabled="!!exportingId"
+          :mode="pngExportMode"
+          @save-png="exportChart(chart, 'png')"
+          @save-svg="exportChart(chart, 'svg')"
+        />
       </div>
       <JitterPlotSubCharts
         :id="chart.svgId"
@@ -113,13 +105,12 @@
 import { ref, computed, watch, inject, nextTick } from 'vue';
 import JitterPlotSubCharts from './JitterPlotSubCharts.vue';
 import JitterPlotControlPanel from './JitterPlotControlPanel.vue';
-import UiIcon from '../UiIcon.vue';
+import ExportImageTools from '../ExportImageTools.vue';
 import { COMPARE_DIMENSIONS, DEFAULT_COMPARE_BY } from '../../data/dataConfig';
 import { log } from '../../utils/logger';
 import { hideChartTooltip } from '../../utils/chartTooltip';
-import { exportSvgAsPng, exportFilename, EXPORT_JITTER_CHART_HEIGHT } from '../../utils/exportChartPng';
+import { exportSvgAsPng, exportSvgAsSvg, exportFilename, EXPORT_JITTER_CHART_HEIGHT } from '../../utils/exportChartPng';
 import { getChartTitle } from '../../config/chartGuides';
-import { savePngLabel } from '../../composables/useChartView';
 
 const CHART_MARGIN = { top: 20, right: 20, bottom: 32, left: 20 };
 
@@ -148,7 +139,7 @@ function orderedGroupKeys(keys, preferredOrder) {
 
 export default {
   name: 'JitterPlot',
-  components: { JitterPlotSubCharts, JitterPlotControlPanel, UiIcon },
+  components: { JitterPlotSubCharts, JitterPlotControlPanel, ExportImageTools },
   props: {
     data: {
       type: Array,
@@ -316,19 +307,21 @@ export default {
       }
     });
 
-    const exportingPngId = ref(null);
+    const exportingId = ref(null);
+    const exportingKind = ref(null);
     const pngExportMode = inject('pngExportMode', ref('fw'));
     const collapseDatasetFiltersForExport = inject(
       'collapseDatasetFiltersForExport',
       async () => {}
     );
 
-    const exportChartPng = async (chart) => {
-      if (exportingPngId.value) return;
+    const exportChart = async (chart, kind = 'png') => {
+      if (exportingId.value) return;
       const root = document.getElementById(chart.id);
       if (!root) return;
       const safeName = slugifyGroup(chart.region);
-      exportingPngId.value = chart.id;
+      exportingId.value = chart.id;
+      exportingKind.value = kind;
       hideChartTooltip();
 
       const prevHeight = chartHeight.value;
@@ -340,32 +333,42 @@ export default {
         await new Promise((r) => setTimeout(r, 120));
       }
 
+      const opts = {
+        mode: pngExportMode.value,
+        expandRoot: root,
+        findSvg: () => document.getElementById(chart.svgId),
+        title: 'How American Is Your Car?',
+        subtitle: `${chart.region}. U.S./Canadian parts content (NHTSA Part 583).`,
+        meta: `${chart.data.length} / ${chart.total} car lines, ${getChartTitle('jitter')}`,
+      };
+
       try {
         await collapseDatasetFiltersForExport();
-        await exportSvgAsPng(null, exportFilename(`chart-${safeName}`), {
-          mode: pngExportMode.value,
-          expandRoot: root,
-          findSvg: () => document.getElementById(chart.svgId),
-          title: 'How American Is Your Car?',
-          subtitle: `${chart.region}. U.S./Canadian parts content (NHTSA Part 583).`,
-          meta: `${chart.data.length} / ${chart.total} car lines, ${getChartTitle('jitter')}`,
-        });
+        if (kind === 'svg') {
+          await exportSvgAsSvg(null, exportFilename(`chart-${safeName}`, 'svg'), opts);
+        } else {
+          await exportSvgAsPng(null, exportFilename(`chart-${safeName}`, 'png'), opts);
+        }
       } catch (err) {
         console.error(err);
-        window.alert('Could not save PNG. Try again after the chart finishes rendering.');
+        window.alert(
+          kind === 'svg'
+            ? 'Could not save SVG. Try again after the chart finishes rendering.'
+            : 'Could not save PNG. Try again after the chart finishes rendering.'
+        );
       } finally {
         if (bumpHeight) chartHeight.value = prevHeight;
-        exportingPngId.value = null;
+        exportingId.value = null;
+        exportingKind.value = null;
       }
     };
 
     return {
       chartHeight,
       radius,
-      exportChartPng,
-      exportingPngId,
+      exportChart,
+      exportingId,
       pngExportMode,
-      savePngLabel,
       fillOpacity,
       strokeOpacity,
       strokeWidth,

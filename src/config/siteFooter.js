@@ -1,6 +1,6 @@
 /**
  * Site footer copy, subtitle, and source links — edit when credit or sources change.
- * Used by the page header, footer, and PNG exports.
+ * Used by the page header, footer, and PNG/SVG exports.
  */
 
 export const NHTSA_HOME_URL = 'https://www.nhtsa.gov/';

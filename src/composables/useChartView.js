@@ -5,7 +5,7 @@ import {
   loadRelease,
 } from '../data/extendedData';
 import { log } from '../utils/logger';
-import { exportSvgAsPng, exportFilename } from '../utils/exportChartPng';
+import { exportSvgAsPng, exportSvgAsSvg, exportFilename } from '../utils/exportChartPng';
 import { hideChartTooltip } from '../utils/chartTooltip';
 import {
   CHART_TYPE_OPTIONS,
@@ -51,17 +51,9 @@ function defaultChartHeight(chartType) {
 }
 
 export const PNG_EXPORT_MODE_OPTIONS = [
-  { value: 'fw', label: 'Preset size', title: 'Wide high-resolution PNG for sharing (1600px layout)' },
+  { value: 'fw', label: 'Preset size', title: 'Wide high-resolution export for sharing (1600px layout)' },
   { value: 'wys', label: 'WYS', title: 'What you see — export the chart as currently laid out' },
 ];
-
-/** Visible export control label, e.g. "Save PNG (preset size)". */
-export function savePngLabel(mode, { exporting = false } = {}) {
-  if (exporting) return 'Exporting…';
-  const opt = PNG_EXPORT_MODE_OPTIONS.find((o) => o.value === mode);
-  const tag = opt?.label || (mode === 'wys' ? 'WYS' : 'Preset size');
-  return `Save PNG (${tag})`;
-}
 
 export function useChartView({
   plotSource,
@@ -85,7 +77,9 @@ export function useChartView({
   const seed = ref(DEFAULT_PLOT.seed);
   const guideOpen = ref(false);
   const chartCardRef = ref(null);
-  const exportingPng = ref(false);
+  /** @type {import('vue').Ref<null | 'png' | 'svg'>} */
+  const exportingKind = ref(null);
+  const exportingAny = computed(() => exportingKind.value != null);
   const lastRenderMs = ref(null);
 
   let releaseLoadSeq = 0;
@@ -218,28 +212,50 @@ export function useChartView({
     return `${filteredData.value.length} / ${extendedDataLength.value} car lines`;
   });
 
+  const buildExportOptions = (card) => {
+    const typeLabel = getChartTitle(selectedChartType.value);
+    return {
+      mode: pngExportMode.value,
+      expandRoot: card,
+      findSvg: () => card.querySelector('svg[data-export="chart"]'),
+      title: 'How American Is Your Car?',
+      subtitle: siteSubtitlePlain,
+      meta: `${filteredData.value.length} / ${extendedDataLength.value} car lines, ${reportYear.value} report, ${typeLabel}`,
+      typeSlug: typeLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || selectedChartType.value,
+    };
+  };
+
   const exportChartPng = async () => {
     const card = chartCardRef.value;
-    if (!card || exportingPng.value) return;
-    exportingPng.value = true;
+    if (!card || exportingKind.value) return;
+    exportingKind.value = 'png';
     hideChartTooltip();
 
     try {
-      const typeLabel = getChartTitle(selectedChartType.value);
-      const typeSlug = typeLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      await exportSvgAsPng(null, exportFilename(`chart-${typeSlug || selectedChartType.value}`), {
-        mode: pngExportMode.value,
-        expandRoot: card,
-        findSvg: () => card.querySelector('svg[data-export="chart"]'),
-        title: 'How American Is Your Car?',
-        subtitle: siteSubtitlePlain,
-        meta: `${filteredData.value.length} / ${extendedDataLength.value} car lines, ${reportYear.value} report, ${typeLabel}`,
-      });
+      const { typeSlug, ...opts } = buildExportOptions(card);
+      await exportSvgAsPng(null, exportFilename(`chart-${typeSlug}`, 'png'), opts);
     } catch (err) {
       console.error(err);
       window.alert('Could not save PNG. Try again after the chart finishes rendering.');
     } finally {
-      exportingPng.value = false;
+      exportingKind.value = null;
+    }
+  };
+
+  const exportChartSvg = async () => {
+    const card = chartCardRef.value;
+    if (!card || exportingKind.value) return;
+    exportingKind.value = 'svg';
+    hideChartTooltip();
+
+    try {
+      const { typeSlug, ...opts } = buildExportOptions(card);
+      await exportSvgAsSvg(null, exportFilename(`chart-${typeSlug}`, 'svg'), opts);
+    } catch (err) {
+      console.error(err);
+      window.alert('Could not save SVG. Try again after the chart finishes rendering.');
+    } finally {
+      exportingKind.value = null;
     }
   };
 
@@ -264,7 +280,6 @@ export function useChartView({
     pngExportMode,
     pngExportModeOptions: PNG_EXPORT_MODE_OPTIONS,
     setPngExportMode,
-    savePngLabel,
     handleResetFilters,
     extendedDataReleaseKey,
     extendedDataReleaseOptions,
@@ -279,8 +294,9 @@ export function useChartView({
     chartCountLabel,
     guideOpen,
     chartCardRef,
-    exportingPng,
+    exportingAny,
     exportChartPng,
+    exportChartSvg,
     lastRenderMs,
     setLastRenderMs,
     chartHeight,
