@@ -78,6 +78,11 @@
     height: 14px;
     font-size: inherit;
   }
+  .panel-toggle-icon.parameters-icon {
+    width: 18px;
+    height: 18px;
+    font-size: inherit;
+  }
 
   .panel-toggle--section {
     font-size: var(--type-ui-size);

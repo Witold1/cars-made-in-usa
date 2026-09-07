@@ -20,7 +20,7 @@ export function useDashboardFilters(sourceData) {
   const selectedPoint = ref(null);
   const markerStyles = ref({});
   const showAdvancedCustomization = ref(false);
-  const enableBrandEmblems = ref(false);
+  const enableBrandEmblems = ref(true);
 
   const hierarchy = computed(() => buildHierarchy(sourceData.value));
 

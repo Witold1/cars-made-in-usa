@@ -8,11 +8,11 @@
     >
       <span class="panel-toggle-label">
         <span class="truncate">
-          {{ showSliders ? 'Hide' : 'Show' }}
+          {{ showSliders ? 'Hide' : 'Edit' }}
           <span class="editorial-heading editorial-heading--ink">chart parameters</span>
         </span>
       </span>
-      <span class="panel-toggle-icon" aria-hidden="true">{{ showSliders ? '▼' : '▶' }}</span>
+      <UiIcon name="parameters" icon-class="panel-toggle-icon parameters-icon" />
     </button>
     <transition name="slide">
       <div v-if="showSliders" class="plot-control-inner">
@@ -42,10 +42,11 @@
 <script>
 import { ref } from 'vue';
 import BeeswarmControlPanelSliders from './BeeswarmControlPanelSliders.vue';
+import UiIcon from '../UiIcon.vue';
 
 export default {
   name: 'BeeswarmControlPanel',
-  components: { BeeswarmControlPanelSliders },
+  components: { BeeswarmControlPanelSliders, UiIcon },
   props: {
     pointRadius: { type: Number, required: true },
     paddingFactor: { type: Number, required: true },

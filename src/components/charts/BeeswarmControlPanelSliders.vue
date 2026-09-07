@@ -4,7 +4,7 @@
       <div class="plot-control-item">
         <span class="plot-control-label">
           Point radius
-          <InfoTip label="Explain point radius" tip="Preferred radius of each data point. If the swarm would overflow the plot, the chart may scale this down a little (still tied to your setting)." />
+          <InfoTip label="Explain point radius" tip="Radius of each data point in pixels." />
         </span>
         <div class="plot-control-inputs">
           <input type="range" :value="pointRadius" @input="emitPointRadius($event.target.value)" min="3" max="7" step="0.1" />
@@ -14,7 +14,7 @@
       <div class="plot-control-item">
         <span class="plot-control-label">
           Padding factor
-          <InfoTip label="Explain padding factor" tip="Preferred spacing between points. Higher values push points farther apart. May scale down slightly with point radius when the swarm is very dense." />
+          <InfoTip label="Explain padding factor" tip="Spacing between points. Higher values push points farther apart to reduce overlap." />
         </span>
         <div class="plot-control-inputs">
           <input type="range" :value="paddingFactor" @input="emitPaddingFactor($event.target.value)" min="0.5" max="2" step="0.1" />
@@ -96,6 +96,7 @@
 
 <script>
 import { ref, onUnmounted } from 'vue';
+import { mqMax } from '../../config/breakpoints';
 import InfoTip from '../InfoTip.vue';
 
 export default {
@@ -183,8 +184,10 @@ export default {
     };
 
     const onReset = () => {
-      emit('update:pointRadius', 5.5);
-      emit('update:paddingFactor', 1.3);
+      const small =
+        typeof window !== 'undefined' && window.matchMedia(mqMax('md')).matches;
+      emit('update:pointRadius', small ? 4 : 5.5);
+      emit('update:paddingFactor', small ? 1 : 1.3);
       emit('update:seed', 42);
       emit('update:center0', -10.5);
       emit('update:spread0', 9);

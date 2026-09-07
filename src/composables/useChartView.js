@@ -32,6 +32,12 @@ const DEFAULT_PLOT = {
   seed: 42,
 };
 
+/** Tighter pack defaults on narrow viewports (beeswarm). */
+const SMALL_SCREEN_PLOT = {
+  pointRadius: 4,
+  paddingFactor: 1,
+};
+
 const JITTER_PLOT = {
   chartHeight: 200,
   pointRadius: 3.8,
@@ -40,6 +46,14 @@ const JITTER_PLOT = {
 
 function isSmallScreen() {
   return typeof window !== 'undefined' && window.matchMedia(CHART_HEIGHT_MOBILE_MQ).matches;
+}
+
+function defaultBeeswarmRadius() {
+  return isSmallScreen() ? SMALL_SCREEN_PLOT.pointRadius : DEFAULT_PLOT.pointRadius;
+}
+
+function defaultBeeswarmPadding() {
+  return isSmallScreen() ? SMALL_SCREEN_PLOT.paddingFactor : DEFAULT_PLOT.paddingFactor;
 }
 
 function defaultChartHeight(chartType) {
@@ -67,8 +81,8 @@ export function useChartView({
   const extendedDataReleaseKey = ref(defaultReleaseKey);
   const releaseLoading = ref(false);
   const chartHeight = ref(defaultChartHeight('beeswarm'));
-  const pointRadius = ref(DEFAULT_PLOT.pointRadius);
-  const paddingFactor = ref(DEFAULT_PLOT.paddingFactor);
+  const pointRadius = ref(defaultBeeswarmRadius());
+  const paddingFactor = ref(defaultBeeswarmPadding());
   const center0 = ref(DEFAULT_PLOT.center0);
   const spread0 = ref(DEFAULT_PLOT.spread0);
   const center1 = ref(DEFAULT_PLOT.center1);
@@ -130,8 +144,8 @@ export function useChartView({
     const isJitter = chartType === 'jitter';
     chartHeightBeforeMobile = null;
     chartHeight.value = defaultChartHeight(chartType);
-    pointRadius.value = isJitter ? JITTER_PLOT.pointRadius : DEFAULT_PLOT.pointRadius;
-    paddingFactor.value = isJitter ? JITTER_PLOT.paddingFactor : DEFAULT_PLOT.paddingFactor;
+    pointRadius.value = isJitter ? JITTER_PLOT.pointRadius : defaultBeeswarmRadius();
+    paddingFactor.value = isJitter ? JITTER_PLOT.paddingFactor : defaultBeeswarmPadding();
     center0.value = DEFAULT_PLOT.center0;
     spread0.value = DEFAULT_PLOT.spread0;
     center1.value = DEFAULT_PLOT.center1;

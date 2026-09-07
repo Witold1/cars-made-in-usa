@@ -1,6 +1,6 @@
 <template>
-  <div class="car-page chart-frame w-full rounded">
-    <div class="car-page-selectors">
+  <div :class="['car-page', 'chart-frame', 'w-full', 'rounded', { 'car-page--idle': isIdle }]">
+    <div v-if="showSelectors" class="car-page-selectors">
       <SearchablePickList
         class="car-page-field"
         label="Year"
@@ -47,7 +47,8 @@
         :disabled="disabled || !rows.length"
         @click="pickRandom"
       >
-        {{ selectedRow ? 'Another random car' : 'Random car' }}
+        <UiIcon name="random" icon-class="car-page-action-icon" />
+        {{ selectedRow ? 'Show another random car' : 'Show random car' }}
       </button>
       <button
         v-if="selectedRow"
@@ -59,7 +60,7 @@
         Reset
       </button>
       <button
-        v-if="!filtersOpen && !selectedRow"
+        v-if="!showSelectors"
         type="button"
         class="car-page-action"
         :disabled="disabled"
@@ -195,6 +196,7 @@ import { ref, computed, watch, nextTick } from 'vue';
 import SearchablePickList from '../controls/SearchablePickList.vue';
 import InfoTip from '../InfoTip.vue';
 import BrandEmblem from '../BrandEmblem.vue';
+import UiIcon from '../UiIcon.vue';
 
 function uniqueSorted(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) =>
@@ -223,7 +225,7 @@ function yearLabel(opt) {
 
 export default {
   name: 'CarPage',
-  components: { SearchablePickList, InfoTip, BrandEmblem },
+  components: { SearchablePickList, InfoTip, BrandEmblem, UiIcon },
   inheritAttrs: false,
   props: {
     /** Full release rows (unfiltered) for make/model lists. */
@@ -257,6 +259,7 @@ export default {
     const makeOpen = ref(false);
     const modelOpen = ref(false);
     const pendingRandom = ref(false);
+    const showSelectors = ref(false);
 
     const rows = computed(() =>
       Array.isArray(props.sourceData) && props.sourceData.length
@@ -285,6 +288,7 @@ export default {
     });
 
     const filtersOpen = computed(() => yearOpen.value || makeOpen.value || modelOpen.value);
+    const isIdle = computed(() => !showSelectors.value);
 
     /** Makes that list the selected model (for disambiguation). */
     const makesForSelectedModel = computed(() => {
@@ -332,6 +336,7 @@ export default {
     });
 
     const openAllFilters = () => {
+      showSelectors.value = true;
       yearOpen.value = true;
       makeOpen.value = true;
       modelOpen.value = true;
@@ -368,6 +373,7 @@ export default {
     };
 
     const resetSelection = () => {
+      showSelectors.value = false;
       selectedMake.value = '';
       selectedModel.value = '';
       const newest = yearOptions.value[0];
@@ -387,6 +393,7 @@ export default {
       }
       selectedMake.value = row.brand || '';
       selectedModel.value = row.model || '';
+      showSelectors.value = true;
       collapseFilters();
     };
 
@@ -441,8 +448,12 @@ export default {
       selectedRow,
       (row, prev) => {
         emit('update:hasSelection', Boolean(row));
-        if (row) collapseFilters();
-        else if (prev && !pendingRandom.value) openAllFilters();
+        if (row) {
+          showSelectors.value = true;
+          collapseFilters();
+        } else if (prev && !pendingRandom.value && showSelectors.value) {
+          openAllFilters();
+        }
       },
       { immediate: true }
     );
@@ -455,6 +466,8 @@ export default {
       makeOpen,
       modelOpen,
       filtersOpen,
+      showSelectors,
+      isIdle,
       rows,
       toggleFilters,
       openAllFilters,

@@ -8,11 +8,11 @@
     >
       <span class="panel-toggle-label">
         <span class="truncate">
-          {{ showSliders ? 'Hide' : 'Show' }}
+          {{ showSliders ? 'Hide' : 'Edit' }}
           <span class="editorial-heading editorial-heading--ink">chart parameters</span>
         </span>
       </span>
-      <span class="panel-toggle-icon" aria-hidden="true">{{ showSliders ? '▼' : '▶' }}</span>
+      <UiIcon name="parameters" icon-class="panel-toggle-icon parameters-icon" />
     </button>
     <transition name="slide">
       <div v-if="showSliders" class="plot-control-inner">
@@ -38,10 +38,11 @@
 <script>
 import { ref } from 'vue';
 import JitterPlotControlPanelSliders from './JitterPlotControlPanelSliders.vue';
+import UiIcon from '../UiIcon.vue';
 
 export default {
   name: 'JitterPlotControlPanel',
-  components: { JitterPlotControlPanelSliders },
+  components: { JitterPlotControlPanelSliders, UiIcon },
   props: {
     chartHeight: {
       type: Number,

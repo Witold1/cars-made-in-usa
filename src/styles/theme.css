@@ -15,7 +15,7 @@
   --font-chart: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --radius: 2px;
+  --radius: 5px;
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
 
   /* Type scale — title + 1rem UI (no smaller reading sizes) */

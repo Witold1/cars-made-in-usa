@@ -29,7 +29,7 @@
 import { ref, watch, onMounted, onUnmounted, inject } from 'vue';
 import * as d3 from 'd3';
 import { AccurateBeeswarm } from 'accurate-beeswarm-plot';
-import { renderPoint, updatePointAttributes, renderAverageLine, renderAverageLineVertical, renderGridlinesHorizontal, renderGridlinesVertical, applyNoise, autoWidenZeroOneSpreads, adaptBeeswarmPackMetrics, CHART_TICK } from '../../utils/chartUtils';
+import { renderPoint, updatePointAttributes, renderAverageLine, renderAverageLineVertical, renderGridlinesHorizontal, renderGridlinesVertical, applyNoise, autoWidenZeroOneSpreads, CHART_TICK } from '../../utils/chartUtils';
 import { log, error as logError } from '../../utils/logger';
 import { readThemeTokens } from '../../utils/themeTokens';
 import { showPointTooltip, hideChartTooltip } from '../../utils/chartTooltip';
@@ -185,13 +185,11 @@ export default {
           .attr("data-export", "chart")
           .style("background", themeTokens.value.chartBg);
 
-        // Slider values are the ceiling; may scale down proportionally if packing overflows.
+        // Slider radius/padding as-is. Auto-widen handles dense 0/1 piles.
         const leftGutter = 28;
         const rightGutter = 8;
-        const userRadius = chartConfig.value.radius;
-        const userPadding = chartConfig.value.paddingFactor;
-        let packRadius = userRadius;
-        let paddingFactor = userPadding;
+        const packRadius = chartConfig.value.radius;
+        const paddingFactor = chartConfig.value.paddingFactor;
 
         // Auto-widen 0/1 bands when a single column would overflow the pack axis
         const dataMaxRaw = props.data?.length ? d3.max(props.data, d => Number(d.value)) : 1;
@@ -282,7 +280,7 @@ export default {
           paddingFactor
         );
 
-        // If packing still clips, widen again (horizontal) and/or scale radius+padding from sliders.
+        // If horizontal packing still clips, widen 0/1 bands again and repack once.
         const measurePackExtent = () => d3.max(beeswarm, d => Math.abs(d.y)) ?? 0;
         const halfFitFor = (radius) => Math.max(1, packHalfSize - radius - 2);
 
@@ -315,33 +313,6 @@ export default {
           }
         }
 
-        {
-          const adapted = adaptBeeswarmPackMetrics({
-            userRadius,
-            userPadding,
-            maxAbsOffset: measurePackExtent(),
-            halfFit: halfFitFor(userRadius),
-          });
-          if (adapted.adapted) {
-            packRadius = adapted.radius;
-            paddingFactor = adapted.paddingFactor;
-            log('Beeswarm adaptive radius/padding (from sliders):', {
-              orientation: isVertical ? 'vertical' : 'horizontal',
-              userRadius,
-              userPadding,
-              packRadius,
-              paddingFactor,
-              fitScale: adapted.fitScale,
-            });
-            ({ formattedData, dataMax, minValue, maxValue, xScale, beeswarm } = packWithSpreads(
-              spread0,
-              spread1,
-              packRadius,
-              paddingFactor
-            ));
-          }
-        }
-
         const drawRadius = packRadius;
         let pointsToRender = beeswarm;
         if (isVertical) {
@@ -356,11 +327,18 @@ export default {
           const yScale = d3.scaleLinear()
             .domain([minValue, domainMax])
             .range([yMax, yMin]);
-          // Centered 1:1 after adaptive re-pack; tiny residual compress only if still tight.
+          // Keep full point radius. Scale sideways offsets to use ~88% of plot width
+          // when the packed swarm is too skinny; compress only if it would clip.
           const centerX = leftMargin + plotWidth / 2;
           const maxAbsJitter = measurePackExtent();
           const halfFit = halfFitFor(drawRadius);
-          const packScale = maxAbsJitter > halfFit ? halfFit / maxAbsJitter : 1;
+          const targetHalf = halfFit * 0.88;
+          let packScale = 1;
+          if (maxAbsJitter > halfFit) {
+            packScale = halfFit / maxAbsJitter;
+          } else if (maxAbsJitter > 0 && maxAbsJitter < targetHalf) {
+            packScale = targetHalf / maxAbsJitter;
+          }
           pointsToRender = beeswarm.map(d => ({
             ...d,
             x: centerX + d.y * packScale,

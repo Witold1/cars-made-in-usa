@@ -55,6 +55,9 @@
     opacity: 0.45;
     user-select: none;
   }
+  .export-mode {
+    margin-left: 0.05em;
+  }
 
   .editorial-select {
     font-size: var(--type-ui-size);

@@ -1,12 +1,12 @@
 <template>
-  <div class="export-tools" role="group" aria-label="Save image">
+  <div class="export-tools" role="group" :aria-label="`Save image (${modeTag})`">
     <UiIcon name="save-png" icon-class="export-icon" />
     <span class="export-prefix">Save image:</span>
     <button
       type="button"
       :disabled="disabled"
       :title="svgTitle"
-      aria-label="Save SVG"
+      :aria-label="svgTitle"
       @click="$emit('save-svg')"
     >
       SVG
@@ -16,11 +16,12 @@
       type="button"
       :disabled="disabled"
       :title="pngTitle"
-      aria-label="Save PNG"
+      :aria-label="pngTitle"
       @click="$emit('save-png')"
     >
       PNG
     </button>
+    <span class="export-mode">({{ modeTag }})</span>
   </div>
 </template>
 
@@ -34,7 +35,7 @@ export default {
   components: { UiIcon },
   props: {
     disabled: { type: Boolean, default: false },
-    /** fw | wys — reflected in button titles only */
+    /** fw | wys — shown after SVG / PNG */
     mode: { type: String, default: 'fw' },
   },
   emits: ['save-svg', 'save-png'],
@@ -45,7 +46,7 @@ export default {
     });
     const svgTitle = computed(() => `Save SVG (${modeTag.value})`);
     const pngTitle = computed(() => `Save PNG (${modeTag.value})`);
-    return { svgTitle, pngTitle };
+    return { modeTag, svgTitle, pngTitle };
   },
 };
 </script>

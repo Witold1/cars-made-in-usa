@@ -129,6 +129,21 @@
   /* Page chart — year / make / model lookup */
   .car-page {
     padding: var(--space-2xl) var(--space-xl);
+    min-height: clamp(11rem, 28vh, 16rem);
+  }
+  .car-page--idle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: clamp(13rem, 32vh, 18rem);
+  }
+  .car-page--idle .car-page-actions {
+    margin-bottom: 0;
+    flex-direction: column;
+    align-items: center;
+  }
+  .car-page--idle .car-page-action {
+    width: min(100%, 22rem);
   }
   .car-page-selectors {
     display: grid;
@@ -152,6 +167,10 @@
   }
   .car-page-action {
     margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45em;
     min-height: var(--touch-min);
     padding: 0.5rem var(--space-xl);
     border: 0;
@@ -165,6 +184,10 @@
     letter-spacing: var(--type-label-tracking);
     text-transform: uppercase;
     cursor: pointer;
+  }
+  .car-page-action-icon {
+    width: 1.1em;
+    height: 1.1em;
   }
   .car-page-action:hover {
     background: var(--surface-2);
@@ -184,6 +207,44 @@
   }
   .car-page-action--primary:hover {
     background: var(--border);
+  }
+  .car-page--idle .car-page-action--primary {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--border-light) 70%, transparent),
+      0 0 12px color-mix(in srgb, var(--text) 10%, transparent);
+    animation: car-page-cta-glow 2.4s ease-in-out infinite;
+  }
+  .car-page--idle .car-page-action--primary:hover {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--border-light) 90%, transparent),
+      0 0 14px color-mix(in srgb, var(--text) 14%, transparent);
+  }
+  .car-page--idle .car-page-action--primary:focus-visible {
+    box-shadow:
+      var(--focus-ring),
+      0 0 12px color-mix(in srgb, var(--text) 10%, transparent);
+  }
+  .car-page--idle .car-page-action--primary:disabled {
+    animation: none;
+    box-shadow: none;
+  }
+  @keyframes car-page-cta-glow {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--border-light) 55%, transparent),
+        0 0 10px color-mix(in srgb, var(--text) 8%, transparent);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--border-light) 85%, transparent),
+        0 0 16px color-mix(in srgb, var(--text) 14%, transparent);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .car-page--idle .car-page-action--primary {
+      animation: none;
+    }
   }
   .car-page-action--reset {
     min-height: auto;

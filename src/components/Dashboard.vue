@@ -87,21 +87,23 @@
                     </button>
                   </div>
                 </template>
-                <p class="editorial-heading">Save image</p>
-                <p class="settings-hint">Preset size exports a wide, sharp image for sharing. WYS saves exactly what you see on screen. Applies to PNG and SVG.</p>
-                <div class="theme-switch-group settings-switch-group" role="group" aria-label="Save image layout">
-                  <button
-                    v-for="opt in pngExportModeOptions"
-                    :key="opt.value"
-                    type="button"
-                    :aria-pressed="pngExportMode === opt.value"
-                    :class="['theme-btn', { 'is-active': pngExportMode === opt.value }]"
-                    :title="opt.title"
-                    @click="setPngExportMode(opt.value)"
-                  >
-                    {{ opt.label }}
-                  </button>
-                </div>
+                <template v-if="supportsImageExport">
+                  <p class="editorial-heading">Save image</p>
+                  <p class="settings-hint">Preset size exports a wide, sharp image for sharing. WYS saves exactly what you see on screen. Applies to PNG and SVG.</p>
+                  <div class="theme-switch-group settings-switch-group" role="group" aria-label="Save image layout">
+                    <button
+                      v-for="opt in pngExportModeOptions"
+                      :key="opt.value"
+                      type="button"
+                      :aria-pressed="pngExportMode === opt.value"
+                      :class="['theme-btn', { 'is-active': pngExportMode === opt.value }]"
+                      :title="opt.title"
+                      @click="setPngExportMode(opt.value)"
+                    >
+                      {{ opt.label }}
+                    </button>
+                  </div>
+                </template>
                 <p class="editorial-heading">Experimental</p>
                 <p class="settings-hint">
                   Allow brand emblems in filters, Page, and tables, powered by
@@ -296,7 +298,7 @@
                 {{ chartCountLabel }}
               </p>
               <ExportImageTools
-                v-if="selectedChartType !== 'jitter' && selectedChartType !== 'page' && selectedChartType !== 'placeholder' && selectedChartType !== 'table' && selectedChartType !== 'table-extended'"
+                v-if="supportsImageExport && selectedChartType !== 'jitter'"
                 :disabled="exportingAny"
                 :mode="pngExportMode"
                 @save-png="exportChartPngWithFiltersClosed"
@@ -488,6 +490,7 @@ export default {
       chartOrientationOptions,
       setChartOrientation,
       supportsChartOrientation,
+      supportsImageExport,
       isNarrow,
     } = useDashboardLayout({ filtersOpen, selectedChartType });
 
@@ -525,11 +528,15 @@ export default {
       await exportChartSvg();
     };
 
-    watch(enableBrandEmblems, (on) => {
-      if (on) {
-        import('../data/brandEmblems.js').then((m) => m.ensureBrandEmblemSprite());
-      }
-    });
+    watch(
+      enableBrandEmblems,
+      (on) => {
+        if (on) {
+          import('../data/brandEmblems.js').then((m) => m.ensureBrandEmblemSprite());
+        }
+      },
+      { immediate: true },
+    );
 
     const chartHasPlotParameters = computed(
       () => selectedChartType.value === 'beeswarm' || selectedChartType.value === 'jitter'
@@ -568,6 +575,7 @@ export default {
       chartOrientationOptions,
       setChartOrientation,
       supportsChartOrientation,
+      supportsImageExport,
       pngExportMode,
       pngExportModeOptions,
       setPngExportMode,

@@ -83,40 +83,6 @@ export function autoWidenZeroOneSpreads({
   };
 }
 
-/**
- * Scale radius/padding down from the user's slider values when the swarm overflows
- * the pack axis. Sliders remain the ceiling; adapts proportionally so moving them
- * still changes the result. Never shrinks more than ~28% below the slider.
- */
-export function adaptBeeswarmPackMetrics({
-  userRadius,
-  userPadding,
-  maxAbsOffset,
-  halfFit,
-  minRadius = 3,
-  minPadding = 0.5,
-  minScale = 0.72,
-}) {
-  const radius = Number(userRadius) || minRadius;
-  const padding = Number(userPadding) || 1;
-  if (!(maxAbsOffset > halfFit) || !(halfFit > 0)) {
-    return {
-      radius,
-      paddingFactor: padding,
-      fitScale: 1,
-      adapted: false,
-    };
-  }
-  const rawScale = halfFit / maxAbsOffset;
-  const fitScale = Math.max(minScale, Math.min(1, rawScale));
-  return {
-    radius: Math.min(radius, Math.max(minRadius, radius * fitScale)),
-    paddingFactor: Math.min(padding, Math.max(minPadding, padding * fitScale)),
-    fitScale,
-    adapted: fitScale < 0.999,
-  };
-}
-
 /** Geometric marker shapes; emblems use a separate render path. */
 export const GEOMETRIC_SHAPES = new Set(['circle', 'square', 'triangle']);
 
