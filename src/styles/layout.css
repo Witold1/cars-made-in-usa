@@ -373,6 +373,27 @@
   color: var(--text-muted);
 }
 
+.footer-attribution-toggle {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.footer-privacy {
+  margin-top: 0.25rem;
+}
+
+.footer-privacy .text-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-attribution {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
 .footer p {
   margin: 0;
 }
@@ -386,7 +407,7 @@
 }
 
 .footer-source-code {
-  margin-top: 0.25rem;
+  margin-top: 0;
 }
 
 .footer-link {

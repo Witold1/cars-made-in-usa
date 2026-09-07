@@ -1,5 +1,5 @@
 export function getOptionState(option, title, hierarchy, selectedRegions, selectedCorporations, selectedBrands) {
-  if (title === "Region") {
+  if (title === "HQ region") {
     const regionBrands = Object.values(hierarchy[option] || {}).flat();
     const allCorporationsSelected = Object.keys(hierarchy[option] || {}).every(corp =>
       selectedCorporations.includes(corp)

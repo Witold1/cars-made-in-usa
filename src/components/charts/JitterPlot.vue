@@ -29,11 +29,11 @@
           type="button"
           class="text-link export-link"
           :disabled="exportingPngId === chart.id"
-          :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
+          :title="pngExportMode === 'fw' ? 'Save PNG (preset size)' : 'Save PNG (WYS)'"
           @click="exportChartPng(chart)"
         >
           <UiIcon name="save-png" icon-class="export-icon" />
-          {{ exportingPngId === chart.id ? 'Exporting…' : 'Save PNG' }}
+          {{ savePngLabel(pngExportMode, { exporting: exportingPngId === chart.id }) }}
         </button>
       </div>
       <JitterPlotSubCharts
@@ -80,11 +80,11 @@
           type="button"
           class="text-link export-link"
           :disabled="exportingPngId === chart.id"
-          :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
+          :title="pngExportMode === 'fw' ? 'Save PNG (preset size)' : 'Save PNG (WYS)'"
           @click="exportChartPng(chart)"
         >
           <UiIcon name="save-png" icon-class="export-icon" />
-          {{ exportingPngId === chart.id ? 'Exporting…' : 'Save PNG' }}
+          {{ savePngLabel(pngExportMode, { exporting: exportingPngId === chart.id }) }}
         </button>
       </div>
       <JitterPlotSubCharts
@@ -110,15 +110,16 @@
 </template>
 
 <script>
-import { ref, computed, watch, inject } from 'vue';
+import { ref, computed, watch, inject, nextTick } from 'vue';
 import JitterPlotSubCharts from './JitterPlotSubCharts.vue';
 import JitterPlotControlPanel from './JitterPlotControlPanel.vue';
 import UiIcon from '../UiIcon.vue';
 import { COMPARE_DIMENSIONS, DEFAULT_COMPARE_BY } from '../../data/dataConfig';
 import { log } from '../../utils/logger';
 import { hideChartTooltip } from '../../utils/chartTooltip';
-import { exportSvgAsPng, exportFilename } from '../../utils/exportChartPng';
+import { exportSvgAsPng, exportFilename, EXPORT_JITTER_CHART_HEIGHT } from '../../utils/exportChartPng';
 import { getChartTitle } from '../../config/chartGuides';
+import { savePngLabel } from '../../composables/useChartView';
 
 const CHART_MARGIN = { top: 20, right: 20, bottom: 32, left: 20 };
 
@@ -316,7 +317,11 @@ export default {
     });
 
     const exportingPngId = ref(null);
-    const pngExportMode = inject('pngExportMode', ref('wys'));
+    const pngExportMode = inject('pngExportMode', ref('fw'));
+    const collapseDatasetFiltersForExport = inject(
+      'collapseDatasetFiltersForExport',
+      async () => {}
+    );
 
     const exportChartPng = async (chart) => {
       if (exportingPngId.value) return;
@@ -325,7 +330,18 @@ export default {
       const safeName = slugifyGroup(chart.region);
       exportingPngId.value = chart.id;
       hideChartTooltip();
+
+      const prevHeight = chartHeight.value;
+      const bumpHeight =
+        pngExportMode.value === 'fw' && prevHeight < EXPORT_JITTER_CHART_HEIGHT;
+      if (bumpHeight) {
+        chartHeight.value = EXPORT_JITTER_CHART_HEIGHT;
+        await nextTick();
+        await new Promise((r) => setTimeout(r, 120));
+      }
+
       try {
+        await collapseDatasetFiltersForExport();
         await exportSvgAsPng(null, exportFilename(`chart-${safeName}`), {
           mode: pngExportMode.value,
           expandRoot: root,
@@ -338,6 +354,7 @@ export default {
         console.error(err);
         window.alert('Could not save PNG. Try again after the chart finishes rendering.');
       } finally {
+        if (bumpHeight) chartHeight.value = prevHeight;
         exportingPngId.value = null;
       }
     };
@@ -348,6 +365,7 @@ export default {
       exportChartPng,
       exportingPngId,
       pngExportMode,
+      savePngLabel,
       fillOpacity,
       strokeOpacity,
       strokeWidth,

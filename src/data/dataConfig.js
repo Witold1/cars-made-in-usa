@@ -10,13 +10,13 @@ export const dataConfig = {
 
 /**
  * Facet dimensions for jitter small-multiples (and future compare-by UIs).
- * Order matches filter panel: Region → Corporation → Brand.
+ * Order matches filter panel: HQ region → Corporation → Brand.
  * Add an entry here when a new filter dimension should be comparable.
  */
 export const COMPARE_DIMENSIONS = [
   {
     value: 'region',
-    label: 'Region',
+    label: 'HQ region',
     field: 'region',
     /** Preferred display order; any other values sort after, alphabetically. */
     preferredOrder: ['European', 'American', 'Asian'],

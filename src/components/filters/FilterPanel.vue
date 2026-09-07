@@ -24,8 +24,8 @@
       }"
     >
       <FilterSection
-        title="Region"
-        tip="Broad geography of the manufacturer (for example North America or Asia). Selecting a region narrows the corporation and brand lists."
+        title="HQ region"
+        tip="Geography of the manufacturer’s headquarters (for example American, European, or Asian). Selecting an HQ region narrows the corporation and brand lists."
         :options="regions"
         :selected-options="selectedRegions"
         @change="onRegionChange"
@@ -34,7 +34,7 @@
         :marker-styles="markerStyles"
         @update:marker-styles="$emit('update:marker-styles', $event)"
         :show-advanced-customization="showAdvancedCustomization"
-        :enable-emoji-markers="enableEmojiMarkers"
+        :enable-brand-emblems="enableBrandEmblems"
         :hierarchy="hierarchy"
         :selected-regions="selectedRegions"
         :selected-corporations="selectedCorporations"
@@ -42,7 +42,7 @@
       />
       <FilterSection
         title="Corporation"
-        tip="Parent company of one or more brands. Options depend on the selected region(s)."
+        tip="Parent company of one or more brands. Options depend on the selected HQ region(s)."
         :options="corporations"
         :selected-options="selectedCorporations"
         @change="onCorporationChange"
@@ -51,7 +51,7 @@
         :marker-styles="markerStyles"
         @update:marker-styles="$emit('update:marker-styles', $event)"
         :show-advanced-customization="showAdvancedCustomization"
-        :enable-emoji-markers="enableEmojiMarkers"
+        :enable-brand-emblems="enableBrandEmblems"
         searchable
         :hierarchy="hierarchy"
         :selected-regions="selectedRegions"
@@ -60,7 +60,7 @@
       />
       <FilterSection
         title="Brand"
-        tip="Vehicle make. Options depend on the selected region(s) and corporation(s)."
+        tip="Vehicle make. Options depend on the selected HQ region(s) and corporation(s)."
         :options="brands"
         :selected-options="selectedBrands"
         @change="onBrandChange"
@@ -69,7 +69,7 @@
         :marker-styles="markerStyles"
         @update:marker-styles="$emit('update:marker-styles', $event)"
         :show-advanced-customization="showAdvancedCustomization"
-        :enable-emoji-markers="enableEmojiMarkers"
+        :enable-brand-emblems="enableBrandEmblems"
         searchable
         :hierarchy="hierarchy"
         :selected-regions="selectedRegions"
@@ -78,14 +78,14 @@
       />
       <AppliedFilters :applied-filters="appliedFilters" />
     </div>
-    <div class="filter-clear-actions mt-3">
+    <div v-if="appliedFilters.length || justCleared" class="filter-clear-actions mt-3">
       <button
         type="button"
         class="text-link text-link--strong"
         :disabled="justCleared"
         @click="onClearFilters"
       >
-        {{ justCleared ? 'Filters cleared' : 'Clear filters' }}
+        {{ justCleared ? 'Filters cleared!' : 'Clear filters' }}
       </button>
     </div>
   </div>
@@ -110,7 +110,7 @@ export default {
     selectedBrands: Array,
     markerStyles: Object,
     showAdvancedCustomization: Boolean,
-    enableEmojiMarkers: { type: Boolean, default: false },
+    enableBrandEmblems: { type: Boolean, default: false },
     stacked: { type: Boolean, default: false },
     sidebar: { type: Boolean, default: false },
   },
@@ -130,7 +130,7 @@ export default {
     let clearFeedbackTimer = null;
 
     const appliedFilters = computed(() => [
-      ...props.selectedRegions.map(r => `Region: ${r}`),
+      ...props.selectedRegions.map(r => `HQ region: ${r}`),
       ...props.selectedCorporations.map(c => `Corporation: ${c}`),
       ...props.selectedBrands.map(b => `Brand: ${b}`)
     ]);

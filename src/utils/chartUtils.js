@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { readThemeTokens } from './themeTokens.js';
+import { resolveEmblemUrl } from '../data/brandEmblems.js';
 
 /** Sparsified mode: spread 0s and 1s around center with ±(spread/2). start/end derived from center and spread. */
 export function applyNoise(data, center0, spread0, center1, spread1, noisePower, rand) {
@@ -19,21 +20,113 @@ export function applyNoise(data, center0, spread0, center1, spread1, noisePower,
   });
 }
 
-/** Geometric marker shapes; anything else (e.g. 🌎🌍🌏) is rendered as emoji text. */
-export const GEOMETRIC_SHAPES = new Set(['circle', 'square', 'triangle']);
+/**
+ * Widen 0%/1% sparsify bands when a single column would exceed the pack axis.
+ * Returns at least the user spreads; does not mutate inputs.
+ *
+ * @param {object} opts
+ * @param {Array<{value: number}>} opts.data
+ * @param {number} opts.center0
+ * @param {number} opts.spread0
+ * @param {number} opts.center1
+ * @param {number} opts.spread1
+ * @param {number} opts.radius - drawn point radius (px)
+ * @param {number} opts.paddingFactor - beeswarm collision padding
+ * @param {number} opts.packHalfSize - px from center to clip edge on the packing axis
+ * @param {number} opts.pixelsPerUnit - value-axis px per domain unit
+ * @param {number} [opts.maxSpread=40]
+ */
+export function autoWidenZeroOneSpreads({
+  data,
+  center0,
+  spread0,
+  center1,
+  spread1,
+  radius,
+  paddingFactor,
+  packHalfSize,
+  pixelsPerUnit,
+  maxSpread = 40,
+}) {
+  const diameter = Math.max(1, 2 * radius * paddingFactor);
+  // Leave headroom: neighboring non-0/1 points make the left pile taller than a pure column.
+  const maxAbsY = Math.max(diameter, (packHalfSize - radius - 2) * 0.8);
+  const slotsPerColumn = Math.max(1, 2 * Math.floor(maxAbsY / diameter) + 1);
 
-export const REGION_EMOJI_OPTIONS = [
-  { value: '🌎', label: '🌎 America' },
-  { value: '🌍', label: '🌍 Europe' },
-  { value: '🌏', label: '🌏 Asia' },
-];
+  let n0 = 0;
+  let n1 = 0;
+  for (const d of data || []) {
+    if (d.value === 0) n0 += 1;
+    else if (d.value === 1) n1 += 1;
+  }
 
-export function isEmojiShape(shape) {
-  return Boolean(shape) && !GEOMETRIC_SHAPES.has(shape);
+  const neededSpread = (count) => {
+    if (count <= slotsPerColumn || !(pixelsPerUnit > 0)) return 0;
+    const columns = Math.ceil(count / slotsPerColumn);
+    return ((columns - 1) * diameter) / pixelsPerUnit;
+  };
+
+  // Prefer not to push 1s deep into real %; allow 0-band to widen freely (may overlap 1s).
+  const maxAuto0 = maxSpread;
+  const maxAuto1 = Math.min(maxSpread, 2 * Math.max(0.5, 4 - center1));
+
+  const next0 = Math.max(spread0, Math.min(maxAuto0, neededSpread(n0)));
+  const next1 = Math.max(spread1, Math.min(maxAuto1, neededSpread(n1)));
+
+  return {
+    spread0: next0,
+    spread1: next1,
+    widened: next0 > spread0 || next1 > spread1,
+    n0,
+    n1,
+    slotsPerColumn,
+  };
 }
 
-function emojiFontSize(radius) {
-  return Math.max(10, radius * 2.4);
+/**
+ * Scale radius/padding down from the user's slider values when the swarm overflows
+ * the pack axis. Sliders remain the ceiling; adapts proportionally so moving them
+ * still changes the result. Never shrinks more than ~28% below the slider.
+ */
+export function adaptBeeswarmPackMetrics({
+  userRadius,
+  userPadding,
+  maxAbsOffset,
+  halfFit,
+  minRadius = 3,
+  minPadding = 0.5,
+  minScale = 0.72,
+}) {
+  const radius = Number(userRadius) || minRadius;
+  const padding = Number(userPadding) || 1;
+  if (!(maxAbsOffset > halfFit) || !(halfFit > 0)) {
+    return {
+      radius,
+      paddingFactor: padding,
+      fitScale: 1,
+      adapted: false,
+    };
+  }
+  const rawScale = halfFit / maxAbsOffset;
+  const fitScale = Math.max(minScale, Math.min(1, rawScale));
+  return {
+    radius: Math.min(radius, Math.max(minRadius, radius * fitScale)),
+    paddingFactor: Math.min(padding, Math.max(minPadding, padding * fitScale)),
+    fitScale,
+    adapted: fitScale < 0.999,
+  };
+}
+
+/** Geometric marker shapes; emblems use a separate render path. */
+export const GEOMETRIC_SHAPES = new Set(['circle', 'square', 'triangle']);
+
+export function isEmblemShape(shape) {
+  return shape === 'emblem';
+}
+
+/** Emblems need more pixels than geometric dots to stay readable. */
+function emblemSize(radius) {
+  return Math.max(40, radius * 8);
 }
 
 export function renderPoint(g, d, style, radius, height, opts = {}) {
@@ -44,20 +137,26 @@ export function renderPoint(g, d, style, radius, height, opts = {}) {
   const strokeWidth = opts.strokeWidth != null ? opts.strokeWidth : 0;
   const cy = height / 2 + d.y;
 
-  if (isEmojiShape(shape)) {
-    g.append('text')
-      .attr('class', 'shape opacity-100')
-      .attr('data-shape', shape)
-      .attr('x', d.x)
-      .attr('y', cy)
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'central')
-      .attr('font-size', emojiFontSize(radius))
-      .attr('fill-opacity', fillOpacity)
-      .text(shape);
-    g.datum({ ...d, style });
-    return;
+  if (isEmblemShape(shape)) {
+    const brandHint = d?.datum?.brand || d?.brand;
+    const emblemUrl = resolveEmblemUrl(style, brandHint);
+    if (emblemUrl) {
+      const size = emblemSize(radius);
+      g.append('image')
+        .attr('class', 'shape opacity-100')
+        .attr('data-shape', 'emblem')
+        .attr('href', emblemUrl)
+        .attr('x', d.x - size / 2)
+        .attr('y', cy - size / 2)
+        .attr('width', size)
+        .attr('height', size)
+        .attr('opacity', fillOpacity);
+      g.datum({ ...d, style });
+      return;
+    }
   }
+
+  const geometricShape = GEOMETRIC_SHAPES.has(shape) ? shape : 'circle';
 
   const shapeConfig = {
     circle: {
@@ -96,7 +195,7 @@ export function renderPoint(g, d, style, radius, height, opts = {}) {
     }
   };
 
-  const config = shapeConfig[shape] || shapeConfig.circle;
+  const config = shapeConfig[geometricShape];
   const shapeElement = g.append(config.tag);
   for (const [key, value] of Object.entries(config.attrs)) {
     shapeElement.attr(key, value);
@@ -120,23 +219,29 @@ export function updatePointAttributes(g, d, state, radius, hoverRadius, height, 
   const strokeOpacity = opts.strokeOpacity != null ? opts.strokeOpacity : 1;
   const strokeWidth = opts.strokeWidth != null ? opts.strokeWidth : 0;
   const shapeType = shape.attr('data-shape')
-    || (shape.attr("r") ? 'circle' : shape.attr("width") ? 'square' : shape.node()?.tagName === 'path' ? 'triangle' : shape.node()?.tagName === 'text' ? shape.text() : 'circle');
+    || (shape.attr("r") ? 'circle' : shape.attr("width") ? 'square' : shape.node()?.tagName === 'path' ? 'triangle' : shape.node()?.tagName === 'image' ? 'emblem' : 'circle');
   const cy = height / 2 + d.y;
 
   shape.classed("hover", isHover)
     .classed("selected", isSelected);
 
-  if (isEmojiShape(shapeType) || shape.node()?.tagName === 'text') {
+  if (isEmblemShape(shapeType) || shape.node()?.tagName === 'image') {
+    const size = emblemSize(effectiveRadius);
+    const brandHint = d?.datum?.brand || d?.brand || d?.style?.emblemBrand;
+    const emblemUrl = resolveEmblemUrl(d.style, brandHint) || shape.attr('href');
     shape
-      .attr('x', d.x)
-      .attr('y', cy)
-      .attr('font-size', emojiFontSize(effectiveRadius))
+      .attr('href', emblemUrl)
+      .attr('x', d.x - size / 2)
+      .attr('y', cy - size / 2)
+      .attr('width', size)
+      .attr('height', size)
       .classed("opacity-50", false)
       .classed("opacity-100", true)
-      .attr('fill-opacity', isSelected || isHover ? 1 : fillOpacity)
-      .attr('opacity', isHover ? 0.85 : 1);
+      .attr('opacity', isSelected || isHover ? 1 : fillOpacity * (isHover ? 0.85 : 1));
     return;
   }
+
+  const geometricType = GEOMETRIC_SHAPES.has(shapeType) ? shapeType : 'circle';
 
   const shapeConfig = {
     circle: {
@@ -161,7 +266,7 @@ export function updatePointAttributes(g, d, state, radius, hoverRadius, height, 
     }
   };
 
-  const config = shapeConfig[shapeType] || shapeConfig.circle;
+  const config = shapeConfig[geometricType];
   for (const [key, value] of Object.entries(config.attrs)) {
     shape.attr(key, value);
   }

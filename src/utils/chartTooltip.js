@@ -44,7 +44,7 @@ export function buildPointTooltipHtml(datum) {
   const lines = [
     datum.brand ? `Brand: ${escapeHtml(datum.brand)}` : '',
     datum.corporation ? `Make: ${escapeHtml(datum.corporation)}` : '',
-    datum.region ? `Region: ${escapeHtml(datum.region)}` : '',
+    datum.region ? `HQ region: ${escapeHtml(datum.region)}` : '',
     `U.S./Canadian parts: ${pct}`,
     assembly ? `Final assembly: ${escapeHtml(assembly)}` : '',
   ].filter(Boolean);

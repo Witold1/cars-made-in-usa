@@ -5,6 +5,7 @@
         class="car-page-field"
         label="Year"
         tip="AALA report year from the NHTSA Part 583 release — not the vehicle model year."
+        required
         v-model="selectedYear"
         :options="yearPickOptions"
         :disabled="disabled || !yearPickOptions.length"
@@ -17,6 +18,7 @@
         class="car-page-field"
         label="Make"
         tip="Vehicle brand as listed in the AALA report (same idea as brand in the dataset filters)."
+        required
         v-model="selectedMake"
         :options="makeOptions"
         :disabled="disabled || !makeOptions.length"
@@ -28,6 +30,7 @@
         class="car-page-field"
         label="Model"
         tip="Carline name as listed in the AALA report for the selected year. You can start with model or make."
+        required
         v-model="selectedModel"
         :options="modelOptions"
         :disabled="disabled || !modelOptions.length"
@@ -69,7 +72,10 @@
     <div v-if="selectedRow" class="car-page-result" aria-live="polite">
       <div class="car-page-hero">
         <p class="car-page-hero-name">
-          <span class="car-page-hero-make">{{ selectedRow.brand }}</span>
+          <span class="car-page-hero-make">
+            <BrandEmblem :brand="selectedRow.brand" :size="36" emblem-class="car-page-hero-emblem" />
+            {{ selectedRow.brand }}
+          </span>
           {{ selectedRow.model }}
         </p>
         <p class="car-page-hero-value">
@@ -188,6 +194,7 @@
 import { ref, computed, watch, nextTick } from 'vue';
 import SearchablePickList from '../controls/SearchablePickList.vue';
 import InfoTip from '../InfoTip.vue';
+import BrandEmblem from '../BrandEmblem.vue';
 
 function uniqueSorted(values) {
   return [...new Set(values.filter(Boolean))].sort((a, b) =>
@@ -216,7 +223,7 @@ function yearLabel(opt) {
 
 export default {
   name: 'CarPage',
-  components: { SearchablePickList, InfoTip },
+  components: { SearchablePickList, InfoTip, BrandEmblem },
   inheritAttrs: false,
   props: {
     /** Full release rows (unfiltered) for make/model lists. */

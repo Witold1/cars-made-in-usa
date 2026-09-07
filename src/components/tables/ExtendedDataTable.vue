@@ -6,7 +6,7 @@
         <input
           v-model.trim="searchQuery"
           type="search"
-          placeholder="Region, corporation, brand, model, origin…"
+          placeholder="HQ region, corporation, brand, model, origin…"
           class="data-table-search editorial-select flex-1 min-w-0 max-w-xs"
           aria-label="Search extended table"
         />
@@ -47,6 +47,10 @@
               >
                 <span v-if="col.isNumeric" class="tabular-nums">
                   {{ formatNumeric(row[col.key]) }}
+                </span>
+                <span v-else-if="col.key === 'brand'" class="brand-cell">
+                  <BrandEmblem :brand="row[col.key]" :size="24" lazy />
+                  <span>{{ row[col.key] }}</span>
                 </span>
                 <span v-else>{{ row[col.key] }}</span>
               </td>
@@ -161,10 +165,11 @@
 <script>
 import { ref, computed } from 'vue';
 import InfoTip from '../InfoTip.vue';
+import BrandEmblem from '../BrandEmblem.vue';
 
 export default {
   name: 'ExtendedDataTable',
-  components: { InfoTip },
+  components: { InfoTip, BrandEmblem },
   inheritAttrs: false,
   props: {
     data: {
@@ -179,7 +184,7 @@ export default {
     const expandedRowId = ref(null);
 
     const columns = [
-      { key: 'region', label: 'Region', isNumeric: false },
+      { key: 'region', label: 'HQ region', isNumeric: false },
       { key: 'corporation', label: 'Corporation', isNumeric: false },
       { key: 'brand', label: 'Brand', isNumeric: false },
       { key: 'model', label: 'Model', isNumeric: false },

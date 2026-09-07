@@ -4,11 +4,12 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if it exists)
+# Copy package manifests + postinstall script (needed during npm install)
 COPY package.json .
 COPY package-lock.json* ./
+COPY scripts/sync-brand-emblems.mjs scripts/
 
-# Install dependencies
+# Install dependencies (postinstall syncs brand emblems into public/brands)
 RUN npm install
 
 # Copy the rest of the application code

@@ -49,7 +49,7 @@ ${METHODOLOGY}
 <p>Learn more: <a href="https://datavizcatalogue.com/blog/chart-snapshot-beeswarm-plot/" target="_blank" rel="noopener noreferrer" class="chart-guide-link">Beeswarm plot</a> (DataViz Catalogue).</p>`,
 
   jitter: `${VALUE_AXIS}
-<p>The <strong>reference chart</strong> at the top shows all data; below it, <strong>one small chart per group</strong>. Use <strong>Compare by</strong> to switch among region, corporation, or brand. Vertical jitter reduces overplotting. Filters still narrow which points appear in each group.</p>
+<p>The <strong>reference chart</strong> at the top shows all data; below it, <strong>one small chart per group</strong>. Use <strong>Compare by</strong> to switch among HQ region, corporation, or brand. Vertical jitter reduces overplotting. Filters still narrow which points appear in each group.</p>
 ${METHODOLOGY}
 <p>Learn more: <a href="https://datavizcatalogue.com/blog/chart-snapshot-jitter-plot/" target="_blank" rel="noopener noreferrer" class="chart-guide-link">Jitter plot</a> (DataViz Catalogue).</p>`,
 
@@ -60,10 +60,10 @@ ${METHODOLOGY}`,
   placeholder: `<p>Reserved slot for a future chart type. Filters still apply to the row count shown here.</p>
 ${METHODOLOGY}`,
 
-  table: `<p>One row per vehicle model. Use <strong>Search</strong> to filter by region, corporation, brand, or model; click column headers to sort.</p>
+  table: `<p>One row per vehicle model. Use <strong>Search</strong> to filter by HQ region, corporation, brand, or model; click column headers to sort.</p>
 ${METHODOLOGY}`,
 
-  'table-extended': `<p>One row per vehicle model, with U.S./Canadian and foreign parts content plus origin summaries. <strong>Columns</strong> - <strong>Region</strong> (broad geography of the manufacturer), <strong>Corporation</strong> (parent company), <strong>Brand</strong> (make), <strong>Model</strong> (carline), <strong>U.S./Canadian %</strong> (U.S./Canadian equipment (parts) content), and <strong>Foreign parts %</strong> (total foreign parts share; when reported, major origin countries are listed after <strong>inc.</strong> - they are included in that total, not the sole source of it).</p>
+  'table-extended': `<p>One row per vehicle model, with U.S./Canadian and foreign parts content plus origin summaries. <strong>Columns</strong> - <strong>HQ region</strong> (geography of the manufacturer’s headquarters), <strong>Corporation</strong> (parent company), <strong>Brand</strong> (make), <strong>Model</strong> (carline), <strong>U.S./Canadian %</strong> (U.S./Canadian equipment (parts) content), and <strong>Foreign parts %</strong> (total foreign parts share; when reported, major origin countries are listed after <strong>inc.</strong> - they are included in that total, not the sole source of it).</p>
 <p><strong>Breakdown panel</strong> - click a row to open a panel showing: <strong>Content breakdown</strong> (U.S./Canadian %, foreign % total, and when available <strong>major sources of foreign parts</strong> by country), <strong>Engine origin</strong>, <strong>Transmission origin</strong>, <strong>Final assembly</strong>, and <strong>Vehicle type (Part 567)</strong>.</p>
 <p><strong>Foreign parts methodology</strong> - We use public NHTSA releases and do not have access to original submissions. <strong>U.S./Canadian %</strong> is as reported. <strong>Foreign parts %</strong> is either as reported in the release or, for older releases that did not publish a foreign total, derived as 100% − U.S./Canadian. When a country breakdown is present, it reflects the regulation’s “major sources of foreign parts content”: only countries that contributed <strong>at least 15%</strong> are listed, and at most <strong>two</strong> (those with the highest percentages) are reported (see 49 CFR §583). Earlier public releases used different column names (e.g. “Percent Content Other Countries”) or had no breakdown at all, so many rows show only the foreign total.</p>
 <p>Use <strong>Search</strong> to filter by any visible text and click column headers to sort.</p>

@@ -42,6 +42,15 @@ export function useDashboardUrlState({
       params.set('corporations', selectedCorporations.value.join(','));
     }
     if (selectedBrands.value?.length) params.set('brands', selectedBrands.value.join(','));
+
+    // Keep analytics override so shared/test links stay silent (or forced on)
+    try {
+      const current = new URLSearchParams(window.location.search).get('analytics');
+      if (current != null && current !== '') {
+        params.set('analytics', current.toLowerCase());
+      }
+    } catch (e) {}
+
     const search = params.toString();
     const url = search ? `${window.location.pathname}?${search}` : window.location.pathname;
     history.replaceState(null, '', url);

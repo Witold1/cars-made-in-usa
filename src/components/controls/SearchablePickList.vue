@@ -5,7 +5,6 @@
   >
     <div
       class="panel-toggle panel-toggle--section"
-      :class="{ 'panel-toggle--with-tip': tip }"
       role="button"
       tabindex="0"
       :aria-expanded="isOpen"
@@ -15,12 +14,12 @@
     >
       <span class="panel-toggle-label">
         <span class="searchable-pick-title-row">
-          <span>{{ label }}</span>
+          <span>{{ label }}<span v-if="required" class="searchable-pick-required" aria-hidden="true">*</span></span>
           <InfoTip v-if="tip" :label="`Explain ${label.toLowerCase()}`" :tip="tip" />
+          <span aria-hidden="true" class="panel-toggle-icon">{{ isOpen ? '▼' : '▶' }}</span>
         </span>
         <span v-if="!isOpen && modelValue" class="searchable-pick-summary">{{ modelValue }}</span>
       </span>
-      <span aria-hidden="true" class="panel-toggle-icon">{{ isOpen ? '▼' : '▶' }}</span>
     </div>
     <div v-if="isOpen" class="filter-section-body searchable-pick-body">
       <div v-if="!disabled" class="searchable-pick-search filter-section-search">
@@ -40,6 +39,7 @@
         class="searchable-pick-options filter-section-options"
         role="listbox"
         :aria-label="label"
+        :aria-required="required || undefined"
         :aria-multiselectable="false"
       >
         <div
@@ -77,6 +77,7 @@ export default {
   props: {
     label: { type: String, required: true },
     tip: { type: String, default: '' },
+    required: { type: Boolean, default: false },
     options: { type: Array, default: () => [] },
     modelValue: { type: String, default: '' },
     disabled: { type: Boolean, default: false },

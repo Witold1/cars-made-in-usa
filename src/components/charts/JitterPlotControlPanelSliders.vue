@@ -70,7 +70,7 @@
       :disabled="justReset"
       @click="onReset"
     >
-      {{ justReset ? 'Parameters reset' : 'Reset parameters' }}
+      {{ justReset ? 'Parameters reset!' : 'Reset parameters' }}
     </button>
   </div>
 </template>

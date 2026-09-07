@@ -1,4 +1,13 @@
 @layer components {
+  /* Save PNG: collapse filters so the chart can reflow at full export width. */
+  body.is-exporting .filter-column {
+    display: none !important;
+  }
+
+  body.is-exporting .dashboard-body {
+    max-width: none;
+  }
+
   .filter-column--sidebar {
     width: auto;
     max-width: min(100%, var(--sidebar-width));

@@ -88,7 +88,7 @@
                   </div>
                 </template>
                 <p class="editorial-heading">Save PNG</p>
-                <p class="settings-hint">WYS keeps the chart as on screen. FW widens it for sharing.</p>
+                <p class="settings-hint">Preset size exports a wide, sharp PNG for sharing. WYS saves exactly what you see on screen.</p>
                 <div class="theme-switch-group settings-switch-group" role="group" aria-label="Save PNG layout">
                   <button
                     v-for="opt in pngExportModeOptions"
@@ -102,28 +102,34 @@
                     {{ opt.label }}
                   </button>
                 </div>
-                <template v-if="selectedChartType !== 'page'">
-                  <p class="editorial-heading">Experimental</p>
-                  <p class="settings-hint">Emoji region markers (🌎🌍🌏)</p>
-                  <div class="theme-switch-group settings-switch-group" role="group" aria-label="Emoji marker styles">
-                    <button
-                      type="button"
-                      :aria-pressed="!enableEmojiMarkers"
-                      :class="['theme-btn', { 'is-active': !enableEmojiMarkers }]"
-                      @click="setEnableEmojiMarkers(false)"
-                    >
-                      Off
-                    </button>
-                    <button
-                      type="button"
-                      :aria-pressed="enableEmojiMarkers"
-                      :class="['theme-btn', { 'is-active': enableEmojiMarkers }]"
-                      @click="setEnableEmojiMarkers(true)"
-                    >
-                      On
-                    </button>
-                  </div>
-                </template>
+                <p class="editorial-heading">Experimental</p>
+                <p class="settings-hint">
+                  Allow brand emblems in filters, Page, and tables, powered by
+                  <a
+                    class="text-link"
+                    href="https://github.com/cardog-ai/icons"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >Cardog Icons</a>.
+                </p>
+                <div class="theme-switch-group settings-switch-group" role="group" aria-label="Brand emblem markers">
+                  <button
+                    type="button"
+                    :aria-pressed="!enableBrandEmblems"
+                    :class="['theme-btn', { 'is-active': !enableBrandEmblems }]"
+                    @click="setEnableBrandEmblems(false)"
+                  >
+                    Off
+                  </button>
+                  <button
+                    type="button"
+                    :aria-pressed="enableBrandEmblems"
+                    :class="['theme-btn', { 'is-active': enableBrandEmblems }]"
+                    @click="setEnableBrandEmblems(true)"
+                  >
+                    On
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -162,7 +168,7 @@
                   <span class="editorial-heading editorial-heading--ink">dataset filters</span>
                 </span>
               </span>
-              <span class="panel-toggle-icon" aria-hidden="true">{{ filtersOpen ? '▼' : '▶' }}</span>
+              <UiIcon name="filter" icon-class="panel-toggle-icon filter-icon" />
             </button>
             <div v-show="filtersOpen" class="filter-panel-wrapper">
               <FilterPanel
@@ -181,7 +187,7 @@
                 @update:marker-styles="updateMarkerStyles"
                 :show-advanced-customization="showAdvancedCustomization"
                 @update:show-advanced-customization="updateShowAdvancedCustomization"
-                :enable-emoji-markers="enableEmojiMarkers"
+                :enable-brand-emblems="enableBrandEmblems"
                 stacked
               />
             </div>
@@ -205,7 +211,7 @@
                   <span class="editorial-heading editorial-heading--ink">dataset filters</span>
                 </span>
               </span>
-              <span class="panel-toggle-icon" aria-hidden="true">{{ filtersDrawerOpen ? '◀' : '▶' }}</span>
+              <UiIcon name="filter" icon-class="panel-toggle-icon filter-icon" />
             </button>
             <div v-show="filtersDrawerOpen" id="filter-drawer-body" class="filter-panel-wrapper">
               <FilterPanel
@@ -224,7 +230,7 @@
                 @update:marker-styles="updateMarkerStyles"
                 :show-advanced-customization="showAdvancedCustomization"
                 @update:show-advanced-customization="updateShowAdvancedCustomization"
-                :enable-emoji-markers="enableEmojiMarkers"
+                :enable-brand-emblems="enableBrandEmblems"
                 sidebar
               />
             </div>
@@ -294,11 +300,11 @@
                 type="button"
                 class="text-link export-link"
                 :disabled="exportingPng"
-                :title="pngExportMode === 'fw' ? 'Save PNG at full width (FW)' : 'Save PNG as on screen (WYS)'"
-                @click="exportChartPng"
+                :title="pngExportMode === 'fw' ? 'Save PNG (preset size)' : 'Save PNG (WYS)'"
+                @click="exportChartPngWithFiltersClosed"
               >
                 <UiIcon name="save-png" icon-class="export-icon" />
-                {{ exportingPng ? 'Exporting…' : 'Save PNG' }}
+                {{ savePngLabel(pngExportMode, { exporting: exportingPng }) }}
               </button>
             </div>
           </div>
@@ -334,9 +340,20 @@
       </div>
 
       <footer v-if="showSiteFooter" class="footer">
-        <p class="footer-sources" v-html="siteSourcesHtml"></p>
-        <p class="footer-credit" v-html="siteCreditHtml"></p>
         <p class="footer-source-code" v-html="siteSourceCodeHtml"></p>
+        <button
+          type="button"
+          class="text-link text-link--strong footer-attribution-toggle"
+          :aria-expanded="attributionOpen"
+          @click="attributionOpen = !attributionOpen"
+        >
+          {{ attributionOpen ? 'Hide attribution' : 'Attribution' }}
+        </button>
+        <div v-if="attributionOpen" class="footer-attribution">
+          <p class="footer-sources" v-html="siteSourcesHtml"></p>
+          <p class="footer-credit" v-html="siteCreditHtml"></p>
+        </div>
+        <p class="footer-privacy" v-html="sitePrivacyHtml"></p>
       </footer>
 
       <DebugSection
@@ -351,7 +368,7 @@
 </template>
 
 <script>
-import { ref, provide, computed, watch } from 'vue';
+import { ref, provide, computed, watch, nextTick } from 'vue';
 import FilterPanel from './filters/FilterPanel.vue';
 import BeeswarmPlot from './charts/BeeswarmPlot.vue';
 import JitterPlot from './charts/JitterPlot.vue';
@@ -365,7 +382,7 @@ import DebugSection from './debug/DebugSection.vue';
 import ReleaseStepper from './controls/ReleaseStepper.vue';
 import UiIcon from './UiIcon.vue';
 import { interimReleaseOptions } from '../data/extendedData';
-import { getSiteSubtitleHtml, getSiteSourcesHtml, getSiteCreditHtml, getSiteSourceCodeHtml } from '../config/siteFooter';
+import { getSiteSubtitleHtml, getSiteSourcesHtml, getSiteCreditHtml, getSiteSourceCodeHtml, getSitePrivacyHtml } from '../config/siteFooter';
 import { useDashboardFilters } from '../composables/useDashboardFilters';
 import { useChartView } from '../composables/useChartView';
 import { useDashboardLayout } from '../composables/useDashboardLayout';
@@ -389,7 +406,7 @@ export default {
   },
   setup() {
     const filtersOpen = ref(false);
-    const filtersDrawerOpen = ref(true);
+    const filtersDrawerOpen = ref(false);
     /** Active release rows (charts + Origins); filled by useChartView. */
     const plotSource = ref([]);
 
@@ -402,7 +419,7 @@ export default {
       selectedPoint,
       markerStyles,
       showAdvancedCustomization,
-      enableEmojiMarkers,
+      enableBrandEmblems,
       regions,
       corporations,
       brands,
@@ -413,7 +430,7 @@ export default {
       clearFilterSelections,
       updateMarkerStyles,
       updateShowAdvancedCustomization,
-      setEnableEmojiMarkers,
+      setEnableBrandEmblems,
     } = useDashboardFilters(plotSource);
 
     const {
@@ -424,6 +441,7 @@ export default {
       pngExportMode,
       pngExportModeOptions,
       setPngExportMode,
+      savePngLabel,
       handleResetFilters,
       extendedDataReleaseKey,
       extendedDataReleaseOptions,
@@ -486,15 +504,37 @@ export default {
 
     provide('pngExportMode', pngExportMode);
     provide('setLastRenderMs', setLastRenderMs);
+    provide('enableBrandEmblems', enableBrandEmblems);
+
+    const collapseDatasetFiltersForExport = async () => {
+      const wasOpen = filtersOpen.value || filtersDrawerOpen.value;
+      filtersOpen.value = false;
+      filtersDrawerOpen.value = false;
+      if (!wasOpen) return;
+      await nextTick();
+      // Allow drawer close + chart ResizeObserver redraw before capture
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    };
+    provide('collapseDatasetFiltersForExport', collapseDatasetFiltersForExport);
+
+    const exportChartPngWithFiltersClosed = async () => {
+      await collapseDatasetFiltersForExport();
+      await exportChartPng();
+    };
+
+    watch(enableBrandEmblems, (on) => {
+      if (on) {
+        import('../data/brandEmblems.js').then((m) => m.ensureBrandEmblemSprite());
+      }
+    });
 
     const chartHasPlotParameters = computed(
       () => selectedChartType.value === 'beeswarm' || selectedChartType.value === 'jitter'
     );
 
     const pageHasCarSelection = ref(false);
-    const showSiteFooter = computed(
-      () => selectedChartType.value !== 'page' || pageHasCarSelection.value
-    );
+    const attributionOpen = ref(false);
+    const showSiteFooter = computed(() => true);
 
     watch(selectedChartType, (type) => {
       if (type !== 'page') pageHasCarSelection.value = false;
@@ -504,6 +544,7 @@ export default {
       filtersOpen,
       filtersDrawerOpen,
       guideOpen,
+      attributionOpen,
       settingsOpen,
       settingsRef,
       headerActionsOpen,
@@ -514,6 +555,7 @@ export default {
       siteCreditHtml: getSiteCreditHtml(),
       siteSourcesHtml: getSiteSourcesHtml(),
       siteSourceCodeHtml: getSiteSourceCodeHtml(),
+      sitePrivacyHtml: getSitePrivacyHtml(),
       showSiteFooter,
       pageHasCarSelection,
       pageLayout,
@@ -526,8 +568,9 @@ export default {
       pngExportMode,
       pngExportModeOptions,
       setPngExportMode,
-      enableEmojiMarkers,
-      setEnableEmojiMarkers,
+      savePngLabel,
+      enableBrandEmblems,
+      setEnableBrandEmblems,
       chartCardRef,
       exportingPng,
       chartHasPlotParameters,
@@ -540,7 +583,7 @@ export default {
       chartCountLabel,
       extendedTableData,
       extendedDataLength,
-      exportChartPng,
+      exportChartPngWithFiltersClosed,
       lastRenderMs,
       selectedRegions,
       selectedCorporations,

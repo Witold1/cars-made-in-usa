@@ -1,6 +1,9 @@
 # Dependencies & local tooling
 node_modules/
 
+# Generated from @cardog-icons/core (npm postinstall)
+public/brands/
+
 # Build / cache
 dist/
 .vite/

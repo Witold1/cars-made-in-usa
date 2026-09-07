@@ -8,18 +8,10 @@
       <option value="circle">Circle</option>
       <option value="square">Square</option>
       <option value="triangle">Triangle</option>
-      <template v-if="enableEmojiMarkers">
-        <option
-          v-for="emoji in regionEmojiOptions"
-          :key="emoji.value"
-          :value="emoji.value"
-        >
-          {{ emoji.label }}
-        </option>
-      </template>
+      <option v-if="showEmblemOption" value="emblem">Emblem</option>
     </select>
     <select
-      v-if="!isEmoji"
+      v-if="!isEmblem"
       :value="markerStyles[option]?.color || '#4f7f9c'"
       @change="$emit('update:marker-styles', { ...markerStyles, [option]: { ...markerStyles[option], color: $event.target.value } })"
       class="editorial-select marker-select"
@@ -48,37 +40,48 @@
 
 <script>
 import { computed } from 'vue';
-import { isEmojiShape, REGION_EMOJI_OPTIONS } from '../../utils/chartUtils';
+import { isEmblemShape } from '../../utils/chartUtils';
+import { hasBrandEmblem } from '../../data/brandEmblems';
 
 export default {
   name: 'MarkerSelector',
   props: {
     option: String,
     markerStyles: Object,
-    enableEmojiMarkers: { type: Boolean, default: false },
+    enableBrandEmblems: { type: Boolean, default: false },
   },
   emits: ['update:marker-styles'],
   setup(props, { emit }) {
-    const regionEmojiOptions = REGION_EMOJI_OPTIONS;
+    const showEmblemOption = computed(
+      () => props.enableBrandEmblems && hasBrandEmblem(props.option)
+    );
 
-    const isEmoji = computed(() =>
-      props.enableEmojiMarkers && isEmojiShape(props.markerStyles?.[props.option]?.shape)
+    const isEmblem = computed(() =>
+      props.enableBrandEmblems && isEmblemShape(props.markerStyles?.[props.option]?.shape)
     );
 
     const onShapeChange = (event) => {
       const shape = event.target.value;
-      if (isEmojiShape(shape) && !props.enableEmojiMarkers) return;
+      if (isEmblemShape(shape) && !showEmblemOption.value) return;
       const prev = props.markerStyles[props.option] || {};
       const next = { ...prev, shape };
-      if (isEmojiShape(shape)) {
+      if (isEmblemShape(shape)) {
         delete next.color;
-      } else if (!next.color) {
-        next.color = '#4f7f9c';
+        delete next.emblemUrl;
+        next.emblemBrand = props.option;
+      } else {
+        delete next.emblemUrl;
+        delete next.emblemBrand;
+        if (!next.color) next.color = '#4f7f9c';
       }
       emit('update:marker-styles', { ...props.markerStyles, [props.option]: next });
     };
 
-    return { regionEmojiOptions, isEmoji, onShapeChange };
+    return {
+      showEmblemOption,
+      isEmblem,
+      onShapeChange,
+    };
   },
 };
 </script>

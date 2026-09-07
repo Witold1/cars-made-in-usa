@@ -209,13 +209,24 @@
     color: var(--text);
   }
   .car-page-hero-make {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45em;
+    line-height: 1;
     font-size: 0.72em;
     font-weight: 500;
     letter-spacing: var(--type-label-tracking);
     text-transform: uppercase;
     color: var(--text-secondary);
     margin-bottom: var(--space-2xs);
+  }
+  .car-page-hero-emblem {
+    flex-shrink: 0;
+  }
+  .car-page-hero-emblem .brand-emblem {
+    width: 2.35em;
+    height: 2.35em;
   }
   .car-page-hero-value {
     margin: 0;

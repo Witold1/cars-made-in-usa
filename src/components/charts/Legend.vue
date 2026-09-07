@@ -9,12 +9,14 @@
         :class="{ selected: isSelected(marker.key) }"
         @click="marker.toggle(marker.value)"
       >
-        <span
-          v-if="isEmojiShape(getMarkerStyle(marker).shape)"
-          class="legend-emoji flex-shrink-0 leading-none"
+        <BrandEmblem
+          v-if="isEmblemShape(getMarkerStyle(marker).shape) && emblemBrandFor(marker)"
+          :brand="emblemBrandFor(marker)"
+          :size="28"
+          :show="true"
+          emblem-class="legend-emblem flex-shrink-0"
           :class="{ 'opacity-100': isSelected(marker.key), 'opacity-50': !isSelected(marker.key) }"
-          aria-hidden="true"
-        >{{ getMarkerStyle(marker).shape }}</span>
+        />
         <svg v-else width="14" height="14" viewBox="0 0 14 14" class="flex-shrink-0">
           <circle
             v-if="getMarkerStyle(marker).shape === 'circle'"
@@ -49,11 +51,14 @@
 
 <script>
 import { computed, toRef } from 'vue';
-import { isEmojiShape } from '../../utils/chartUtils';
+import { isEmblemShape } from '../../utils/chartUtils';
+import { hasBrandEmblem } from '../../data/brandEmblems';
 import { readThemeTokens } from '../../utils/themeTokens';
+import BrandEmblem from '../BrandEmblem.vue';
 
 export default {
   name: 'Legend',
+  components: { BrandEmblem },
   props: {
     filteredData: Array,
     selectedRegions: Array,
@@ -77,7 +82,14 @@ export default {
       return {
         shape: style.shape || 'circle',
         color: style.color || readThemeTokens().palette5,
+        emblemBrand: style.emblemBrand || null,
       };
+    };
+
+    const emblemBrandFor = (marker) => {
+      const style = getMarkerStyle(marker);
+      const brand = style.emblemBrand || marker.brand || marker.key;
+      return hasBrandEmblem(brand) ? brand : null;
     };
 
     const markers = computed(() => {
@@ -120,7 +132,7 @@ export default {
           addMarker(
             d.region,
             d.region,
-            `Region: ${d.region}`,
+            `HQ region: ${d.region}`,
             (value) => emit('toggle-region', value),
             'region',
             d
@@ -157,7 +169,14 @@ export default {
       props.selectedCorporations.includes(key) ||
       props.selectedRegions.includes(key);
 
-    return { uniqueMarkers, markerStyles, isSelected, getMarkerStyle, isEmojiShape };
+    return {
+      uniqueMarkers,
+      markerStyles,
+      isSelected,
+      getMarkerStyle,
+      emblemBrandFor,
+      isEmblemShape,
+    };
   }
 };
 </script>

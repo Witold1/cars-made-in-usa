@@ -1,8 +1,12 @@
 import { readThemeTokens } from './themeTokens.js';
 import { getSiteFooterLines, siteSubtitlePlain } from '../config/siteFooter.js';
 
-const EXPORT_WIDTH = 1200;
-const SCALE = 2;
+const EXPORT_WIDTH = 1600;
+const SCALE = 3;
+/** Preset export chart height (beeswarm / main plots). */
+export const EXPORT_CHART_HEIGHT = 550;
+/** Preset export height for jitter small-multiples. */
+export const EXPORT_JITTER_CHART_HEIGHT = 300;
 const PAD_X = 28;
 const PAD_Y = 24;
 const HEADER_GAP = 14;
@@ -13,8 +17,8 @@ const DEFAULT_SUBTITLE = siteSubtitlePlain;
 
 /**
  * Export chart SVG(s) as PNG with title/footer chrome.
- * mode=wys (default): capture the current on-screen layout.
- * mode=fw: temporarily widen to a full export width, then capture.
+ * mode=fw (default): temporarily widen to a preset export width, then capture.
+ * mode=wys: capture the current on-screen layout.
  * @param {SVGSVGElement | null} svgEl - Live SVG (re-queried after layout expand when possible)
  * @param {string} filename - Download filename
  * @param {object} [options]
@@ -22,7 +26,7 @@ const DEFAULT_SUBTITLE = siteSubtitlePlain;
  * @param {string} [options.subtitle]
  * @param {string | string[]} [options.footer] - Footer lines (defaults to site credit + sources)
  * @param {string} [options.meta] - Optional meta line above the footer (e.g. point count)
- * @param {'wys' | 'fw'} [options.mode] - wys = as on screen (default); fw = expand to full export width
+ * @param {'wys' | 'fw'} [options.mode] - fw = preset export width (default); wys = as on screen
  * @param {HTMLElement | null} [options.expandRoot] - Container to widen when mode is fw
  * @param {number} [options.exportWidth]
  * @param {number} [options.scale]
@@ -36,7 +40,7 @@ export async function exportSvgAsPng(svgEl, filename = 'chart.png', options = {}
     subtitle = DEFAULT_SUBTITLE,
     footer = getSiteFooterLines(),
     meta = '',
-    mode = 'wys',
+    mode = 'fw',
     expandRoot = null,
     exportWidth = EXPORT_WIDTH,
     scale = SCALE,
@@ -66,7 +70,7 @@ export async function exportSvgAsPng(svgEl, filename = 'chart.png', options = {}
     const svgs = resolveSvgs({ svgEl, findSvg, findSvgs, expandRoot });
     if (!svgs.length) return false;
 
-    const prepared = svgs.map((el) => prepareSvgClone(el));
+    const prepared = await Promise.all(svgs.map((el) => prepareSvgClone(el)));
     const images = await Promise.all(prepared.map((p) => svgToImage(p.svgString)));
 
     const contentW = Math.max(...prepared.map((p) => p.width), 320);
@@ -81,6 +85,8 @@ export async function exportSvgAsPng(svgEl, filename = 'chart.png', options = {}
     canvas.width = Math.round(cssW * scale);
     canvas.height = Math.round(cssH * scale);
     const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
     ctx.fillStyle = tokens.bg || tokens.chartBg;
     ctx.fillRect(0, 0, cssW, cssH);
@@ -149,7 +155,7 @@ function expandForCapture(el, width) {
   };
 }
 
-function prepareSvgClone(svgEl) {
+async function prepareSvgClone(svgEl) {
   const width =
     parseFloat(svgEl.getAttribute('width')) ||
     svgEl.clientWidth ||
@@ -171,6 +177,7 @@ function prepareSvgClone(svgEl) {
   clone.classList.remove('bg-chart-bg');
 
   inlineComputedStyles(svgEl, clone);
+  await inlineExternalImages(clone);
 
   // Transparent chart frame - matches page bg in the PNG, not --chart-bg.
   clone.style.background = 'transparent';
@@ -178,6 +185,133 @@ function prepareSvgClone(svgEl) {
 
   const svgString = new XMLSerializer().serializeToString(clone);
   return { svgString, width, height };
+}
+
+/** Cache: absolute URL → data URL (so repeat exports skip refetch). */
+const imageDataUrlCache = new Map();
+
+/**
+ * External <image href> (e.g. brand emblems) do not load inside blob SVGs.
+ * Fetch + rasterize to PNG data URLs before serialize → canvas.
+ */
+async function inlineExternalImages(svgRoot) {
+  const nodes = [...svgRoot.querySelectorAll('image')];
+  if (!nodes.length) return;
+
+  const jobs = new Map(); // href → Promise<dataUrl|null>
+
+  for (const node of nodes) {
+    const href =
+      node.getAttribute('href') ||
+      node.getAttributeNS('http://www.w3.org/1999/xlink', 'href') ||
+      '';
+    if (!href || href.startsWith('data:')) continue;
+    if (!jobs.has(href)) {
+      jobs.set(href, fetchAsDataUrl(href));
+    }
+  }
+
+  const resolved = new Map();
+  await Promise.all(
+    [...jobs.entries()].map(async ([href, promise]) => {
+      resolved.set(href, await promise);
+    })
+  );
+
+  for (const node of nodes) {
+    const href =
+      node.getAttribute('href') ||
+      node.getAttributeNS('http://www.w3.org/1999/xlink', 'href') ||
+      '';
+    if (!href || href.startsWith('data:')) continue;
+    const dataUrl = resolved.get(href);
+    if (!dataUrl) continue;
+    node.setAttribute('href', dataUrl);
+    node.setAttributeNS('http://www.w3.org/1999/xlink', 'href', dataUrl);
+  }
+}
+
+async function fetchAsDataUrl(href) {
+  let absolute;
+  try {
+    absolute = new URL(href, window.location.href).href;
+  } catch {
+    return null;
+  }
+
+  if (imageDataUrlCache.has(absolute)) {
+    return imageDataUrlCache.get(absolute);
+  }
+
+  try {
+    const res = await fetch(absolute);
+    if (!res.ok) return null;
+    const contentType = (res.headers.get('content-type') || '').split(';')[0].trim();
+    const buffer = await res.arrayBuffer();
+    const isSvg =
+      contentType.includes('svg') ||
+      absolute.toLowerCase().endsWith('.svg');
+
+    // Nested SVG data-URLs inside SVG→Image→canvas are unreliable; rasterize to PNG.
+    const dataUrl = isSvg
+      ? await svgBufferToPngDataUrl(buffer)
+      : arrayBufferToDataUrl(
+          buffer,
+          contentType && contentType !== 'application/octet-stream'
+            ? contentType
+            : 'application/octet-stream'
+        );
+
+    if (dataUrl) imageDataUrlCache.set(absolute, dataUrl);
+    return dataUrl;
+  } catch {
+    return null;
+  }
+}
+
+function svgBufferToPngDataUrl(buffer) {
+  const svgText = new TextDecoder().decode(buffer);
+  const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const w = Math.max(1, img.naturalWidth || img.width || 128);
+        const h = Math.max(1, img.naturalHeight || img.height || 128);
+        const canvas = document.createElement('canvas');
+        // Match main export SCALE so emblems stay sharp when inlined.
+        const scale = SCALE;
+        canvas.width = w * scale;
+        canvas.height = h * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/png'));
+      } catch {
+        resolve(null);
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(null);
+    };
+    img.src = url;
+  });
+}
+
+function arrayBufferToDataUrl(buffer, mime) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
+  return `data:${mime};base64,${btoa(binary)}`;
 }
 
 /** Copy paints/fonts so Tailwind utility classes survive SVG→image. */

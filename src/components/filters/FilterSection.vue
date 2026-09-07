@@ -85,7 +85,7 @@
                 <MarkerSelector
                   :option="option"
                   :marker-styles="markerStyles"
-                  :enable-emoji-markers="enableEmojiMarkers"
+                  :enable-brand-emblems="enableBrandEmblems"
                   @update:marker-styles="$emit('update:marker-styles', $event)"
                 />
               </div>
@@ -116,7 +116,7 @@ export default {
     isOpen: Boolean,
     markerStyles: Object,
     showAdvancedCustomization: Boolean,
-    enableEmojiMarkers: { type: Boolean, default: false },
+    enableBrandEmblems: { type: Boolean, default: false },
     searchable: { type: Boolean, default: false },
     hierarchy: Object,
     selectedRegions: Array,

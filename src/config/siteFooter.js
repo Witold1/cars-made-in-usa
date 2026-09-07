@@ -6,6 +6,8 @@
 export const NHTSA_HOME_URL = 'https://www.nhtsa.gov/';
 export const AALA_REPORTS_URL =
   'https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports';
+export const PART_583_URL =
+  'https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-583';
 
 const LINK_ATTRS = 'target="_blank" rel="noopener noreferrer"';
 
@@ -24,6 +26,12 @@ export const siteRepo = {
   href: 'https://github.com/Witold1/cars-made-in-usa',
 };
 
+export const sitePrivacy = {
+  label: 'Privacy',
+  /** Relative path under the Vite base (GitHub Pages project site) */
+  href: 'privacy.html',
+};
+
 export const siteSources = {
   /** Lead-in label before the source list */
   label: 'Sources',
@@ -39,11 +47,13 @@ export const siteSources = {
 export const siteSubtitlePlain =
   'We visualized the share of U.S. (and Canadian) parts content for motor vehicles reported under American Automobile Labeling Act (Part 583) regulation from National Highway Traffic Safety Administration (NHTSA).';
 
-/** Header subtitle with links to NHTSA and Part 583 reports. */
+/** Header subtitle with links to the published reports, Part 583 text, and NHTSA. */
 export function getSiteSubtitleHtml() {
   return [
-    'We visualized the share of U.S. (and Canadian) parts content for motor vehicles reported under',
-    `<a href="${AALA_REPORTS_URL}" ${LINK_ATTRS} class="subtitle-link" title="NHTSA Part 583 American Automobile Labeling Act reports">American Automobile Labeling Act (Part 583) regulation</a>`,
+    'We visualized the share of U.S. (and Canadian) parts content for motor vehicles',
+    `<a href="${AALA_REPORTS_URL}" ${LINK_ATTRS} class="subtitle-link" title="NHTSA Part 583 American Automobile Labeling Act reports">reported</a>`,
+    'under',
+    `<a href="${PART_583_URL}" ${LINK_ATTRS} class="subtitle-link" title="49 CFR Part 583 — American Automobile Labeling Act">American Automobile Labeling Act (Part 583) regulation</a>`,
     'from',
     `<a href="${NHTSA_HOME_URL}" ${LINK_ATTRS} class="subtitle-link" title="National Highway Traffic Safety Administration">National Highway Traffic Safety Administration (NHTSA)</a>.`,
   ].join(' ');
@@ -70,6 +80,11 @@ export function getSiteSourceCodeHtml() {
     `${siteRepo.label}:`,
     `<a href="${siteRepo.href}" ${LINK_ATTRS} class="footer-link" title="GitHub repository">${siteRepo.text}</a>`,
   ].join(' ');
+}
+
+/** Footer privacy policy link (static page in public/). */
+export function getSitePrivacyHtml() {
+  return `<a href="${sitePrivacy.href}" class="text-link text-link--strong" title="Privacy policy">${sitePrivacy.label}</a>`;
 }
 
 /** Plain source-code line (PNG export). */

@@ -3,18 +3,8 @@
     <div class="plot-control-list">
       <div class="plot-control-item">
         <span class="plot-control-label">
-          Chart height
-          <InfoTip label="Explain chart height" tip="Chart height in pixels." />
-        </span>
-        <div class="plot-control-inputs">
-          <input type="range" :value="chartHeight" @input="emitChartHeight($event.target.value)" min="200" max="600" step="10" />
-          <input type="number" :value="chartHeight" @input="emitChartHeight($event.target.value)" min="200" max="600" step="10" />
-        </div>
-      </div>
-      <div class="plot-control-item">
-        <span class="plot-control-label">
           Point radius
-          <InfoTip label="Explain point radius" tip="Radius of each data point in pixels." />
+          <InfoTip label="Explain point radius" tip="Preferred radius of each data point. If the swarm would overflow the plot, the chart may scale this down a little (still tied to your setting)." />
         </span>
         <div class="plot-control-inputs">
           <input type="range" :value="pointRadius" @input="emitPointRadius($event.target.value)" min="3" max="7" step="0.1" />
@@ -24,7 +14,7 @@
       <div class="plot-control-item">
         <span class="plot-control-label">
           Padding factor
-          <InfoTip label="Explain padding factor" tip="Spacing between points. Higher values push points farther apart to reduce overlap." />
+          <InfoTip label="Explain padding factor" tip="Preferred spacing between points. Higher values push points farther apart. May scale down slightly with point radius when the swarm is very dense." />
         </span>
         <div class="plot-control-inputs">
           <input type="range" :value="paddingFactor" @input="emitPaddingFactor($event.target.value)" min="0.5" max="2" step="0.1" />
@@ -43,7 +33,7 @@
       <div class="plot-control-item">
         <span class="plot-control-label">
           Full 0–100 axis
-          <InfoTip label="Explain full axis" tip="Extend the value axis through 100%. Off by default — the axis stops near the highest data value, which is often well below 100%." />
+          <InfoTip label="Explain full axis" tip="Extend the value axis through 100%. On by default — turn off to stop the axis near the highest data value." />
         </span>
         <div class="plot-control-inputs">
           <label class="plot-control-check">
@@ -65,7 +55,7 @@
       <div class="plot-control-item">
         <span class="plot-control-label">
           Spread for 0s
-          <InfoTip label="Explain spread for 0s" tip="Width of the band around the 0% reference. Wider spread separates stacked 0% points." />
+          <InfoTip label="Explain spread for 0s" tip="Width of the band around the 0% reference. Wider spread separates stacked 0% points. The chart may auto-widen this when the left pile would clip the plot." />
         </span>
         <div class="plot-control-inputs">
           <input type="range" :value="spread0" @input="emitSpread0($event.target.value)" min="1" max="20" step="0.5" />
@@ -85,7 +75,7 @@
       <div class="plot-control-item">
         <span class="plot-control-label">
           Spread for 1s
-          <InfoTip label="Explain spread for 1s" tip="Width of the band around the 1% reference. Wider spread separates stacked 1% points." />
+          <InfoTip label="Explain spread for 1s" tip="Width of the band around the 1% reference. Wider spread separates stacked 1% points. The chart may auto-widen this when the left pile would clip the plot." />
         </span>
         <div class="plot-control-inputs">
           <input type="range" :value="spread1" @input="emitSpread1($event.target.value)" min="1" max="20" step="0.5" />
@@ -99,21 +89,19 @@
       :disabled="justReset"
       @click="onReset"
     >
-      {{ justReset ? 'Parameters reset' : 'Reset parameters' }}
+      {{ justReset ? 'Parameters reset!' : 'Reset parameters' }}
     </button>
   </div>
 </template>
 
 <script>
 import { ref, onUnmounted } from 'vue';
-import { mqMax } from '../../config/breakpoints';
 import InfoTip from '../InfoTip.vue';
 
 export default {
   name: 'BeeswarmControlPanelSliders',
   components: { InfoTip },
   props: {
-    chartHeight: { type: Number, required: true },
     pointRadius: { type: Number, required: true },
     paddingFactor: { type: Number, required: true },
     center0: { type: Number, required: true },
@@ -121,10 +109,9 @@ export default {
     center1: { type: Number, required: true },
     spread1: { type: Number, required: true },
     seed: { type: Number, default: 42 },
-    fullAxis: { type: Boolean, default: false }
+    fullAxis: { type: Boolean, default: true }
   },
   emits: [
-    'update:chartHeight',
     'update:pointRadius',
     'update:paddingFactor',
     'update:center0',
@@ -137,14 +124,6 @@ export default {
   setup(props, { emit }) {
     const justReset = ref(false);
     let resetFeedbackTimer = null;
-
-    const emitChartHeight = (value) => {
-      const numValue = +value;
-      if (!isNaN(numValue)) {
-        const constrainedValue = Math.min(Math.max(numValue, 200), 600);
-        emit('update:chartHeight', constrainedValue);
-      }
-    };
 
     const emitPointRadius = (value) => {
       const numValue = +value;
@@ -204,19 +183,14 @@ export default {
     };
 
     const onReset = () => {
-      const heightDefault =
-        typeof window !== 'undefined' && window.matchMedia(mqMax('md')).matches
-          ? 600
-          : 400;
-      emit('update:chartHeight', heightDefault);
       emit('update:pointRadius', 5.5);
       emit('update:paddingFactor', 1.3);
       emit('update:seed', 42);
       emit('update:center0', -10.5);
       emit('update:spread0', 9);
       emit('update:center1', -2);
-      emit('update:spread1', 6);
-      emit('update:fullAxis', false);
+      emit('update:spread1', 4);
+      emit('update:fullAxis', true);
       justReset.value = true;
       if (resetFeedbackTimer) clearTimeout(resetFeedbackTimer);
       resetFeedbackTimer = setTimeout(() => {
@@ -231,7 +205,6 @@ export default {
 
     return {
       justReset,
-      emitChartHeight,
       emitPointRadius,
       emitPaddingFactor,
       emitCenter0,

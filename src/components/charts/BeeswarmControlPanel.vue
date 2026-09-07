@@ -17,7 +17,6 @@
     <transition name="slide">
       <div v-if="showSliders" class="plot-control-inner">
         <BeeswarmControlPanelSliders
-          :chartHeight="chartHeight"
           :pointRadius="pointRadius"
           :paddingFactor="paddingFactor"
           :center0="center0"
@@ -26,7 +25,6 @@
           :spread1="spread1"
           :seed="seed"
           :fullAxis="fullAxis"
-          @update:chartHeight="emitUpdate('chartHeight', $event)"
           @update:pointRadius="emitUpdate('pointRadius', $event)"
           @update:paddingFactor="emitUpdate('paddingFactor', $event)"
           @update:center0="emitUpdate('center0', $event)"
@@ -49,7 +47,6 @@ export default {
   name: 'BeeswarmControlPanel',
   components: { BeeswarmControlPanelSliders },
   props: {
-    chartHeight: { type: Number, required: true },
     pointRadius: { type: Number, required: true },
     paddingFactor: { type: Number, required: true },
     center0: { type: Number, required: true },
@@ -57,10 +54,9 @@ export default {
     center1: { type: Number, required: true },
     spread1: { type: Number, required: true },
     seed: { type: Number, default: 42 },
-    fullAxis: { type: Boolean, default: false }
+    fullAxis: { type: Boolean, default: true }
   },
   emits: [
-    'update:chartHeight',
     'update:pointRadius',
     'update:paddingFactor',
     'update:center0',

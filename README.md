@@ -6,14 +6,18 @@
 ![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)
 ![D3](https://img.shields.io/badge/D3-7-f9a03c?style=flat-square&logo=d3dotjs&logoColor=white)<br>
 ![JSON](https://img.shields.io/badge/Data-JSON-000000?style=flat-square&logo=json&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT%20%2B%20CC%20BY--SA%204.0-lightgrey?style=flat-square)<br>
+![License](https://img.shields.io/badge/License-MIT%20and%20CC%20BY--SA%204.0-lightgrey?style=flat-square)<br>
 ![Data quality](https://img.shields.io/badge/Data--quality-public--alpha-orange?style=flat-square)
 ![Dashboard status](https://img.shields.io/badge/Dashboard--status-public--beta-orange?style=flat-square)
 ![AI Assistance](https://img.shields.io/badge/AI--Assistance-high-informational?style=flat-square)
 
-Interactive dashboard of U.S./Canadian parts content for passenger vehicle carlines, based on public NHTSA American Automobile Labeling Act (Part 583) releases.
+## Preview
 
-Vue 3 + Vite + D3. Dataset is plain JSON under `data/` - edit files, refresh the app.
+<p align="center">
+  <img src="project-preview.jpg" width="500" alt="Project preview. How American Is Your Car?">
+</p>
+
+Interactive dashboard of U.S./Canadian parts content for passenger vehicle carlines, based on public NHTSA American Automobile Labeling Act (Part 583) releases.
 
 ## Description
 
@@ -26,7 +30,7 @@ Vue 3 + Vite + D3. Dataset is plain JSON under `data/` - edit files, refresh the
 | -------------------- | -------------------------------------------------------------------- |
 | Exploration widget   | Year → make → model lookup for one carline’s content and origins     |
 | Visual summary       | One point per carline; U.S./Canadian parts content on the value axis |
-| Visual comparison    | Same data, one small chart per region under a reference strip        |
+| Visual comparison    | Same data, one small chart per HQ region under a reference strip     |
 | Data table           | Extended release rows (foreign parts, origins, assembly)             |
 | Placeholder          | Reserved slot for a future chart type                                |
 | Artificially generated table | Searchable / sortable carline rows                          |
@@ -40,19 +44,21 @@ Top bar:
 
 - **View** - switch chart / table type
 - **Theme** - light or dark
-- **Save PNG** - export the chart (WYS = as on screen; FW = full-width reflow)
-- **Settings (gear)** - dataset filters position, chart orientation (beeswarm), PNG mode, experimental emoji markers
+- **Save PNG** - export the chart (default: Preset size = wide high-res for sharing; WYS = as on screen)
+- **Settings (gear)** - dataset filters position, chart orientation (beeswarm), PNG mode, experimental brand emblems (filters / Page / tables)
 
 Dataset filters:
 
 - **Report** - shared AALA report year for charts and Origins (default: 2026 interim data)
-- Region / corporation / brand hierarchy
+- HQ region / corporation / brand hierarchy
 - Optional marker style customization
 - Legend toggles mirror the same selections
 
 URL query params keep chart type and filters shareable (`?chart=beeswarm&regions=…`).
 
 ## Data
+
+  * Data comes from **[Part 583 American Automobile Labeling Act Reports](https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports)** shared to public by National Highway Traffic Safety Administration. For more details and context of this regulation, see _Title 49 CFR Part 583 - Automobile Parts Content Labeling_ on _[Electronic Code of Federal Regulations (eCFR)](https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-583)_ or _[Legal Information Institute, Cornell University](https://www.law.cornell.edu/cfr/text/49/part-583)_. In addition, you can check the ["Evaluation of the American Automobile Labeling Act (NHTSA Publication DOT HS 809 208)"](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/809208), a report from January 2001 that stated "most consumers were unaware of the existence of the AALA labels".
 
 Source of truth is JSON under `data/`:
 
@@ -80,7 +86,7 @@ Open the printed localhost URL (Vite default: `http://localhost:5173`).
 Optional Docker:
 
 ```powershell
-docker compose up
+docker compose -f docker/docker-compose.yml up
 ```
 
 
@@ -88,8 +94,12 @@ docker compose up
 ## Repository layout
 
 ```text
-index.html              Page shell
+index.html              Page shell (+ analytics loader)
+public/
+  analytics.js          GoatCounter + Clarity + GA4 (live only)
+  privacy.html          Privacy overview for analytics/hosting
 vite.config.js          Vite + Vue
+docker/                 Dockerfile, compose, .dockerignore
 .github/workflows/      GitHub Pages deploy
 
 src/

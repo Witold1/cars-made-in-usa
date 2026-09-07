@@ -218,10 +218,19 @@
     overflow-y: auto;
   }
   .searchable-pick-title-row {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.2rem;
+    width: 100%;
     min-width: 0;
+  }
+  .searchable-pick-title-row .panel-toggle-icon {
+    margin-left: auto;
+  }
+  .searchable-pick-required {
+    margin-left: 0.15em;
+    color: #c62828;
+    font-weight: 600;
   }
   .searchable-pick-summary {
     display: block;

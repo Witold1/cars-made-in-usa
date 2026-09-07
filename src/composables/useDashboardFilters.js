@@ -7,7 +7,7 @@ import {
   toggleBrandSelection,
 } from '../utils/hierarchyUtils';
 import { log } from '../utils/logger';
-import { isEmojiShape } from '../utils/chartUtils';
+import { isEmblemShape } from '../utils/chartUtils';
 
 /**
  * @param {import('vue').Ref<Array>} sourceData - full plot rows for the active release
@@ -20,7 +20,7 @@ export function useDashboardFilters(sourceData) {
   const selectedPoint = ref(null);
   const markerStyles = ref({});
   const showAdvancedCustomization = ref(false);
-  const enableEmojiMarkers = ref(false);
+  const enableBrandEmblems = ref(false);
 
   const hierarchy = computed(() => buildHierarchy(sourceData.value));
 
@@ -124,20 +124,22 @@ export function useDashboardFilters(sourceData) {
     log('Advanced Customization Toggled:', showAdvancedCustomization.value);
   };
 
-  const setEnableEmojiMarkers = (value) => {
-    enableEmojiMarkers.value = value;
-    if (!value) {
+  const setEnableBrandEmblems = (value) => {
+    enableBrandEmblems.value = value;
+    if (value) {
+      showAdvancedCustomization.value = true;
+    } else {
       const next = { ...markerStyles.value };
       let changed = false;
       for (const key of Object.keys(next)) {
-        if (isEmojiShape(next[key]?.shape)) {
-          next[key] = { ...next[key], shape: 'circle', color: next[key].color || '#4f7f9c' };
+        if (isEmblemShape(next[key]?.shape)) {
+          next[key] = { shape: 'circle', color: next[key].color || '#4f7f9c' };
           changed = true;
         }
       }
       if (changed) markerStyles.value = next;
     }
-    log('Emoji markers:', value);
+    log('Brand emblems:', value);
   };
 
   return {
@@ -149,7 +151,7 @@ export function useDashboardFilters(sourceData) {
     selectedPoint,
     markerStyles,
     showAdvancedCustomization,
-    enableEmojiMarkers,
+    enableBrandEmblems,
     regions,
     corporations,
     brands,
@@ -160,6 +162,6 @@ export function useDashboardFilters(sourceData) {
     clearFilterSelections,
     updateMarkerStyles,
     updateShowAdvancedCustomization,
-    setEnableEmojiMarkers,
+    setEnableBrandEmblems,
   };
 }

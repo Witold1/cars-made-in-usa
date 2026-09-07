@@ -6,7 +6,7 @@ Data corrections and additions are welcome - especially carline content fixes, n
 ## How to contribute `/data`
 
 1. Fork the repository.
-2. Edit the relevant file under `data/` (`data/interim 2/*.xlsx`, or `meta.json` / `sources.json`). Region tags for pipeline drafts can also be adjusted in `src/data/regionTaxonomy.js`.
+2. Edit the relevant file under `data/` (`data/interim 2/*.xlsx`, or `meta.json` / `sources.json`). HQ region tags for pipeline drafts can also be adjusted in `src/data/regionTaxonomy.js`.
 3. After changing interim Excel, rebuild release JSON: `npm run data:build` (requires Python + `scripts/requirements.txt`).
 3. If you add a release file, register it in `data/releases/index.json`.
 4. Note material changes in `data/CHANGELOG.md`.

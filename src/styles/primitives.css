@@ -73,6 +73,11 @@
     color: var(--text-muted);
     line-height: 1;
   }
+  .panel-toggle-icon.filter-icon {
+    width: 14px;
+    height: 14px;
+    font-size: inherit;
+  }
 
   .panel-toggle--section {
     font-size: var(--type-ui-size);
@@ -211,10 +216,8 @@
   }
 
   .info-tip-bubble {
-    position: absolute;
-    left: 0;
-    top: calc(100% + 0.35rem);
-    z-index: 20;
+    position: fixed;
+    z-index: 90;
     box-sizing: border-box;
     width: max-content;
     max-width: min(18rem, calc(100vw - 2rem));

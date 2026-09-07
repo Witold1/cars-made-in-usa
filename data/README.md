@@ -1,5 +1,7 @@
 # How American Is Your Car? - dataset
 
+![Status](https://img.shields.io/badge/Status-work%20in%20progress-orange?style=flat-square)
+
 Structured carline and AALA-release data for the dashboard (beeswarm / jitter / Origins table).
 
 ## Layout
@@ -76,7 +78,7 @@ npm run dev
 - Prefer **public NHTSA AALA releases** only - we do not have original manufacturer submissions.
 - U.S./Canadian `%` is as reported; foreign totals may be reported or derived (`100 − U.S./Canadian`).
 - Major foreign sources follow **49 CFR §583.7(e)** (see `sources.json` id `cfr-583-7-e`).
-- Region taxonomy is editorial enrichment for filtering - verify against manufacturer geography when citing.
+- HQ region taxonomy is editorial enrichment for filtering - verify against manufacturer geography when citing.
 
 See **[SOURCES.md](./SOURCES.md)** for portals used when compiling releases and **[CHANGELOG.md](./CHANGELOG.md)** for a record of data revisions.
 

@@ -1,7 +1,6 @@
 <template>
   <div class="w-full">
     <BeeswarmControlPanel
-      :chartHeight="chartConfig.height"
       :pointRadius="chartConfig.radius"
       :paddingFactor="chartConfig.paddingFactor"
       :center0="center0"
@@ -10,7 +9,6 @@
       :spread1="spread1"
       :seed="seed"
       :fullAxis="fullAxis"
-      @update:chartHeight="updateChartHeight($event)"
       @update:pointRadius="updatePointRadius($event)"
       @update:paddingFactor="updatePaddingFactor($event)"
       @update:center0="updateCenter0($event)"
@@ -31,11 +29,13 @@
 import { ref, watch, onMounted, onUnmounted, inject } from 'vue';
 import * as d3 from 'd3';
 import { AccurateBeeswarm } from 'accurate-beeswarm-plot';
-import { renderPoint, updatePointAttributes, renderAverageLine, renderAverageLineVertical, renderGridlinesHorizontal, renderGridlinesVertical, applyNoise, CHART_TICK } from '../../utils/chartUtils';
+import { renderPoint, updatePointAttributes, renderAverageLine, renderAverageLineVertical, renderGridlinesHorizontal, renderGridlinesVertical, applyNoise, autoWidenZeroOneSpreads, adaptBeeswarmPackMetrics, CHART_TICK } from '../../utils/chartUtils';
 import { log, error as logError } from '../../utils/logger';
 import { readThemeTokens } from '../../utils/themeTokens';
 import { showPointTooltip, hideChartTooltip } from '../../utils/chartTooltip';
 import BeeswarmControlPanel from './BeeswarmControlPanel.vue';
+
+const BEESWARM_CHART_HEIGHT = 550;
 
 export default {
   name: 'BeeswarmPlot',
@@ -51,17 +51,17 @@ export default {
     randomSeed: { type: Number, default: 42 },
     pointRadius: { type: Number, default: 5.5 },
     paddingFactor: { type: Number, default: 1.3 },
-    chartHeight: { type: Number, default: 400 },
+    /** Accepted from Dashboard; beeswarm height is fixed at BEESWARM_CHART_HEIGHT. */
+    chartHeight: { type: Number, default: BEESWARM_CHART_HEIGHT },
     center0: { type: Number, default: -10.5 },
     spread0: { type: Number, default: 9 },
     center1: { type: Number, default: -2 },
-    spread1: { type: Number, default: 6 },
+    spread1: { type: Number, default: 4 },
     /** auto | horizontal | vertical - overrides width-based beeswarm orientation when not auto */
     orientation: { type: String, default: 'auto' },
   },
   emits: [
     'update:selected-point',
-    'update:chartHeight',
     'update:pointRadius',
     'update:paddingFactor',
     'update:center0',
@@ -77,11 +77,11 @@ export default {
       radius: props.pointRadius || 5.5,
       hoverRadius: (props.pointRadius || 5.5) + 2,
       width: 800,
-      height: props.chartHeight || 400,
+      height: BEESWARM_CHART_HEIGHT,
       margin: { top: 20, right: 20, bottom: 32, left: 40 },
       paddingFactor: props.paddingFactor || 1.3
     });
-    const fullAxis = ref(false);
+    const fullAxis = ref(true);
     const isDarkMode = ref(document.documentElement.classList.contains('dark'));
     const themeTokens = ref(readThemeTokens());
     const selectedPointId = ref(null);
@@ -102,14 +102,6 @@ export default {
       log('Theme changed, isDarkMode:', isDarkMode.value);
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme'] });
-
-    const updateChartHeight = (value) => {
-      const numValue = +value;
-      if (!isNaN(numValue)) {
-        chartConfig.value.height = Math.min(Math.max(numValue, 200), 600);
-        emit('update:chartHeight', chartConfig.value.height);
-      }
-    };
 
     const updatePointRadius = (value) => {
       const numValue = +value;
@@ -193,31 +185,169 @@ export default {
           .attr("data-export", "chart")
           .style("background", themeTokens.value.chartBg);
 
+        // Slider values are the ceiling; may scale down proportionally if packing overflows.
+        const leftGutter = 28;
+        const rightGutter = 8;
+        const userRadius = chartConfig.value.radius;
+        const userPadding = chartConfig.value.paddingFactor;
+        let packRadius = userRadius;
+        let paddingFactor = userPadding;
+
+        // Auto-widen 0/1 bands when a single column would overflow the pack axis
+        const dataMaxRaw = props.data?.length ? d3.max(props.data, d => Number(d.value)) : 1;
+        const domainMax = fullAxis.value ? 100 : dataMaxRaw + 1;
+        const valueAxisPx = isVertical
+          ? Math.max(1, height - margin.top - margin.bottom)
+          : Math.max(1, parentWidth - margin.left - margin.right);
+        const packHalfSize = isVertical
+          ? Math.max(1, (parentWidth - leftGutter - rightGutter) / 2)
+          : height / 2;
+
+        let spread0 = props.spread0;
+        let spread1 = props.spread1;
+        let autoMeta = null;
+        for (let pass = 0; pass < 2; pass += 1) {
+          const provisionalMin = Math.min(
+            props.center0 - spread0 / 2,
+            props.center1 - spread1 / 2
+          );
+          const pixelsPerUnit = valueAxisPx / Math.max(1e-6, domainMax - provisionalMin);
+          const autoSpread = autoWidenZeroOneSpreads({
+            data: props.data,
+            center0: props.center0,
+            spread0,
+            center1: props.center1,
+            spread1,
+            radius: packRadius,
+            paddingFactor,
+            packHalfSize,
+            pixelsPerUnit,
+          });
+          autoMeta = autoSpread;
+          if (!autoSpread.widened) break;
+          spread0 = autoSpread.spread0;
+          spread1 = autoSpread.spread1;
+        }
+        if (autoMeta && (spread0 > props.spread0 || spread1 > props.spread1)) {
+          log('Beeswarm auto-widened 0/1 spreads:', {
+            orientation: isVertical ? 'vertical' : 'horizontal',
+            spread0: props.spread0,
+            spread1: props.spread1,
+            effectiveSpread0: spread0,
+            effectiveSpread1: spread1,
+            n0: autoMeta.n0,
+            n1: autoMeta.n1,
+            slotsPerColumn: autoMeta.slotsPerColumn,
+          });
+        }
+
         // Always apply spread (mean ± spread/2) for 0s and 1s
-        const rand = seededRandom(seed.value);
-        const formattedData = applyNoise(props.data, props.center0, props.spread0, props.center1, props.spread1, props.noisePower, rand);
+        const packWithSpreads = (s0, s1, radius, pad) => {
+          const rand = seededRandom(seed.value);
+          const formatted = applyNoise(
+            props.data,
+            props.center0,
+            s0,
+            props.center1,
+            s1,
+            props.noisePower,
+            rand
+          );
+          const dMax = formatted.length > 0 ? d3.max(formatted, d => Number(d.value)) : 1;
+          const minV = Math.min(props.center0 - s0 / 2, props.center1 - s1 / 2);
+          const maxV = fullAxis.value ? 100 : dMax;
+          // Pack in value-axis pixel space so collision distance matches the displayed axis.
+          const valuePackScale = d3.scaleLinear()
+            .domain([minV, domainMax])
+            .range(isVertical
+              ? [0, Math.max(1, height - margin.top - margin.bottom)]
+              : [margin.left, parentWidth - margin.right]);
+          const packed = new AccurateBeeswarm(
+            formatted,
+            radius * pad,
+            d => valuePackScale(Number(d.value))
+          )
+            .withTiesBrokenByArrayOrder()
+            .calculateYPositions();
+          const xSc = isVertical
+            ? d3.scaleLinear().domain([minV, domainMax]).range([margin.left, parentWidth - margin.right])
+            : valuePackScale;
+          return { formattedData: formatted, dataMax: dMax, minValue: minV, maxValue: maxV, xScale: xSc, beeswarm: packed };
+        };
 
-        const dataMax = formattedData.length > 0 ? d3.max(formattedData, d => Number(d.value)) : 1;
-        const minValue = Math.min(props.center0 - props.spread0 / 2, props.center1 - props.spread1 / 2);
-        const maxValue = fullAxis.value ? 100 : dataMax;
-        const domainMax = fullAxis.value ? 100 : dataMax + 1;
-        const xScale = d3.scaleLinear()
-          .domain([minValue, domainMax])
-          .range([margin.left, parentWidth - margin.right]);
+        let { formattedData, dataMax, minValue, maxValue, xScale, beeswarm } = packWithSpreads(
+          spread0,
+          spread1,
+          packRadius,
+          paddingFactor
+        );
 
-        const beeswarm = new AccurateBeeswarm(
-          formattedData,
-          chartConfig.value.radius * chartConfig.value.paddingFactor,
-          d => xScale(Number(d.value))
-        )
-          .withTiesBrokenByArrayOrder()
-          .calculateYPositions(height / 2 - 100, height / 2 + 100);
+        // If packing still clips, widen again (horizontal) and/or scale radius+padding from sliders.
+        const measurePackExtent = () => d3.max(beeswarm, d => Math.abs(d.y)) ?? 0;
+        const halfFitFor = (radius) => Math.max(1, packHalfSize - radius - 2);
 
+        if (!isVertical) {
+          const yLimit = halfFitFor(packRadius);
+          const maxAbsY = measurePackExtent();
+          if (maxAbsY > yLimit) {
+            const factor = maxAbsY / yLimit;
+            const prev0 = spread0;
+            const prev1 = spread1;
+            spread0 = Math.min(40, Math.max(spread0, spread0 * factor));
+            spread1 = Math.min(40, Math.max(spread1, spread1 * factor));
+            if (spread0 > prev0 || spread1 > prev1) {
+              log('Beeswarm post-pack auto-widen:', {
+                maxAbsY,
+                yLimit,
+                factor,
+                spread0: prev0,
+                spread1: prev1,
+                effectiveSpread0: spread0,
+                effectiveSpread1: spread1,
+              });
+              ({ formattedData, dataMax, minValue, maxValue, xScale, beeswarm } = packWithSpreads(
+                spread0,
+                spread1,
+                packRadius,
+                paddingFactor
+              ));
+            }
+          }
+        }
+
+        {
+          const adapted = adaptBeeswarmPackMetrics({
+            userRadius,
+            userPadding,
+            maxAbsOffset: measurePackExtent(),
+            halfFit: halfFitFor(userRadius),
+          });
+          if (adapted.adapted) {
+            packRadius = adapted.radius;
+            paddingFactor = adapted.paddingFactor;
+            log('Beeswarm adaptive radius/padding (from sliders):', {
+              orientation: isVertical ? 'vertical' : 'horizontal',
+              userRadius,
+              userPadding,
+              packRadius,
+              paddingFactor,
+              fitScale: adapted.fitScale,
+            });
+            ({ formattedData, dataMax, minValue, maxValue, xScale, beeswarm } = packWithSpreads(
+              spread0,
+              spread1,
+              packRadius,
+              paddingFactor
+            ));
+          }
+        }
+
+        const drawRadius = packRadius;
         let pointsToRender = beeswarm;
         if (isVertical) {
           // Narrow side gutters; Y ticks centered in the left band
-          const leftMargin = 28;
-          const rightMargin = 8;
+          const leftMargin = leftGutter;
+          const rightMargin = rightGutter;
           const plotWidth = parentWidth - leftMargin - rightMargin;
           const vertMargin = { ...margin, left: leftMargin, right: rightMargin };
           const tickX = leftMargin / 2;
@@ -226,16 +356,14 @@ export default {
           const yScale = d3.scaleLinear()
             .domain([minValue, domainMax])
             .range([yMax, yMin]);
-          // Beeswarm returns d.y as offset from center; use actual extent so points fit in plot
-          const jitterExtent = d3.extent(beeswarm, d => d.y);
-          const jitterMin = jitterExtent[0] ?? -100;
-          const jitterMax = jitterExtent[1] ?? 100;
-          const jitterScale = d3.scaleLinear()
-            .domain([jitterMin, jitterMax])
-            .range([leftMargin, leftMargin + plotWidth]);
+          // Centered 1:1 after adaptive re-pack; tiny residual compress only if still tight.
+          const centerX = leftMargin + plotWidth / 2;
+          const maxAbsJitter = measurePackExtent();
+          const halfFit = halfFitFor(drawRadius);
+          const packScale = maxAbsJitter > halfFit ? halfFit / maxAbsJitter : 1;
           pointsToRender = beeswarm.map(d => ({
             ...d,
-            x: jitterScale(d.y),
+            x: centerX + d.y * packScale,
             y: yScale(Number(d.datum.value)) - height / 2
           }));
           // Gridlines at 10, 20, 30, ... then average + 0% / 1% on top
@@ -291,6 +419,7 @@ export default {
           });
         }
 
+        const hoverRadius = drawRadius + 2;
         const dots = svg.selectAll(".dot")
           .data(pointsToRender, d => d.datum.id)
           .enter()
@@ -301,16 +430,16 @@ export default {
           const style = props.markerStyles[d.datum.brand] ||
                         props.markerStyles[d.datum.corporation] ||
                         props.markerStyles[d.datum.region] || { shape: 'circle', color: themeTokens.value.palette5 };
-          renderPoint(d3.select(this), d, style, chartConfig.value.radius, height);
+          renderPoint(d3.select(this), d, style, drawRadius, height);
           if (props.selectedPoint && d.datum.id === selectedPointId.value) {
-            updatePointAttributes(d3.select(this), d, 'selected', chartConfig.value.radius, chartConfig.value.hoverRadius, height);
+            updatePointAttributes(d3.select(this), d, 'selected', drawRadius, hoverRadius, height);
           }
         });
 
         dots.on("mouseover", function(event, d) {
           showPointTooltip(d.datum, event.clientX, event.clientY, d.style?.color);
           if (!props.selectedPoint || d.datum.id !== selectedPointId.value) {
-            updatePointAttributes(d3.select(this), d, 'hover', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+            updatePointAttributes(d3.select(this), d, 'hover', drawRadius, hoverRadius, height);
           }
         })
         .on("mousemove", function(event, d) {
@@ -318,22 +447,22 @@ export default {
         })
         .on("mouseout", function(event, d) {
           if (d.datum.id !== selectedPointId.value) {
-            updatePointAttributes(d3.select(this), d, 'default', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+            updatePointAttributes(d3.select(this), d, 'default', drawRadius, hoverRadius, height);
           }
           hideChartTooltip();
         })
         .on("click", function(event, d) {
           if (props.selectedPoint) {
-            updatePointAttributes(d3.select(props.selectedPoint), d, 'default', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+            updatePointAttributes(d3.select(props.selectedPoint), d, 'default', drawRadius, hoverRadius, height);
           }
           emit('update:selected-point', this);
           selectedPointId.value = d.datum.id;
-          updatePointAttributes(d3.select(this), d, 'selected', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+          updatePointAttributes(d3.select(this), d, 'selected', drawRadius, hoverRadius, height);
           showPointTooltip(d.datum, event.clientX, event.clientY, d.style?.color);
         })
         .on("dblclick", function(event, d) {
           if (props.selectedPoint) {
-            updatePointAttributes(d3.select(props.selectedPoint), d, 'default', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+            updatePointAttributes(d3.select(props.selectedPoint), d, 'default', drawRadius, hoverRadius, height);
             emit('update:selected-point', null);
             selectedPointId.value = null;
             hideChartTooltip();
@@ -342,7 +471,7 @@ export default {
 
         svg.on("click", function(event) {
           if (event.target.tagName === "svg" && props.selectedPoint) {
-            updatePointAttributes(d3.select(props.selectedPoint), { x: 0, y: 0 }, 'default', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+            updatePointAttributes(d3.select(props.selectedPoint), { x: 0, y: 0 }, 'default', drawRadius, hoverRadius, height);
             emit('update:selected-point', null);
             selectedPointId.value = null;
             hideChartTooltip();
@@ -350,7 +479,7 @@ export default {
         })
         .on("dblclick", function(event) {
           if (event.target.tagName === "svg" && props.selectedPoint) {
-            updatePointAttributes(d3.select(props.selectedPoint), { x: 0, y: 0 }, 'default', chartConfig.value.radius, chartConfig.value.hoverRadius, chartConfig.value.height);
+            updatePointAttributes(d3.select(props.selectedPoint), { x: 0, y: 0 }, 'default', drawRadius, hoverRadius, height);
             emit('update:selected-point', null);
             selectedPointId.value = null;
             hideChartTooltip();
@@ -391,7 +520,6 @@ export default {
       isDarkMode,
       () => props.pointRadius,
       () => props.paddingFactor,
-      () => props.chartHeight,
       () => props.center0,
       () => props.spread0,
       () => props.center1,
@@ -404,7 +532,7 @@ export default {
       chartConfig.value.radius = props.pointRadius || 5.5;
       chartConfig.value.hoverRadius = (props.pointRadius || 5.5) + 2;
       chartConfig.value.paddingFactor = props.paddingFactor || 1.3;
-      chartConfig.value.height = props.chartHeight || 400;
+      chartConfig.value.height = BEESWARM_CHART_HEIGHT;
       seed.value = props.randomSeed || 42;
       renderChart();
     }, { deep: true, immediate: true });
@@ -413,7 +541,6 @@ export default {
       svgRef,
       chartConfig,
       fullAxis,
-      updateChartHeight,
       updatePointRadius,
       updatePaddingFactor,
       updateCenter0,

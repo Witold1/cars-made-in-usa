@@ -6,7 +6,7 @@
         <input
           v-model.trim="searchQuery"
           type="search"
-          placeholder="Region, corporation, brand, model…"
+          placeholder="HQ region, corporation, brand, model…"
           class="data-table-search editorial-select flex-1 min-w-0 max-w-xs"
           aria-label="Search table"
         />
@@ -48,6 +48,10 @@
                 {{ formatValue(row[col.key]) }}
               </span>
               <span v-else-if="col.key === config.model">{{ displayCarlineName(row) }}</span>
+              <span v-else-if="col.key === config.brand" class="brand-cell">
+                <BrandEmblem :brand="row[col.key]" :size="24" lazy />
+                <span>{{ row[col.key] }}</span>
+              </span>
               <span v-else>{{ row[col.key] }}</span>
             </td>
           </tr>
@@ -61,9 +65,11 @@
 import { ref, computed } from 'vue';
 import { dataConfig } from '../../data/dataConfig';
 import { displayCarlineName } from '../../utils/chartTooltip';
+import BrandEmblem from '../BrandEmblem.vue';
 
 export default {
   name: 'DataTable',
+  components: { BrandEmblem },
   inheritAttrs: false,
   props: {
     data: {
@@ -78,7 +84,7 @@ export default {
     const sortDir = ref('desc');
 
     const columns = [
-      { key: config.region, label: 'Region' },
+      { key: config.region, label: 'HQ region' },
       { key: config.corporation, label: 'Corporation' },
       { key: config.brand, label: 'Brand' },
       { key: config.model, label: 'Model' },

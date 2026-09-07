@@ -21,13 +21,13 @@ const CHART_HEIGHT_MAX = 600;
 const CHART_HEIGHT_MOBILE_MQ = mqMax('md');
 
 const DEFAULT_PLOT = {
-  chartHeight: 400,
+  chartHeight: 550,
   pointRadius: 5.5,
   paddingFactor: 1.3,
   center0: -10.5,
   spread0: 9,
   center1: -2,
-  spread1: 6,
+  spread1: 4,
   noisePower: 1,
   seed: 42,
 };
@@ -43,16 +43,25 @@ function isSmallScreen() {
 }
 
 function defaultChartHeight(chartType) {
-  if (isSmallScreen() && (chartType === 'beeswarm' || chartType === 'jitter')) {
+  if (chartType === 'beeswarm') return DEFAULT_PLOT.chartHeight;
+  if (isSmallScreen() && chartType === 'jitter') {
     return CHART_HEIGHT_MAX;
   }
   return chartType === 'jitter' ? JITTER_PLOT.chartHeight : DEFAULT_PLOT.chartHeight;
 }
 
 export const PNG_EXPORT_MODE_OPTIONS = [
-  { value: 'wys', label: 'WYS', title: 'What you see - export the chart as currently laid out' },
-  { value: 'fw', label: 'FW', title: 'Full width - reflow at 1200px for sharing on phones' },
+  { value: 'fw', label: 'Preset size', title: 'Wide high-resolution PNG for sharing (1600px layout)' },
+  { value: 'wys', label: 'WYS', title: 'What you see — export the chart as currently laid out' },
 ];
+
+/** Visible export control label, e.g. "Save PNG (preset size)". */
+export function savePngLabel(mode, { exporting = false } = {}) {
+  if (exporting) return 'Exporting…';
+  const opt = PNG_EXPORT_MODE_OPTIONS.find((o) => o.value === mode);
+  const tag = opt?.label || (mode === 'wys' ? 'WYS' : 'Preset size');
+  return `Save PNG (${tag})`;
+}
 
 export function useChartView({
   plotSource,
@@ -62,7 +71,7 @@ export function useChartView({
   clearFilterSelections,
 }) {
   const selectedChartType = ref('page');
-  const pngExportMode = ref('wys'); // wys | fw
+  const pngExportMode = ref('fw'); // fw (preset size) | wys
   const extendedDataReleaseKey = ref(defaultReleaseKey);
   const releaseLoading = ref(false);
   const chartHeight = ref(defaultChartHeight('beeswarm'));
@@ -110,7 +119,8 @@ export function useChartView({
     typeof window !== 'undefined' ? window.matchMedia(CHART_HEIGHT_MOBILE_MQ) : null;
 
   const syncChartHeightToViewport = (chartType = selectedChartType.value) => {
-    if (chartType !== 'beeswarm' && chartType !== 'jitter') return;
+    // Beeswarm height is fixed; only jitter adapts on small screens.
+    if (chartType !== 'jitter') return;
     if (mobileChartMq?.matches) {
       if (chartHeight.value !== CHART_HEIGHT_MAX) {
         chartHeightBeforeMobile = chartHeight.value;
@@ -213,6 +223,7 @@ export function useChartView({
     if (!card || exportingPng.value) return;
     exportingPng.value = true;
     hideChartTooltip();
+
     try {
       const typeLabel = getChartTitle(selectedChartType.value);
       const typeSlug = typeLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -253,6 +264,7 @@ export function useChartView({
     pngExportMode,
     pngExportModeOptions: PNG_EXPORT_MODE_OPTIONS,
     setPngExportMode,
+    savePngLabel,
     handleResetFilters,
     extendedDataReleaseKey,
     extendedDataReleaseOptions,
