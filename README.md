@@ -54,7 +54,7 @@ Dataset filters:
 - Optional marker style customization
 - Legend toggles mirror the same selections
 
-URL query params keep chart type and filters shareable (`?chart=beeswarm&regions=…`).
+Chart type lives in the path (`/summary`); filters stay as query params (`?regions=…`).
 
 ## Data
 

@@ -57,7 +57,7 @@
               aria-label="Layout settings"
             >
               <div class="settings-panel-inner">
-                <template v-if="selectedChartType !== 'page'">
+                <template v-if="selectedChartType !== 'widget'">
                   <p class="editorial-heading">Dataset filters position</p>
                   <div class="theme-switch-group settings-switch-group" role="group" aria-label="Dataset filters position">
                     <button
@@ -147,7 +147,7 @@
         ]"
       >
         <div
-          v-if="selectedChartType !== 'page'"
+          v-if="selectedChartType !== 'widget'"
           :class="[
             'filter-column min-w-0',
             isNarrow ? 'w-full' : 'filter-column--sidebar shrink-0',
@@ -241,7 +241,7 @@
         <div :class="['chart-area min-w-0', isNarrow ? 'w-full' : 'flex-1']">
           <div ref="chartCardRef" class="chart-card w-full">
             <div
-              v-if="!chartHasPlotParameters && selectedChartType !== 'page'"
+              v-if="!chartHasPlotParameters && selectedChartType !== 'widget'"
               class="release-stepper-block"
             >
               <ReleaseStepper
@@ -292,13 +292,13 @@
             </component>
             <div class="chart-meta-row mt-2 flex items-center justify-between gap-2 flex-wrap">
               <p
-                v-if="selectedChartType !== 'page' || pageHasCarSelection"
+                v-if="selectedChartType !== 'widget' || pageHasCarSelection"
                 class="editorial-label"
               >
                 {{ chartCountLabel }}
               </p>
               <ExportImageTools
-                v-if="supportsImageExport && selectedChartType !== 'jitter'"
+                v-if="supportsImageExport && selectedChartType !== 'comparison'"
                 :disabled="exportingAny"
                 :mode="pngExportMode"
                 @save-png="exportChartPngWithFiltersClosed"
@@ -323,7 +323,7 @@
             </div>
           </div>
           <Legend
-            v-if="selectedChartType !== 'page'"
+            v-if="selectedChartType !== 'widget'"
             :filtered-data="filteredData"
             :selected-regions="selectedRegions"
             :selected-corporations="selectedCorporations"
@@ -539,7 +539,7 @@ export default {
     );
 
     const chartHasPlotParameters = computed(
-      () => selectedChartType.value === 'beeswarm' || selectedChartType.value === 'jitter'
+      () => selectedChartType.value === 'summary' || selectedChartType.value === 'comparison'
     );
 
     const pageHasCarSelection = ref(false);
@@ -547,7 +547,7 @@ export default {
     const showSiteFooter = computed(() => true);
 
     watch(selectedChartType, (type) => {
-      if (type !== 'page') pageHasCarSelection.value = false;
+      if (type !== 'widget') pageHasCarSelection.value = false;
     });
 
     return {

@@ -1,5 +1,24 @@
 import { watch, onMounted } from 'vue';
-import { VALID_CHART_TYPES } from '../config/chartGuides';
+import { normalizeChartType } from '../config/chartGuides';
+
+function getBasePath() {
+  return (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+}
+
+function getAppPathname() {
+  if (typeof window === 'undefined') return '/';
+  const basePath = getBasePath();
+  let pathname = window.location.pathname;
+  if (basePath && pathname.startsWith(basePath)) {
+    pathname = pathname.slice(basePath.length) || '/';
+  }
+  return pathname;
+}
+
+function chartFromPathname(pathname) {
+  const segment = pathname.replace(/^\/+|\/+$/g, '').split('/')[0] || '';
+  return normalizeChartType(segment);
+}
 
 export function useDashboardUrlState({
   selectedChartType,
@@ -10,14 +29,14 @@ export function useDashboardUrlState({
   onChartTypeChange,
 }) {
   const parseUrlState = () => {
-    if (typeof window === 'undefined' || !window.location.search) return null;
+    if (typeof window === 'undefined') return null;
     const params = new URLSearchParams(window.location.search);
-    const chart = params.get('chart');
+    const chart = chartFromPathname(getAppPathname());
     const regions = params.get('regions');
     const corporations = params.get('corporations');
     const brands = params.get('brands');
     const state = {};
-    if (chart && VALID_CHART_TYPES.includes(chart)) state.chart = chart;
+    if (chart) state.chart = chart;
     if (regions) state.regions = regions.split(',').filter(Boolean);
     if (corporations) state.corporations = corporations.split(',').filter(Boolean);
     if (brands) state.brands = brands.split(',').filter(Boolean);
@@ -36,7 +55,6 @@ export function useDashboardUrlState({
   const syncStateToUrl = () => {
     if (typeof window === 'undefined' || typeof history === 'undefined') return;
     const params = new URLSearchParams();
-    if (selectedChartType.value) params.set('chart', selectedChartType.value);
     if (selectedRegions.value?.length) params.set('regions', selectedRegions.value.join(','));
     if (selectedCorporations.value?.length) {
       params.set('corporations', selectedCorporations.value.join(','));
@@ -51,8 +69,11 @@ export function useDashboardUrlState({
       }
     } catch (e) {}
 
+    const basePath = getBasePath();
+    const chartSegment = selectedChartType.value || 'widget';
+    const pathname = `${basePath}/${chartSegment}`;
     const search = params.toString();
-    const url = search ? `${window.location.pathname}?${search}` : window.location.pathname;
+    const url = search ? `${pathname}?${search}` : pathname;
     history.replaceState(null, '', url);
   };
 

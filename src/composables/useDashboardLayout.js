@@ -41,11 +41,11 @@ export function useDashboardLayout({ filtersOpen, selectedChartType }) {
     return !viewportWide.value;
   });
 
-  const supportsChartOrientation = computed(() => selectedChartType.value === 'beeswarm');
+  const supportsChartOrientation = computed(() => selectedChartType.value === 'summary');
 
-  /** SVG/PNG export exists for beeswarm (Dashboard tools) and jitter (per-chart tools). */
+  /** SVG/PNG export exists for summary (Dashboard tools) and comparison (per-chart tools). */
   const supportsImageExport = computed(() =>
-    selectedChartType.value === 'beeswarm' || selectedChartType.value === 'jitter',
+    selectedChartType.value === 'summary' || selectedChartType.value === 'comparison',
   );
 
   const setPageLayout = (value) => {

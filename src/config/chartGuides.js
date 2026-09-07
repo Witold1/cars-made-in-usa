@@ -5,9 +5,9 @@ const METHODOLOGY =
   '<p>Data from <a href="https://www.nhtsa.gov/part-583-american-automobile-labeling-act-reports" target="_blank" rel="noopener noreferrer" class="chart-guide-link" title="Listings of Passenger Motor Vehicles That Are Labeled With Their U.S./Canadian Parts Content">NHTSA Part 583 American Automobile Labeling Act (AALA) reports</a>. Values are U.S./Canadian equipment (parts) content as a share of parts content (0% to 100%).</p>';
 
 export const CHART_TYPE_OPTIONS = [
-  { value: 'page', label: 'Exploration widget' },
-  { value: 'beeswarm', label: 'Visual summary' },
-  { value: 'jitter', label: 'Visual comparison' },
+  { value: 'widget', label: 'Exploration widget' },
+  { value: 'summary', label: 'Visual summary' },
+  { value: 'comparison', label: 'Visual comparison' },
   { value: 'table-extended', label: 'Data table' },
   { value: 'placeholder', label: 'Placeholder' },
   { value: 'table', label: 'Artificially generated table' },
@@ -15,45 +15,49 @@ export const CHART_TYPE_OPTIONS = [
 
 export const VALID_CHART_TYPES = CHART_TYPE_OPTIONS.map((o) => o.value);
 
+export function normalizeChartType(value) {
+  return value && VALID_CHART_TYPES.includes(value) ? value : null;
+}
+
 const GUIDE_TITLES = {
-  beeswarm: 'Visual summary',
-  jitter: 'Visual comparison',
-  page: 'Exploration widget',
+  summary: 'Visual summary',
+  comparison: 'Visual comparison',
+  widget: 'Exploration widget',
   placeholder: 'Placeholder chart',
   table: 'Artificially generated table',
   'table-extended': 'Data table',
 };
 
 const CHART_TITLES = {
-  beeswarm: 'Visual summary',
-  jitter: 'Visual comparison',
-  page: 'Exploration widget',
+  summary: 'Visual summary',
+  comparison: 'Visual comparison',
+  widget: 'Exploration widget',
   placeholder: 'Placeholder',
   table: 'Artificially generated table',
   'table-extended': 'Data table',
 };
 
 const CHART_COMPONENTS = {
-  beeswarm: 'BeeswarmPlot',
-  jitter: 'JitterPlot',
-  page: 'CarPage',
+  summary: 'BeeswarmPlot',
+  comparison: 'JitterPlot',
+  widget: 'CarPage',
   placeholder: 'PlaceholderChart',
   table: 'DataTable',
   'table-extended': 'ExtendedDataTable',
 };
 
 const GUIDE_BODIES = {
-  beeswarm: `${VALUE_AXIS}
+  summary: `${VALUE_AXIS}
 <p>Points are spread vertically (jittered) to reduce overplotting. The lines labeled <strong>0%</strong> and <strong>1%</strong> mark the reference positions for models at 0% and 1% U.S./Canadian equipment (parts) content; points are spread around these for visibility. The <strong>average</strong> line shows mean U.S./Canadian equipment (parts) content in the filtered set.</p>
 ${METHODOLOGY}
 <p>Learn more: <a href="https://datavizcatalogue.com/blog/chart-snapshot-beeswarm-plot/" target="_blank" rel="noopener noreferrer" class="chart-guide-link">Beeswarm plot</a> (DataViz Catalogue).</p>`,
 
-  jitter: `${VALUE_AXIS}
+  comparison: `${VALUE_AXIS}
 <p>The <strong>reference chart</strong> at the top shows all data; below it, <strong>one small chart per group</strong>. Use <strong>Compare by</strong> to switch among HQ region, corporation, or brand. Vertical jitter reduces overplotting. Filters still narrow which points appear in each group.</p>
 ${METHODOLOGY}
 <p>Learn more: <a href="https://datavizcatalogue.com/blog/chart-snapshot-jitter-plot/" target="_blank" rel="noopener noreferrer" class="chart-guide-link">Jitter plot</a> (DataViz Catalogue).</p>`,
 
-  page: `<p>Pick a <strong>report year</strong>, then <strong>make</strong> and <strong>model</strong>, to look up one carline. The large percentage is U.S./Canadian equipment (parts) content. Below it: foreign-parts summary, engine and transmission origins, final assembly, and how this carline ranks among others in that report.</p>
+  widget: `<p>Pick a <strong>report year</strong>, then <strong>make</strong> and <strong>model</strong>, to look up one carline. The large percentage is U.S./Canadian equipment (parts) content. Below it: foreign-parts summary, engine and transmission origins, final assembly, and how this carline ranks among others in that report.</p>
 <p>Year here is the AALA report year (same as the report-date control on other views), not model year. Make and model lists come from the full release, not the sidebar filters.</p>
 ${METHODOLOGY}`,
 

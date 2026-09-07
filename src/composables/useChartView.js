@@ -57,11 +57,11 @@ function defaultBeeswarmPadding() {
 }
 
 function defaultChartHeight(chartType) {
-  if (chartType === 'beeswarm') return DEFAULT_PLOT.chartHeight;
-  if (isSmallScreen() && chartType === 'jitter') {
+  if (chartType === 'summary') return DEFAULT_PLOT.chartHeight;
+  if (isSmallScreen() && chartType === 'comparison') {
     return CHART_HEIGHT_MAX;
   }
-  return chartType === 'jitter' ? JITTER_PLOT.chartHeight : DEFAULT_PLOT.chartHeight;
+  return chartType === 'comparison' ? JITTER_PLOT.chartHeight : DEFAULT_PLOT.chartHeight;
 }
 
 export const PNG_EXPORT_MODE_OPTIONS = [
@@ -76,11 +76,11 @@ export function useChartView({
   handleApplyFilters,
   clearFilterSelections,
 }) {
-  const selectedChartType = ref('page');
+  const selectedChartType = ref('widget');
   const pngExportMode = ref('fw'); // fw (preset size) | wys
   const extendedDataReleaseKey = ref(defaultReleaseKey);
   const releaseLoading = ref(false);
-  const chartHeight = ref(defaultChartHeight('beeswarm'));
+  const chartHeight = ref(defaultChartHeight('summary'));
   const pointRadius = ref(defaultBeeswarmRadius());
   const paddingFactor = ref(defaultBeeswarmPadding());
   const center0 = ref(DEFAULT_PLOT.center0);
@@ -127,8 +127,8 @@ export function useChartView({
     typeof window !== 'undefined' ? window.matchMedia(CHART_HEIGHT_MOBILE_MQ) : null;
 
   const syncChartHeightToViewport = (chartType = selectedChartType.value) => {
-    // Beeswarm height is fixed; only jitter adapts on small screens.
-    if (chartType !== 'jitter') return;
+    // Summary height is fixed; only comparison adapts on small screens.
+    if (chartType !== 'comparison') return;
     if (mobileChartMq?.matches) {
       if (chartHeight.value !== CHART_HEIGHT_MAX) {
         chartHeightBeforeMobile = chartHeight.value;
@@ -141,11 +141,11 @@ export function useChartView({
   };
 
   const resetPlotParams = (chartType = selectedChartType.value) => {
-    const isJitter = chartType === 'jitter';
+    const isComparison = chartType === 'comparison';
     chartHeightBeforeMobile = null;
     chartHeight.value = defaultChartHeight(chartType);
-    pointRadius.value = isJitter ? JITTER_PLOT.pointRadius : defaultBeeswarmRadius();
-    paddingFactor.value = isJitter ? JITTER_PLOT.paddingFactor : defaultBeeswarmPadding();
+    pointRadius.value = isComparison ? JITTER_PLOT.pointRadius : defaultBeeswarmRadius();
+    paddingFactor.value = isComparison ? JITTER_PLOT.paddingFactor : defaultBeeswarmPadding();
     center0.value = DEFAULT_PLOT.center0;
     spread0.value = DEFAULT_PLOT.spread0;
     center1.value = DEFAULT_PLOT.center1;
@@ -178,7 +178,7 @@ export function useChartView({
 
   const handleResetFilters = () => {
     clearFilterSelections();
-    resetPlotParams('beeswarm');
+    resetPlotParams('summary');
     log('Filters Reset:', { filteredDataCount: plotSource.value.length });
   };
 
@@ -214,7 +214,7 @@ export function useChartView({
     if (releaseLoading.value) {
       return `Loading ${reportYear.value}…`;
     }
-    if (selectedChartType.value === 'page') {
+    if (selectedChartType.value === 'widget') {
       return `${extendedDataLength.value} carlines in ${reportYear.value} report`;
     }
     if (selectedChartType.value === 'table-extended') {

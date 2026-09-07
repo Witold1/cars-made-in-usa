@@ -339,7 +339,7 @@ export default {
         findSvg: () => document.getElementById(chart.svgId),
         title: 'How American Is Your Car?',
         subtitle: `${chart.region}. U.S./Canadian parts content (NHTSA Part 583).`,
-        meta: `${chart.data.length} / ${chart.total} car lines, ${getChartTitle('jitter')}`,
+        meta: `${chart.data.length} / ${chart.total} car lines, ${getChartTitle('comparison')}`,
       };
 
       try {
