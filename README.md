@@ -94,9 +94,8 @@ docker compose -f docker/docker-compose.yml up
 ## Repository layout
 
 ```text
-index.html              Page shell (+ analytics loader)
+index.html              Page shell (+ shared analytics loader)
 public/
-  analytics.js          GoatCounter + Clarity + GA4 (live only)
   privacy.html          Privacy overview for analytics/hosting
 vite.config.js          Vite + Vue
 docker/                 Dockerfile, compose, .dockerignore

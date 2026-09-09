@@ -61,11 +61,14 @@ export function useDashboardUrlState({
     }
     if (selectedBrands.value?.length) params.set('brands', selectedBrands.value.join(','));
 
-    // Keep analytics override so shared/test links stay silent (or forced on)
+    // Keep telemetry override so shared/test links stay silent (or forced on)
     try {
-      const current = new URLSearchParams(window.location.search).get('analytics');
-      if (current != null && current !== '') {
-        params.set('analytics', current.toLowerCase());
+      const current = new URLSearchParams(window.location.search);
+      for (const key of ['telemetry', 'wa']) {
+        const value = current.get(key);
+        if (value != null && value !== '') {
+          params.set(key, value.toLowerCase());
+        }
       }
     } catch (e) {}
 
